@@ -4,8 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test && npm run lint",
+    "preversion" : "npm run lint"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Mahesh S Warrier (codespede)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "jest": "^26.6.3",
+    "prettier": "^2.3.0",
+    "ts-jest": "^26.5.6",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "fs": "0.0.1-security",
+    "fs-extra": "^10.0.0",
+    "inflected": "^2.1.0",
+    "path": "^0.12.7",
+    "sequelize": "^6.6.2",
+    "url": "^0.11.0"
+  }
 }
