@@ -2,7 +2,7 @@ import Inflector = require('inflected');
 import { emptyDir } from 'fs-extra';
 import { DataTypes, Model as ActualModel } from 'sequelize';
 
-export class Model extends ActualModel {
+export default class Model extends ActualModel {
   errors = [];
   dataValues;
   messages;

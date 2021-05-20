@@ -1,5 +1,5 @@
 import Component from './Component';
-export class Controller extends Component {
+export default class Controller extends Component {
   mixpanel;
   public constructor(config) {
     super(config);

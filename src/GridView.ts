@@ -1,10 +1,11 @@
 import { emptyDir } from 'fs-extra';
+import path = require('path');
 import Application from './Application';
 import CollectionView from './CollectionView';
 import Component from './Component';
 import DataColumn from './DataColumn';
 import Html from './Html';
-import { Model } from './Model';
+import Model from './Model';
 
 export default class GridView extends CollectionView {
   public dataColumnClass = DataColumn;
@@ -50,8 +51,8 @@ export default class GridView extends CollectionView {
   public async run() {
     await this.initialization;
     // console.log('columns-from-run', this.columns, this.dataProvider, this.emptyCell);
-    Application.view.publishAndRegisterFile('src/components/assets/css/bootstrap.css');
-    Application.view.publishAndRegisterFile('src/components/assets/js/gridView.js');
+    Application.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
+    Application.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
     // Application.view.registerFile('css', 'default/css/bootstrap.css');
     console.log('gv-run', this.options);
     const id = this.options.id;

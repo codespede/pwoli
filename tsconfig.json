@@ -5,7 +5,8 @@
     "declaration": true,
     "outDir": "./lib",
     "strict": false,
-    "lib": ["es2016", "DOM"]
+    "lib": ["es2016", "DOM"],
+    "baseUrl": ".",
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]

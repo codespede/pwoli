@@ -20,9 +20,9 @@ export default class View extends Component {
 
   public async init() {
     await super.init.call(this);
-    this.publishAndRegisterFile('src/components/assets/js/jquery.js', 'head');
+    this.publishAndRegisterFile(path.join(__dirname, 'assets/js/jquery.js'), 'head');
     this.registerFile('js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js');
-    this.publishAndRegisterFile('src/components/assets/js/framework.js', 'head');
+    this.publishAndRegisterFile(path.join(__dirname, 'assets/js/framework.js'), 'head');
   }
 
   public async publishAndRegisterFile(file, position = 'end') {

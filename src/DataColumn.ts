@@ -3,7 +3,7 @@ import ActiveDataProvider from './ActiveDataProvider';
 import ArrayDataProvider from './ArrayDataProvider';
 import Column from './Column';
 import Html from './Html';
-import { Model } from './Model';
+import Model from './Model';
 
 export default class DataColumn extends Column {
   public attribute;
