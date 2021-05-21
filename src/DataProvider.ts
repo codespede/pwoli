@@ -1,4 +1,4 @@
-import { Model } from 'sequelize/types';
+import { Model } from 'src';
 import Component from './Component';
 import Pagination from './Pagination';
 import Sort from './Sort';
@@ -40,12 +40,12 @@ export default class DataProvider extends Component {
     //
   }
 
-  public async prepareModels() {
-    //
+  public async prepareModels(): Promise<Model[]> {
+    return new Promise<Model[]>((resolve, reject) => { });
   }
 
-  public async prepareTotalCount() {
-    //
+  public async prepareTotalCount(): Promise<number> {
+    return 0;
   }
 
   public async getModels() {

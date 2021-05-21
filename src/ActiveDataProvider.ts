@@ -1,12 +1,24 @@
-import { Model } from 'sequelize';
+import Application from './Application';
 import DataProvider from './DataProvider';
+import ORMAdapter from './ORMAdapters/ORMAdapter';
+import SequelizeAdapter from './ORMAdapters/SequelizeAdapter';
 
 export default class ActiveDataProvider extends DataProvider {
   public query: any = {};
   public key: string;
+  public ormAdapter: ORMAdapter | undefined;
+
   public constructor(config) {
     super(config);
     Object.assign(this, config);
+  }
+
+  public async init() {
+    await super.init.call(this)
+    if (this.ormAdapter === undefined) {
+      this.ormAdapter = Application.getORMAdapter();
+      this.ormAdapter.modelClass = this.modelClass;
+    }
   }
 
   public async prepareModels() {
@@ -23,17 +35,14 @@ export default class ActiveDataProvider extends DataProvider {
     }
     const sort = this.getSort();
     if (sort !== false && sort.getOrders().length > 0)
-      if (this.query.order === undefined) this.query.order = sort.getOrders();
-      else this.query.order.push(sort.getOrders());
+      this.query = this.ormAdapter.applySort(this.query, sort.getOrders());
     // console.log('query', this.query)
-    const modelClass = this.modelClass;
-    // console.log('queryy', this.query);
-    return await modelClass.findAll(this.query);
+    return await this.ormAdapter.findAll(this.query);
   }
 
   public prepareKeys(models) {
     const keys = [];
-    const modelPK = this.modelClass.primaryKey();
+    const modelPK = this.ormAdapter.primaryKey();
     if (this.key !== undefined) {
       for (const model of models) keys.push(model[this.key]);
     } else if (modelPK !== undefined) for (const model of models) keys.push(model[modelPK]);
@@ -41,8 +50,7 @@ export default class ActiveDataProvider extends DataProvider {
   }
 
   public async prepareTotalCount() {
-    const modelClass = this.modelClass;
-    const totalCount = await modelClass.count(this.query);
+    const totalCount = await this.ormAdapter.count(this.query);
     // console.log('tcfptc', totalCount)
     return totalCount;
   }
@@ -54,8 +62,8 @@ export default class ActiveDataProvider extends DataProvider {
       const model = new this.modelClass();
       // console.log('model-attributes', this.modelClass.rawAttributes, model.rawAttributes, sort.attributes);
       if (Object.keys(sort.attributes).length === 0) {
-        for (const attribute in this.modelClass.rawAttributes) {
-          if (this.modelClass.rawAttributes[attribute] !== undefined)
+        const attributes = this.ormAdapter.attributes();
+        for (const attribute of attributes) {
             sort.attributes[attribute] = {
               asc: [attribute, 'asc'],
               desc: [attribute, 'desc'],

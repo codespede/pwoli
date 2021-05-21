@@ -65,8 +65,8 @@ export default class GridView extends CollectionView {
     return '';
   }
 
-  public render() {
-    return super.render.call(this);
+  public async render() {
+    return await super.render.call(this);
   }
 
   public async renderSection(name) {
