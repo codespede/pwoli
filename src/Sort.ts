@@ -116,7 +116,8 @@ export default class Sort extends Component {
   public createUrl(attribute, absolute = false) {
     let params = this.params;
     if (params === undefined) params = url.parse(Application.request.url, true).query;
-    params[this.sortParam] = this.createSortParam(attribute);
+      params[this.sortParam] = this.createSortParam(attribute);
+      console.log('cu', Application.getFullUrlOfRequest());
     const sortUrl = new URL(Application.getFullUrlOfRequest());
     for (const param in params) sortUrl.searchParams.set(param, params[param]);
     return sortUrl;

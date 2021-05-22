@@ -28,6 +28,7 @@
     "fs": "0.0.1-security",
     "fs-extra": "^10.0.0",
     "inflected": "^2.1.0",
+    "mysql2": "^2.2.5",
     "path": "^0.12.7",
     "sequelize": "^6.6.2",
     "url": "^0.11.0"

@@ -35,7 +35,7 @@ export default class ActiveDataProvider extends DataProvider {
     }
     const sort = this.getSort();
     if (sort !== false && sort.getOrders().length > 0)
-      this.query = this.ormAdapter.applySort(this.query, sort.getOrders());
+      this.query = this.ormAdapter.applySort(this.query, sort);
     // console.log('query', this.query)
     return await this.ormAdapter.findAll(this.query);
   }

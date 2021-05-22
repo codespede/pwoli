@@ -1,12 +1,14 @@
 import Inflector = require('inflected');
 import { emptyDir } from 'fs-extra';
 import Application from './Application';
+import { Model as ActualModel } from "sequelize";
 const ormAdapter = Application.getORMAdapter();
 const ORMModel = ormAdapter.extendableModelClass();
 export default class Model extends ORMModel {
     public errors = [];
     protected attributeLabels = {};
-        
+    static init;
+    public static hooks = {};
     public toJSON() {
         const json = super.toJSON();
         if (this.errors.length === 0) return json;
@@ -39,4 +41,8 @@ export default class Model extends ORMModel {
         }
         return false;
     }
+
+    // public static init(attributes, options) {
+    //     return super.init.call(attributes, options);
+    // };
 }
