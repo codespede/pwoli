@@ -1,4 +1,4 @@
-import { Model } from 'src';
+import { Model } from '.';
 import Component from './Component';
 import Pagination from './Pagination';
 import Sort from './Sort';

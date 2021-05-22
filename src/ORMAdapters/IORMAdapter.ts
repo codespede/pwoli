@@ -1,6 +1,6 @@
 import { Pagination, Sort } from "../";
-import Component from "src/Component";
-import Model from "src/Model";
+import Component from "../Component";
+import Model from "../Model";
 
 export default interface IORMAdapter extends Component{
     modelClass: Model;
