@@ -19,10 +19,10 @@ export default class Widget extends Component {
   }
 
   public async run(): Promise<any> {
-    //
+    
   }
 
   public registerAssets() {
-    //
+    
   }
 }

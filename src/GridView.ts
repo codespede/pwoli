@@ -42,19 +42,19 @@ export default class GridView extends CollectionView {
 
   public async init() {
     await super.init.call(this);
-    console.log('gv-init', this.options);
+    
     if (this.filterRowOptions.id === undefined) this.filterRowOptions.id = `${this.options.id}-filters`;
-    // console.log('columns-from-init', this.columns, this.dataProvider, this.emptyCell);
+    
     await this.initColumns();
   }
 
   public async run() {
     await this.initialization;
-    // console.log('columns-from-run', this.columns, this.dataProvider, this.emptyCell);
+    
     Application.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
     Application.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
     // Application.view.registerFile('css', 'default/css/bootstrap.css');
-    console.log('gv-run', this.options);
+    
     const id = this.options.id;
     const options = { ...this.getClientOptions(), filterOnfocusOut: this.filterOnfocusOut };
     Application.view.registerJs(`jQuery('#${id}').widgetGridView(${JSON.stringify(options)});`);
@@ -108,7 +108,7 @@ export default class GridView extends CollectionView {
   }
 
   public async renderColumnGroup() {
-    console.log('rcgc', this.columns);
+    
     for (const column of this.columns) {
       if (column.options !== undefined && column.options.length > 0) {
         const cols = [];
@@ -125,7 +125,7 @@ export default class GridView extends CollectionView {
     let content = Html.tag('tr', cells.join(''), this.headerRowOptions);
     if (this.filterPosition === 'header') content = (await this.renderFilters()) + content;
     else if (this.filterPosition === 'body') content = content + (await this.renderFilters());
-    console.log('rth', this.filterPosition, await this.renderFilters(), content);
+    
     return `<thead>\n${content}\n</thead>`;
   }
 
@@ -152,7 +152,7 @@ export default class GridView extends CollectionView {
 
     const rows = [];
     let i = 0;
-    // console.log('models', models);
+    
     for (const model of models) {
       const key = keys[i];
       rows.push(await this.renderTableRow(model, key, i));
@@ -168,13 +168,13 @@ export default class GridView extends CollectionView {
     for (const column of this.columns) cells.push(column.renderDataCell(model, key, index));
     const options = this.rowOptions;
     options['data-key'] = key;
-    // console.log('cells', cells, this.columns);
+    
     return Html.tag('tr', cells.join(''), options);
   }
 
   public async initColumns() {
     // await this.initialization;
-    // console.log('columns', this.columns, this.dataProvider);
+    
     if (this.columns.length === 0) this.guessColumns();
     let i = 0;
     for (let column of this.columns) {

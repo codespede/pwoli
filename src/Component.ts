@@ -8,6 +8,6 @@ export default class Component {
   }
 
   public async init() {
-    //
+    
   }
 }

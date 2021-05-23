@@ -37,7 +37,7 @@ export default class DataProvider extends Component {
   }
 
   public prepareKeys(models) {
-    //
+    
   }
 
   public async prepareModels(): Promise<Model[]> {
@@ -68,7 +68,7 @@ export default class DataProvider extends Component {
   public async getTotalCount() {
     if (this.getPagination() === false) return this.getCount();
     else if (this._totalCount === undefined) this._totalCount = await this.prepareTotalCount();
-    console.log('totalCount', this._totalCount);
+    
     return this._totalCount;
   }
 
@@ -95,7 +95,7 @@ export default class DataProvider extends Component {
     if (value instanceof Sort || value === false) this._sort = value;
     else {
       const config: any = {};
-      // console.log('dp-this', this);
+      
       if (this.id !== undefined) config.sortParam = `${this.id}-sort`;
       this._sort = new Sort({ ...value, ...config });
       // this._sort.enableMultiSort = true;

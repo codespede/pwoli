@@ -1,7 +1,7 @@
 import Inflector = require('inflected');
 import { emptyDir } from 'fs-extra';
 import Application from './Application';
-import { Model as ActualModel } from "sequelize";
+import { ActiveDataProvider } from '.';
 const ormAdapter = Application.getORMAdapter();
 const ORMModel = ormAdapter.extendableModelClass();
 export default class Model extends ORMModel {
@@ -31,18 +31,26 @@ export default class Model extends ORMModel {
     }
 
     public load(data, formName = null) {
+        console.group('model-load', data);
         const scope = formName === null ? this.getFormName() : formName;
+        console.log('data-scope', scope, data[scope]);
         if (scope === '' && !emptyDir(data)) {
-        this.setAttributes(data);
-        return true;
+            this.setAttributeValues(data);
+            return true;
         } else if (data[scope] !== undefined) {
-        this.setAttributes(data[scope]);
-        return true;
+            this.setAttributeValues(data[scope]);
+            return true;
         }
         return false;
     }
 
-    // public static init(attributes, options) {
-    //     return super.init.call(attributes, options);
-    // };
+    public search(params: {}): ActiveDataProvider {
+        this.load(params);
+        ormAdapter.modelClass = this.constructor;
+        return ormAdapter.search(this, params, new ActiveDataProvider({modelClass: this.constructor}));
+    }
+    
+    public setAttributeValues(values: {}) {
+        return ormAdapter.setAttributes(this, values);
+    }
 }

@@ -28,7 +28,7 @@ export default class CollectionView extends Widget {
     if (this.dataProvider === undefined) throw new Error('The "dataProvider" property must be set.');
     if (this.emptyText === undefined) this.emptyText = 'No results found';
     if (this.options.id === undefined) this.options.id = this.getId();
-    console.log('getId', this.options.id);
+    
   }
 
   public async run() {
@@ -36,11 +36,11 @@ export default class CollectionView extends Widget {
     this._models = await this.dataProvider.getModels();
     if (this.showOnEmpty || this.dataProvider.getCount() > 0)
       content = await DataHelper.replaceAsync(this.layout, /{\w+}/g, async (match) => {
-        console.log('run-match', match, this.dataProvider.totalCountPromise);
+        
         return await this.renderSection(match);
       });
     else content = this.renderEmpty();
-    console.log('content', content);
+    
     const options = this.options;
     const tag = options.tag !== undefined ? options.tag : 'div';
     return Html.tag(tag, content, options);
@@ -48,7 +48,7 @@ export default class CollectionView extends Widget {
 
   public async renderSection(name) {
     name = name.replace(/\{|\}/g, '');
-    // console.log('renderItems', await this.renderItems());
+    
     return await this[`render${name.charAt(0).toUpperCase() + name.slice(1)}`]();
   }
 
@@ -75,7 +75,7 @@ export default class CollectionView extends Widget {
     if (pagination !== false) {
       await pagination.totalCountPromise;
       totalCount = await this.dataProvider.getTotalCount();
-      console.log('rs', pagination.getPage());
+      
       begin = pagination.getPage() * pagination.getPageSize() + 1;
       end = begin + count - 1;
       if (begin > end) begin = end;
@@ -93,19 +93,19 @@ export default class CollectionView extends Widget {
   }
 
   public async renderItems(): Promise<any> {
-    //
+    
   }
 
   public async renderPager() {
     await this.dataProvider.totalCountPromise;
     const pagination = this.dataProvider.getPagination();
-    console.log('rp-pagination', pagination, this.dataProvider._pagination, this.dataProvider.totalCountPromise);
+    
     if (pagination === false && this.dataProvider.getCount() <= 0) return '';
 
     const pager = this.pager;
     const classInstance = pager.class !== undefined ? pager.class : LinkPager;
     pager.pagination = pagination;
-    console.log('pager', await new classInstance(pager).render());
+    
     return await new classInstance(pager).render();
   }
 

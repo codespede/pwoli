@@ -15,11 +15,6 @@ export default class Application extends Component {
   public static ormModelClass;
   public static getFullUrlOfRequest() {
     const req = this.request;
-    console.log('gfuor', {
-        protocol: req.protocol || 'http',
-        host: req.host || req.headers.host,
-        pathname: req.originalUrl || req.url,
-      })
     return decodeURIComponent(
       url.format({
         protocol: req.protocol || 'http',

@@ -22,12 +22,12 @@ export default class ActiveDataProvider extends DataProvider {
   }
 
   public async prepareModels() {
-    // console.log('this.model', this.modelClass)
+    
     const pagination = this.getPagination();
     if (pagination !== false) {
       this.totalCountPromise = this.getTotalCount();
       pagination.totalCount = await this.totalCountPromise;
-      console.log('adppm', pagination.totalCount);
+      
       if (pagination.totalCount === 0) return [];
       this.query.limit = pagination.getLimit();
       this.query.offset = pagination.getOffset();
@@ -36,7 +36,7 @@ export default class ActiveDataProvider extends DataProvider {
     const sort = this.getSort();
     if (sort !== false && sort.getOrders().length > 0)
       this.query = this.ormAdapter.applySort(this.query, sort);
-    // console.log('query', this.query)
+    
     return await this.ormAdapter.findAll(this.query);
   }
 
@@ -51,7 +51,7 @@ export default class ActiveDataProvider extends DataProvider {
 
   public async prepareTotalCount() {
     const totalCount = await this.ormAdapter.count(this.query);
-    // console.log('tcfptc', totalCount)
+    
     return totalCount;
   }
 
@@ -60,7 +60,7 @@ export default class ActiveDataProvider extends DataProvider {
     const sort = this.getSort();
     if (sort !== false) {
       const model = new this.modelClass();
-      // console.log('model-attributes', this.modelClass.rawAttributes, model.rawAttributes, sort.attributes);
+      
       if (Object.keys(sort.attributes).length === 0) {
         const attributes = this.ormAdapter.attributes();
         for (const attribute of attributes) {

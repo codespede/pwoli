@@ -41,14 +41,14 @@ export default class Sort extends Component {
       // if (attributeOrders[attribute] === undefined)
       //     continue;
       const definition = this.attributes[attribute[0]];
-      // console.log('definition', definition, this.attributes, attribute[0], this.attributes[attribute[0]], attributeOrders);
-      // console.log('attributeOrders[attribute]', attributeOrders[attribute[0]])
+      
+      
       const columns = this.attributes[attribute[0]][attribute[1]];
       // if (typeof columns === 'object')
       //     for (const name in columns)
       //         orders[name] = columns[name];
       // else
-      // console.log('columns', columns, definition, this.attributes[attribute[0]][attribute[1]])
+      
       orders.push(columns);
     }
     return orders;
@@ -60,7 +60,7 @@ export default class Sort extends Component {
       // Component.request;
       let params = this.params;
       if (params === undefined) params = url.parse(Application.request.url, true).query;
-      // console.log('paramss', params, params[this.sortParam], this.parseSortParam(params[this.sortParam]));
+      
       if (params[this.sortParam] !== undefined) {
         for (let attribute of this.parseSortParam(params[this.sortParam])) {
           let descending = false;
@@ -77,7 +77,7 @@ export default class Sort extends Component {
       }
       if (this._attributeOrders.length === 0 && this.defaultOrder.length > 0) this._attributeOrders = this.defaultOrder;
     }
-    // console.log('ao', this._attributeOrders);
+    
     return this._attributeOrders;
   }
 
@@ -117,7 +117,7 @@ export default class Sort extends Component {
     let params = this.params;
     if (params === undefined) params = url.parse(Application.request.url, true).query;
       params[this.sortParam] = this.createSortParam(attribute);
-      console.log('cu', Application.getFullUrlOfRequest());
+      
     const sortUrl = new URL(Application.getFullUrlOfRequest());
     for (const param in params) sortUrl.searchParams.set(param, params[param]);
     return sortUrl;
@@ -130,7 +130,7 @@ export default class Sort extends Component {
     let directions = this.getAttributeOrders();
     let direction: any = false;
     let i = 0;
-    if (attribute === 'title') console.log('csp', this.attributes[attribute], direction, directions);
+    if (attribute === 'title') 
     for (const dir of directions) {
       if (dir !== undefined && dir[0] === attribute) {
         direction = dir[1];
@@ -140,7 +140,7 @@ export default class Sort extends Component {
     }
     delete directions[i];
     if (direction !== false) {
-      console.log('csp-dir', direction);
+      
       direction = direction === 'desc' ? 'asc' : 'desc';
     } else direction = definition.default !== undefined ? definition.default : 'asc';
     directions = this.enableMultiSort ? [[attribute, direction]].push(directions) : [[attribute, direction]];

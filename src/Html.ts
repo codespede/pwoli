@@ -118,7 +118,7 @@ export default class Html extends Component {
 
   public static getInputName(model, attribute) {
     const formName = model.getFormName();
-    console.log('formName', formName);
+    
     const matches = attribute.match(this.attributeRegex);
     if (matches.length === 0) throw new Error('Attribute name must contain word characters only.');
     const prefix = matches[1];
@@ -149,7 +149,7 @@ export default class Html extends Component {
     if (matches.length === 0) throw new Error('Attribute name must contain word characters only.');
     attribute = matches[2];
     let value = model[attribute];
-    console.log('gav', value, matches, model.title);
+    
     if (matches[3] !== '') {
       for (const id of matches[3].trim().split(']['))
         if (Array.isArray(value) && value[id] !== undefined) value = value[id];

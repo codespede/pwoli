@@ -30,7 +30,7 @@ export default class View extends Component {
     fs.copyFile(file, `${this.basePath}/${path.basename(file)}`, (error) => {
       if (error) throw error;
     });
-    console.log('parf', file, path.extname(file));
+    
     this.registerFile(path.extname(file) === '.js' ? 'js' : 'css', `${this.basePath}/${path.basename(file)}`, {
       position,
     });
@@ -58,7 +58,7 @@ export default class View extends Component {
 
   public renderEndHtml(ajaxMode) {
     const lines = [];
-    console.log('jsFiless', this.jsFiles);
+    
     if (this.jsFiles.end.length > 0) lines.push(this.jsFiles.end.join('\n'));
     if (ajaxMode) {
       const scripts = [];

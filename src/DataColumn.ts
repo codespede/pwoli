@@ -34,7 +34,7 @@ export default class DataColumn extends Column {
 
     if (this.encodeLabel) label = Html.encode(label);
     const sort = this.grid.dataProvider.getSort();
-    // console.log('rhcc', this.attribute !== undefined && this.enableSorting && (sort !== false) && sort.hasAttribute(this.attribute));
+    
     if (this.attribute !== undefined && this.enableSorting && sort !== false && sort.hasAttribute(this.attribute))
       return sort.link(this.attribute, { ...this.sortLinkOptions, label });
     return label;

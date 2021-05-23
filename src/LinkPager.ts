@@ -39,13 +39,13 @@ export default class LinkPager extends Widget {
   }
 
   protected doRegisterLinkTags() {
-    //
+    
   }
 
   protected async renderPageButtons() {
     const pageCount = await this.pagination.getPageCount();
     // setTimeout(() => {
-    //     console.log('rpb', pageCount, this.pagination.totalCount);
+    //     
     // }, 1000);
 
     if (pageCount < 2 && this.hideOnSinglePage) return '';
@@ -116,7 +116,7 @@ export default class LinkPager extends Widget {
   protected async renderPageButton(label, page, cssClass, disabled, active) {
     let options: any = {};
     options = Object.assign(options, this.linkContainerOptions);
-    console.log('rpb-link-container', options, this.linkContainerOptions);
+    
     const linkWrapTag = options.tag !== undefined ? options.tag : 'li';
     delete options.tag;
     Html.addCssClass(options, cssClass === undefined ? this.pageCssClass : cssClass);
@@ -136,7 +136,7 @@ export default class LinkPager extends Widget {
   protected getPageRange() {
     const currentPage = this.pagination.getPage();
     const pageCount = this.pagination.getPageCount();
-    // console.log('pageCount', pageCount);
+    
     let beginPage = Math.max(0, currentPage - this.maxButtonCount / 2);
     let endPage = beginPage + this.maxButtonCount - 1;
     if (endPage >= pageCount) {

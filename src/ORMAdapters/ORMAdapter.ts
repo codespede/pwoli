@@ -29,7 +29,7 @@ export default class ORMAdapter extends Component implements IORMAdapter {
     }
 
     public extendableModelClass() {
-        console.log('app obj', Application);
+        
         if (Application.ormModelClass === undefined)
             throw new Error("'Application.ormModelClass' should be set.");
         return Application.ormModelClass;

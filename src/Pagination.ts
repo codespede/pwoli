@@ -19,7 +19,7 @@ export default class Pagination extends Component {
   }
 
   public getPageCount() {
-    console.log('gpc', this.totalCount);
+    
     const pageSize = this.getPageSize();
     if (pageSize < 1) return this.totalCount > 0 ? 1 : 0;
     const totalCount = this.totalCount < 0 ? 0 : this.totalCount;
@@ -73,16 +73,16 @@ export default class Pagination extends Component {
     if (page > 0 || (page === 0 && this.forcePageParam)) params[this.pageParam] = page + 1;
     else delete params[this.pageParam];
     if (pageSize <= 0 || pageSize === undefined) pageSize = this.getPageSize();
-    // console.log('pageSize', pageSize);
+    
     if (pageSize !== undefined && pageSize !== this.defaultPageSize) params[this.pageSizeParam] = pageSize;
     else {
-      // console.log('delete', 's');
+      
       delete params[this.pageSizeParam];
     }
 
     const pageUrl = new URL(Application.getFullUrlOfRequest());
     for (const param in params) pageUrl.searchParams.set(param, params[param]);
-    // console.log('paramss', params, pageSize, pageUrl);
+    
     return pageUrl;
   }
 

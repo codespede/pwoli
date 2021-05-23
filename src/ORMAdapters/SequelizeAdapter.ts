@@ -1,3 +1,4 @@
+//import { ActiveDataProvider } from "..";
 import IORMAdapter from "./IORMAdapter";
 import ORMAdapter from "./ORMAdapter";
 export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
@@ -35,5 +36,27 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
 
     public attributes() {
         return Object.keys(this.modelClass.rawAttributes);
+    }
+
+    public setAttributes(model, values) {
+        for (let attribute in values) {
+            if (values[attribute] !== undefined)
+                model.dataValues[attribute] = values[attribute];
+        }
+        return model;
+    }
+
+    public search(model, params = {}, dataProvider) {
+        const { Op } = require("sequelize");
+        console.log('dpquery', dataProvider.query, dataProvider.query.where)
+        dataProvider.query.where = dataProvider.query.where !== undefined? dataProvider.query.where : {};
+        console.log('sas', params, this.modelClass, dataProvider.query.where );
+        if (params[this.modelClass.name] !== undefined) {
+            for (const param in params[this.modelClass.name]) {
+                if (this.attributes().includes(param))
+                    dataProvider.query.where[param] = { [Op.like]: `%${params[this.modelClass.name][param]}%`};
+            }
+        }
+        return dataProvider;
     }
 }
