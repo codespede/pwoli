@@ -4,8 +4,7 @@ import Html from './Html';
 import fs = require('fs');
 import path = require('path');
 import Application from './Application';
-
-import ejs from 'ejs';
+const ejs = require('ejs');
 export default class View extends Component {
   public cssFiles = [];
   public jsFiles = { head: [], end: [] };
