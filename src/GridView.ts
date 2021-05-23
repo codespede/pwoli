@@ -79,7 +79,7 @@ export default class GridView extends CollectionView {
   }
 
   protected getClientOptions() {
-    const filterUrl = this.filterUrl !== undefined ? this.filterUrl : Application.request.originalUrl;
+    const filterUrl = this.filterUrl !== undefined ? this.filterUrl : (Application.request.originalUrl || Application.request.url);
     const id = this.filterRowOptions.id;
     let filterSelector = `#${id} input, #${id} select`;
     if (this.filterSelector !== undefined) filterSelector += `, ${this.filterSelector}`;
