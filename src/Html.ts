@@ -174,4 +174,46 @@ export default class Html extends Component {
   public static script(content, options = []) {
     return this.tag('script', content, options);
   }
+
+  public static radio(name, checked = false, options: any = {}) {
+    return this.booleanInput('radio', name, checked, options);
+  }
+
+  public static checkbox(name, checked = false, options: any = {}) {
+    return this.booleanInput('checkbox', name, checked, options);
+  }
+
+  public static hiddenInput(name, value = null, options: any = {}) {
+    return this.input('hidden', name, value, options);
+  }
+
+  public static label(content, forValue = null, options: any = {}){
+    options.for = forValue;
+    return this.tag('label', content, options);
+  }
+
+  public static booleanInput(type, name, checked = false, options: any = {}) {
+    if (options.checked === undefined)
+      options.checked = checked;
+    const value = options.value !== undefined ? options.value : '1';
+    let hidden;
+    if (options.uncheck !== 'undefined') {
+      const hiddenOptions: any = {};
+      if (options.form !== undefined)
+        hiddenOptions.form = options.form;
+      if (options.disabled.length > 0)
+        hiddenOptions.disabled = options.disabled;
+      hidden = this.hiddenInput(name, options.uncheck, hiddenOptions);
+      delete options.uncheck;
+    } else
+      hidden = '';
+    if (options.label !== undefined) {
+      const label = options.label;
+      const labelOptions = options.labelOptions !== undefined ? options.labelOptions : {};
+      delete options.label, options.labelOptions;
+      const content = this.label(`${this.input(type, name, value, options)} ${label}`, null, labelOptions);
+      return hidden + content;
+    }
+    return hidden + this.input(type, name, value, options);
+  }
 }
