@@ -1,12 +1,16 @@
 import Inflector = require('inflected');
-export default class ActiveForm {
+import { Component } from '.';
+export default class ActiveForm extends Component{
   model;
   errorClass = 'error';
   fieldTemplate =
     '<label for="{fieldName}" class="input-label">{fieldLabel}</label><br><[type] [htmlOptions] type="text" placeholder="{placeholder}" name="{fieldName}" value="{fieldValue}" class="{hasError}">{errorHtml}';
-  constructor(model) {
-    this.model = model;
-  }
+  
+  public constructor(config) {
+    super(config);
+    Object.assign(this, config);
+  } 
+  
   public renderField(name, type = 'input', htmlOptions = {}) {
     const html = this.fieldTemplate.replace(/{\w+}/g, (match) => {
       return this.renderSection(match, name);

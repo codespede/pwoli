@@ -9,10 +9,10 @@ export default class DataColumn extends Column {
 
     public header = '#';
 
-    protected renderDataCellContent(model, key, index) {
+    protected async renderDataCellContent(model, key, index) {
         const pagination = this.grid.dataProvider.getPagination();
         if (pagination !== false)
-            return pagination.getOffset + index + 1;
+            return pagination.getOffset() + index + 1;
         return index + 1;
     }
 }

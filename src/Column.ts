@@ -3,7 +3,7 @@ import Html from './Html';
 
 export default class Column extends Component {
   public grid;
-  public header;
+  public header = '';
   public footer = '';
   public content;
   public visible = true;
@@ -26,9 +26,9 @@ export default class Column extends Component {
     return Html.tag('td', this.renderFooterCellContent(), this.footerOptions);
   }
 
-  public renderDataCell(model, key, index) {
+  public async renderDataCell(model, key, index) {
     const options = this.contentOptions;
-    return Html.tag('td', this.renderDataCellContent(model, key, index), options);
+    return Html.tag('td', await this.renderDataCellContent(model, key, index), options);
   }
 
   public renderFilterCell() {

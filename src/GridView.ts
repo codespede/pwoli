@@ -1,6 +1,7 @@
 import { emptyDir } from 'fs-extra';
 import path = require('path');
-import Application from './Application';
+import { DataHelper } from '.';
+import Pwoli from './Application';
 import CollectionView from './CollectionView';
 import Component from './Component';
 import DataColumn from './DataColumn';
@@ -51,13 +52,13 @@ export default class GridView extends CollectionView {
   public async run() {
     await this.initialization;
     
-    Application.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
-    Application.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
-    // Application.view.registerFile('css', 'default/css/bootstrap.css');
+    Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
+    Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
+    // Pwoli.view.registerFile('css', 'default/css/bootstrap.css');
     
     const id = this.options.id;
     const options = { ...this.getClientOptions(), filterOnfocusOut: this.filterOnfocusOut };
-    Application.view.registerJs(`jQuery('#${id}').widgetGridView(${JSON.stringify(options)});`);
+    Pwoli.view.registerJs(`jQuery('#${id}').widgetGridView(${JSON.stringify(options)});`);
     return super.run.call(this);
   }
 
@@ -79,7 +80,7 @@ export default class GridView extends CollectionView {
   }
 
   protected getClientOptions() {
-    const filterUrl = this.filterUrl !== undefined ? this.filterUrl : (Application.request.originalUrl || Application.request.url);
+    const filterUrl = this.filterUrl !== undefined ? this.filterUrl : (Pwoli.request.originalUrl || Pwoli.request.url);
     const id = this.filterRowOptions.id;
     let filterSelector = `#${id} input, #${id} select`;
     if (this.filterSelector !== undefined) filterSelector += `, ${this.filterSelector}`;
@@ -165,7 +166,7 @@ export default class GridView extends CollectionView {
 
   public async renderTableRow(model, key, index) {
     const cells = [];
-    for (const column of this.columns) cells.push(column.renderDataCell(model, key, index));
+    for (const column of this.columns) cells.push(await column.renderDataCell(model, key, index));
     const options = this.rowOptions;
     options['data-key'] = key;
     
@@ -178,14 +179,17 @@ export default class GridView extends CollectionView {
     if (this.columns.length === 0) this.guessColumns();
     let i = 0;
     for (let column of this.columns) {
-      if (typeof column === 'string') column = this.createDataColumn(column);
-      else column = new this.dataColumnClass({ grid: this, ...column });
-      if (!column.visible) {
-        delete this.columns[i];
-        continue;
-      }
-      this.columns[i] = column;
-      i++;
+        if (typeof column === 'string') column = this.createDataColumn(column);
+        else {
+            const columnClass = DataHelper.remove(column, 'class', this.dataColumnClass);
+            column = new columnClass({ grid: this, ...column });
+        }
+        if (!column.visible) {
+            delete this.columns[i];
+            continue;
+        }
+        this.columns[i] = column;
+        i++;
     }
   }
 

@@ -4,6 +4,11 @@ export default class DataColumn extends Column {
     public name = 'radioButtonSelection';
     public radioOptions: any = {};
     
+    public constructor(config) {
+        super(config);
+        Object.assign(this, config);
+    }
+
     public async init() {
         await super.init.call(this);
         if (this.name.length > 0)
@@ -11,7 +16,7 @@ export default class DataColumn extends Column {
     }
 
     protected renderDataCellContent(model, key, index) {
-        if (this.content !== null)
+        if (this.content !== undefined)
             return super.renderDataCellContent(model, key, index);
         let options;
         if (typeof this.radioOptions === 'function')

@@ -36,7 +36,6 @@ export default class CollectionView extends Widget {
     this._models = await this.dataProvider.getModels();
     if (this.showOnEmpty || this.dataProvider.getCount() > 0)
       content = await DataHelper.replaceAsync(this.layout, /{\w+}/g, async (match) => {
-        
         return await this.renderSection(match);
       });
     else content = this.renderEmpty();

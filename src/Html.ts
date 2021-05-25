@@ -23,7 +23,7 @@ export default class Html extends Component {
     'track',
     'wbr',
   ];
-  public static tag(name, content = '', options = []) {
+  public static tag(name, content = '', options: any = []) {
     if (name === undefined || !name) return content;
     let optionsHtml = '';
     for (const option in options) optionsHtml += ` ${option}="${options[option]}"`;
@@ -197,11 +197,11 @@ export default class Html extends Component {
       options.checked = checked;
     const value = options.value !== undefined ? options.value : '1';
     let hidden;
-    if (options.uncheck !== 'undefined') {
+    if (options.uncheck !== undefined) {
       const hiddenOptions: any = {};
       if (options.form !== undefined)
         hiddenOptions.form = options.form;
-      if (options.disabled.length > 0)
+      if (options.disabled !== undefined)
         hiddenOptions.disabled = options.disabled;
       hidden = this.hiddenInput(name, options.uncheck, hiddenOptions);
       delete options.uncheck;
@@ -214,6 +214,8 @@ export default class Html extends Component {
       const content = this.label(`${this.input(type, name, value, options)} ${label}`, null, labelOptions);
       return hidden + content;
     }
+    if (options.checked === false)
+      delete options.checked;
     return hidden + this.input(type, name, value, options);
   }
 }
