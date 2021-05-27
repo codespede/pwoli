@@ -21,7 +21,7 @@ export default class CheckboxColumn extends Column {
     }
 
     protected async renderHeaderCellContent() {
-        if (this.header !== null || !this.multiple)
+        if (this.header !== undefined || !this.multiple)
             return await super.renderHeaderCellContent();
         return Html.checkbox(this.getHeaderCheckBoxName(), false, { class: 'select-on-check-all' });
     }
@@ -44,9 +44,13 @@ export default class CheckboxColumn extends Column {
     protected getHeaderCheckBoxName() {
         let name = this.name;
         let matches = name.match(/(.*)\[\]$/);
+        console.log('matches', matches.length);
+
         if (matches.length > 0)
             name = matches[1];
         matches = name.match(/(.*)\]$/);
+        if (matches === null)
+            matches = [];
         if (matches.length > 0)
             name = matches[1] + '_all]';
         else

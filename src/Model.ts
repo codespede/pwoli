@@ -5,7 +5,7 @@ import { ActiveDataProvider } from '.';
 const ormAdapter = Application.getORMAdapter();
 const ORMModel = ormAdapter.extendableModelClass();
 export default class Model extends ORMModel {
-    public errors = [];
+    public _errors = [];
     protected attributeLabels = {};
     static init;
     public static hooks = {};
@@ -52,5 +52,30 @@ export default class Model extends ORMModel {
     
     public setAttributeValues(values: {}) {
         return ormAdapter.setAttributes(this, values);
+    }
+
+    public getFirstError(attribute) {
+        return this.errors[attribute] !== undefined  && this.errors[attribute].length > 0? this.errors[attribute][0] : null;
+    }
+
+    public getAttributeHint(attribute) {
+        let hints = this.attributeHints();
+        return (hints[attribute] !== undefined) ? hints[attribute] : '';
+    }
+
+    public isAttributeRequired(attribute) {
+        return ormAdapter.isAttributeRequired(this, attribute);
+    }
+
+    public hasErrors(attribute = null) {
+        return attribute === null ? this._errors.length > 0 : this._errors[attribute] !== undefined;
+    }
+
+    public activeAttributes() {
+        return ormAdapter.activeAttributes(this);
+    }
+
+    public getActiveValidators(attribute) {
+        return ormAdapter.getActiveValidators(this, attribute);
     }
 }

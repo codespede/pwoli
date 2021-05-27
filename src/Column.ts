@@ -3,8 +3,8 @@ import Html from './Html';
 
 export default class Column extends Component {
   public grid;
-  public header = '';
-  public footer = '';
+  public header;
+  public footer;
   public content;
   public visible = true;
   public options: any = [];
@@ -36,7 +36,7 @@ export default class Column extends Component {
   }
 
   protected async renderHeaderCellContent() {
-    return (this.header !== '' ? this.header : await this.getHeaderCellLabel()).trim();
+    return (this.header !== undefined ? this.header : await this.getHeaderCellLabel()).trim();
   }
 
   protected getHeaderCellLabel() {
@@ -44,7 +44,7 @@ export default class Column extends Component {
   }
 
   protected renderFooterCellContent() {
-    return (this.footer !== '' ? this.footer : this.grid.emptyCell).trim();
+    return (this.footer !== undefined ? this.footer : this.grid.emptyCell).trim();
   }
 
   protected renderDataCellContent(model, key, index) {

@@ -59,4 +59,29 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         }
         return dataProvider;
     }
+
+    public isAttributeRequired(model, attribute) {
+        return !model.rawAttributes[attribute].allowNull;
+    }
+
+    public activeAttributes(model) {
+        const attributes = [];
+        for (let attribute in model.rawAttributes) {
+            if (this.isAttributeActive(model, attribute))
+                attributes.push(attribute);
+        }
+        return attributes;
+    }
+
+    public isAttributeActive(model, attribute) {
+        return model.rawAttributes[attribute].allowNull === false || model.rawAttributes[attribute].validate !== undefined;
+    }
+
+    public getActiveValidators(model, attribute) {
+        const validators = model.rawAttributes[attribute].validate;
+        if (model.rawAttributes[attribute].allowNull === false)
+            validators.notNull = true;
+        return validators;
+    }
+
 }
