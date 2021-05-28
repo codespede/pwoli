@@ -50,16 +50,15 @@ export default class GridView extends CollectionView {
   }
 
   public async run() {
-    await this.initialization;
     
-    Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
-    Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
-    // Pwoli.view.registerFile('css', 'default/css/bootstrap.css');
-    
+    await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
+    await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
+    console.log('gvr', Pwoli.view.cssFiles);
+    //await this.initialization;
     const id = this.options.id;
     const options = { ...this.getClientOptions(), filterOnfocusOut: this.filterOnfocusOut };
-    Pwoli.view.registerJs(`jQuery('#${id}').widgetGridView(${JSON.stringify(options)});`);
-    return super.run.call(this);
+    await Pwoli.view.registerJs(`jQuery('#${id}').pwoliGridView(${JSON.stringify(options)});`);
+    return await super.run.call(this);
   }
 
   public renderErrors() {

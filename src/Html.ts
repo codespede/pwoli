@@ -63,9 +63,9 @@ export default class Html extends Component {
     public static tag(name, content = '', options: any = []) {
         if (name === undefined || !name) return content;
         let optionsHtml = '';
-        for (const option in options) optionsHtml += ` {option}="{options[option]}"`;
-        const html = `<{name}{optionsHtml}>`;
-        return this.voidElements.includes(name) ? html : `{html}{content}</{name}>`;
+        for (const option in options) optionsHtml += ` ${option}="${options[option]}"`;
+        const html = `<${name}${optionsHtml}>`;
+        return this.voidElements.includes(name) ? html : `${html}${content}</${name}>`;
     }
 
     public static addCssClass(options, cssClass) {
@@ -102,7 +102,7 @@ export default class Html extends Component {
         if (formatter !== null) results.push(formatter(items[index], index));
         else results.push(this.tag('li', encode ? this.encode(items[index]) : items[index], itemOptions));
         }
-        return this.tag(tag, `{separator}{results.join(separator)}{separator}`, options);
+        return this.tag(tag, `${separator}${results.join(separator)}${separator}`, options);
     }
 
     public static encode(content) {
@@ -110,6 +110,7 @@ export default class Html extends Component {
     }
 
     public static escape(html) {
+        html = html === null? '' : html;
         const map = {
         '&': '&amp;',
         '<': '&lt;',
@@ -162,13 +163,12 @@ export default class Html extends Component {
         attribute = matches[2];
         const suffix = matches[3];
         if (formName === '' && prefix === '') return attribute + suffix;
-        else if (formName !== '') return `{formName + prefix}[{attribute}]{suffix}`;
+        else if (formName !== '') return `${formName + prefix}[${attribute}]${suffix}`;
         throw new Error(`${model.constructor.name}.formName() cannot be empty for tabular inputs.`);
     }
 
     public static getInputId(model, attribute) {
         const name = this.getInputName(model, attribute).toLowerCase();
-        console.log('input-name', name);
         const map = {
         '[]': '',
         '][': '-',
@@ -249,7 +249,7 @@ export default class Html extends Component {
         const label = options.label;
         const labelOptions = options.labelOptions !== undefined ? options.labelOptions : {};
         delete options.label, options.labelOptions;
-        const content = this.label(`{this.input(type, name, value, options)} {label}`, null, labelOptions);
+        const content = this.label(`${this.input(type, name, value, options)} ${label}`, null, labelOptions);
         return hidden + content;
         }
         if (options.checked === false)
@@ -261,21 +261,18 @@ export default class Html extends Component {
         let hiddenInputs = [];
         const request = Pwoli.request;
         method = method.toLowerCase();
-            if (request instanceof Request) {
-                if (['get', 'post'].includes(method)) {
-                    // simulate PUT, DELETE, etc. via POST
-                    hiddenInputs.push(this.hiddenInput('_method', method));
-                    method = 'post';
-                }
-            }
-
-            options['action'] = action;
-            options['method'] = method;
-            let form = this.beginTag('form', options);
-            if (hiddenInputs.length > 0)
-                form += "\n" + hiddenInputs.join("\n");
-            return form;
+        if (['get', 'post'].includes(method)) {
+            // simulate PUT, DELETE, etc. via POST
+            hiddenInputs.push(this.hiddenInput('_method', method));
+            method = 'post';
         }
+        options['action'] = action;
+        options['method'] = method;
+        let form = this.beginTag('form', options);
+        if (hiddenInputs.length > 0)
+            form += "\n" + hiddenInputs.join("\n");
+        return form;
+    }
 
 
     public static endForm(){
@@ -285,14 +282,14 @@ export default class Html extends Component {
     public static beginTag(name, options: any = {}) {
         if (name === null || name === false)
         return '';
-        return `<{name}{this.renderTagAttributes(options)}>`
+        return `<${name}${this.renderTagAttributes(options)}>`
     }
 
     public static endTag(name){
         if (name === null || name === false) {
             return '';
         }
-        return `</{name}>`;
+        return `</${name}>`;
     }
 
     public static getAttributeName(attribute) {
@@ -324,30 +321,30 @@ export default class Html extends Component {
                     for (let n in value) {
                         let v = value[n];
                         if (Array.isArray(v)) {
-                            html += ` {name}-{n}='{JSON.stringify(v)}'`;
+                            html += ` ${name}-${n}='${JSON.stringify(v)}'`;
                         } else if (typeof v === 'boolean') {
                             if (v) {
-                                html += ` {name}-{n}`;
+                                html += ` ${name}-${n}`;
                             }
                         } else if (v !== null) {
-                            html += ` {name}-{n}="{this.encode(v)}"`;
+                            html += ` ${name}-${n}="${this.encode(v)}"`;
                         }
                     }
                 } else if (name === 'class') {
                     if (value.length === 0) {
                         continue;
                     }
-                    html += ` {name}="{this.encode(value.join(' '))}"`;
+                    html += ` ${name}="${this.encode(value.join(' '))}"`;
                 } else if (name === 'style') {
                     if (value.length === 0) {
                         continue;
                     }
-                    html += ` {name}="{this.encode(this.cssStyleFromObject(value))}"`;
+                    html += ` ${name}="${this.encode(this.cssStyleFromObject(value))}"`;
                 } else {
-                    html += ` {name}='{JSON.stringify(value)}'`;
+                    html += ` ${name}='${JSON.stringify(value)}'`;
                 }
             } else if (value !== null) {
-                html += ` {name}="{this.encode(value)}"`;
+                html += ` ${name}="${this.encode(value)}"`;
             }
         }
 
@@ -357,7 +354,7 @@ export default class Html extends Component {
     public static cssStyleFromObject(style) {
         let result = '';
         for(let name in style) {
-            result += `name: {style[name]}; `;
+            result += `name: ${style[name]}; `;
         }
         // return null if empty to avoid rendering the "style" attribute
         return result === '' ? null : result.trimRight();
@@ -474,7 +471,7 @@ export default class Html extends Component {
             delete options.label;
         }
 
-        let checked = value === `{{options.value}}`;
+        let checked = value === `{${options.value}}`;
 
         if (options.id === undefined) {
             options.id = this.getInputId(model, attribute);

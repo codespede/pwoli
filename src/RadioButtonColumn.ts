@@ -11,7 +11,7 @@ export default class DataColumn extends Column {
 
     public async init() {
         await super.init.call(this);
-        if (this.name.length > 0)
+        if (this.name.length === 0)
             throw new Error('The "name" property must be set.');
     }
 

@@ -35,26 +35,34 @@ export default class ActiveForm extends Widget{
     public async init() {
         await super.init.call(this);
         if (this.options.id === undefined)
-        this.options.id = this.getId();
+            this.options.id = this.getId();
+        console.log('af-init', this.options);
     }
 
     public async run() {
         if (this._fields.length === 0)
         throw new Error('Each beginField() should have a matching endField() call.');
-        let html = Html.beginForm(this.action, this.method, this.options);
+    }
 
+    public async begin() {
+        console.log('af-begin', this.options);
+        let html = Html.beginForm(this.action, this.method, this.options);
         if (this.enableClientScript)
-        this.registerClientScript();
-        html += Html.endForm();
+            await this.registerClientScript();
         return html;
     }
 
-    public registerClientScript() {
+    public end() {
+        const html = Html.endForm();
+        return html;
+    }
+
+    public async registerClientScript() {
         const id = this.options.id;
         const options = JSON.stringify(this.getClientOptions());
         const attributes = JSON.stringify(this.attributes);
-        Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/activeForm.js'));
-        Pwoli.view.registerJs(`jQuery('#${id}').yiiActiveForm($attributes, $options);`);
+        await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/activeForm.js'));
+        Pwoli.view.registerJs(`jQuery('#${id}').pwoliActiveForm(${attributes}, ${options});`);
     }
 
     protected getClientOptions() {

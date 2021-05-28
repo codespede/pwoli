@@ -61,7 +61,6 @@ export default class ActionColumn extends Column {
                 isVisible = typeof this.visibleButtons[name] === 'function' ? this.visibleButtons[name](this.visibleButtons[name], model, key, index) : this.visibleButtons[name];
             else
                 isVisible = true;
-            console.log('ac-buttons', match, isVisible, isVisible && this.buttons[name] !== undefined, this.buttons);
             if (isVisible && this.buttons[name] !== undefined)
                 return this.buttons[name](this.createUrl(name, model, key, index), model, key);
             return '';

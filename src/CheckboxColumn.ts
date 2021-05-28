@@ -44,8 +44,6 @@ export default class CheckboxColumn extends Column {
     protected getHeaderCheckBoxName() {
         let name = this.name;
         let matches = name.match(/(.*)\[\]$/);
-        console.log('matches', matches.length);
-
         if (matches.length > 0)
             name = matches[1];
         matches = name.match(/(.*)\]$/);
@@ -61,6 +59,6 @@ export default class CheckboxColumn extends Column {
     public registerClientScript() {
         const id = this.grid.options.id;
         const options = JSON.stringify({ name: this.name, class: this.cssClass, multiple: this.multiple, checkAll: this.grid.showHeader ? this.getHeaderCheckBoxName() : null });
-        Pwoli.view.registerJs(`jQuery('#$id').yiiGridView('setSelectionColumn', ${options});`);
+        Pwoli.view.registerJs(`jQuery('#${id}').pwoliGridView('setSelectionColumn', ${options});`);
     }
 }

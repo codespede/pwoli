@@ -23,7 +23,6 @@ export default class DataHelper extends Component {
     for (let param in params) {
       let matches = param.match(/(.*)\[(.*)\]/);
       if (matches) {
-        console.log(param, matches);
         parsedParams[matches[1]] = parsedParams[matches[1]] !== undefined? parsedParams[matches[1]] : {};
         parsedParams[matches[1]][matches[2]] = params[param];
       }else

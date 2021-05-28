@@ -11,6 +11,7 @@ export default class View extends Component {
   public js = { head: [], begin: [], ready: [], load: [], end: [] };
   public css = [];
   public basePath = 'static';
+  public layout;
 
   public constructor(config) {
     super(config);
@@ -19,20 +20,19 @@ export default class View extends Component {
 
   public async init() {
     await super.init.call(this);
-    this.publishAndRegisterFile(path.join(__dirname, 'assets/js/jquery.js'), 'head');
+    console.log('view-init', this.jsFiles);
+    await this.publishAndRegisterFile(path.join(__dirname, 'assets/js/jquery.js'), 'head');
     this.registerFile('js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js');
-    this.publishAndRegisterFile(path.join(__dirname, 'assets/js/framework.js'), 'head');
+    await this.publishAndRegisterFile(path.join(__dirname, 'assets/js/pwoli.js'), 'head');
   }
 
   public async publishAndRegisterFile(file, position = 'end') {
-    await this.initialization;
-    fs.copyFile(file, `${this.basePath}/${path.basename(file)}`, (error) => {
-      if (error) throw error;
-    });
-    
+    //await this.initialization;
     this.registerFile(path.extname(file) === '.js' ? 'js' : 'css', `${this.basePath}/${path.basename(file)}`, {
       position,
     });
+
+    fs.copyFileSync(file, `${this.basePath}/${path.basename(file)}`);
   }
 
   public registerFile(type: 'js' | 'css', url, options: any = {}, key = null) {
@@ -40,6 +40,8 @@ export default class View extends Component {
     const position = DataHelper.remove(options, 'position', 'end');
     if (type === 'js') this.jsFiles[position].push(Html.jsFile(url, options));
     else this.cssFiles.push(Html.cssFile(url, options));
+    if (type === 'css')
+      console.log('rf', this.cssFiles);
   }
 
   public async registerJs(js, position = 'ready', key = null) {
@@ -50,6 +52,7 @@ export default class View extends Component {
 
   public renderHeadHtml() {
     const lines = [];
+    console.log('rhh', this.cssFiles, this.jsFiles);
     if (this.cssFiles.length > 0) lines.push(this.cssFiles.join('\n'));
     if (this.jsFiles.head.length > 0) lines.push(this.jsFiles.head.join('\n'));
     return lines.length > 0 ? lines.join('\n') : '';
@@ -91,8 +94,12 @@ export default class View extends Component {
     return this.renderEndHtml(ajaxMode);
   }
 
-  public async render(view, params = {}) {
-    return await this.renderFile(this.findViewFile(view), params);
+  public async render(view, params: any = {}, withLayout = true) {
+    if (withLayout && this.layout !== undefined) {
+      params.body = await this.renderFile(this.findViewFile(view), params);
+      return await this.renderFile(this.findViewFile(this.layout), params);
+    }else
+      return await this.renderFile(this.findViewFile(view), params);
   }
 
   protected findViewFile(view) {
@@ -104,7 +111,14 @@ export default class View extends Component {
     return file;
   }
 
-  public async renderFile(viewFile, params = {}) {
+  public async renderFile(viewFile, params: any = {}) {
+    params.pwoliView = this;
+    console.log('vrf', this.cssFiles);
     return await ejs.renderFile(viewFile, params, { async: true });
+  }
+
+  public setLayout(layout) {
+    this.layout = layout;
+    return this;
   }
 }

@@ -48,9 +48,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
 
     public search(model, params = {}, dataProvider) {
         const { Op } = require("sequelize");
-        console.log('dpquery', dataProvider.query, dataProvider.query.where)
         dataProvider.query.where = dataProvider.query.where !== undefined? dataProvider.query.where : {};
-        console.log('sas', params, this.modelClass, dataProvider.query.where );
         if (params[this.modelClass.name] !== undefined) {
             for (const param in params[this.modelClass.name]) {
                 if (this.attributes().includes(param))
@@ -61,6 +59,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
     }
 
     public isAttributeRequired(model, attribute) {
+        console.log('saiar', model.rawAttributes, attribute)
         return !model.rawAttributes[attribute].allowNull;
     }
 
@@ -82,6 +81,16 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         if (model.rawAttributes[attribute].allowNull === false)
             validators.notNull = true;
         return validators;
+    }
+
+    public getClientValidationParams(criteria) {
+        const options: any = {};
+        if (criteria.msg !== undefined) {
+            options.message = criteria.msg;
+            criteria = criteria.args;
+        } else if (criteria === false)
+            return {};
+        return { criteria, options };
     }
 
 }

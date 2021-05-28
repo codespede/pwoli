@@ -7,12 +7,13 @@ const ORMModel = ormAdapter.extendableModelClass();
 export default class Model extends ORMModel {
     public _errors = [];
     protected attributeLabels = {};
+    protected attributeHints = {};
     static init;
     public static hooks = {};
     public toJSON() {
         const json = super.toJSON();
-        if (this.errors.length === 0) return json;
-        const newJson = { ...json, errors: this.errors };
+        if (this._errors.length === 0) return json;
+        const newJson = { ...json, errors: this._errors };
         return newJson;
     }
 
@@ -33,7 +34,6 @@ export default class Model extends ORMModel {
     public load(data, formName = null) {
         console.group('model-load', data);
         const scope = formName === null ? this.getFormName() : formName;
-        console.log('data-scope', scope, data[scope]);
         if (scope === '' && !emptyDir(data)) {
             this.setAttributeValues(data);
             return true;
@@ -55,11 +55,11 @@ export default class Model extends ORMModel {
     }
 
     public getFirstError(attribute) {
-        return this.errors[attribute] !== undefined  && this.errors[attribute].length > 0? this.errors[attribute][0] : null;
+        return this._errors[attribute] !== undefined? this._errors[attribute][0] : null;
     }
 
     public getAttributeHint(attribute) {
-        let hints = this.attributeHints();
+        let hints = this.attributeHints;
         return (hints[attribute] !== undefined) ? hints[attribute] : '';
     }
 

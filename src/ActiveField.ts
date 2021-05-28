@@ -1,5 +1,8 @@
-import { Component, DataHelper, Html } from '.';
 import Pwoli from './Application';
+import Component from './Component';
+import DataHelper from './DataHelper';
+import Html from './Html';
+const ormAdapter = Pwoli.getORMAdapter();
 export default class ActiveField extends Component {
     public form;
     public model;
@@ -21,16 +24,28 @@ export default class ActiveField extends Component {
     public addAriaAttributes = true;
     private _inputId;
     private _skipLabelFor = false;
+    private clientValidators = {
+        is: (params) => {
+            return `yii.validation.regularExpression(value, messages, ${JSON.stringify({ pattern: params.criteria })});`;
+        },
+        not: (params) => {
+            return `yii.validation.regularExpression(value, messages, ${JSON.stringify({ pattern: params.criteria, not: true })});`;
+        },
+        isEmail: (params) => {
+            params.options = {
+                ...params.options,
+                'pattern': '/^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/',
+                'fullPattern': '/^[^@]*<[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/',
+            };
+            return `yii.validation.email(value, messages, ${JSON.stringify(params.options)});`;
+        },
+    };
 
-    public __toString() {
-        try {
-            return this.render();
-        } catch (e) {
-            throw new Error(e);
-        }
+    public async __toString() {
+        return await this.render();
     }
 
-    public render(content = null) {
+    public async render(content = null) {
         const cont = content;
         if (content === null) {
             if (this.parts['{input}'] === undefined)
@@ -41,9 +56,9 @@ export default class ActiveField extends Component {
                 this.error();
             if (this.parts['{hint}'] === undefined)
                 this.hint(null);
-            // content = DataHelper.replaceAsync(this.template, /{\w+}/g, async (match) => {
-            //     return this.parts[match] !== undefined ? this.parts[match] : '';
-            // });
+            content = await DataHelper.replaceAsync(this.template, /{\w+}/g, async (match) => {
+                return this.parts[match] !== undefined ? this.parts[match] : '';
+            });
         } else if (typeof cont === 'string') {
             content = content(this);
         }
@@ -259,7 +274,7 @@ export default class ActiveField extends Component {
             this.labelOptions.for = options.id;
     }
 
-    protected getClientOptions() {
+    protected getClientOptions(): any {
         const attribute = Html.getAttributeName(this.attribute);
         if (!this.model.activeAttributes().includes(attribute))
             return [];
@@ -269,7 +284,7 @@ export default class ActiveField extends Component {
         if (clientValidation) {
             const activeValidators = this.model.getActiveValidators(attribute);
             for (let validator in activeValidators) {
-                let js = this.clientValidateAttribute(attribute, validator, activeValidators[validator]);
+                let js = this.clientValidateAttribute(this.model, attribute, validator, activeValidators[validator]);
                 if (js !== '') {
                     validators.push(js);
                 }
@@ -325,8 +340,15 @@ export default class ActiveField extends Component {
         };
     }
 
-    public clientValidateAttribute(attribute, validator, option) {
-        
+    public clientValidateAttribute(model, attribute, validator, criteria) {
+        let js = '';
+        let options: any = {};
+        if (this.clientValidators[validator] !== undefined) {
+            const params = ormAdapter.getClientValidationParams(criteria);
+            if(Object.keys(params).length > 0)
+                js += this.clientValidators[validator](params);
+        }
+        return js;
     }
 
     protected isClientValidationEnabled() {

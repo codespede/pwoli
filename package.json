@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "tsc && rm -rf pkgtest-lib && cp lib pkgtest-lib -R",
+    "build": "tsc && rm -rf pkgtest-lib && cp lib pkgtest-lib -R && rm -rf pkgtest-lib/pkgtest/views && cp src/pkgtest/views pkgtest-lib/pkgtest/views -R",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
