@@ -59,6 +59,7 @@ export default class ActiveField extends Component {
             content = await DataHelper.replaceAsync(this.template, /{\w+}/g, async (match) => {
                 return this.parts[match] !== undefined ? this.parts[match] : '';
             });
+            console.log('af-render', this.parts['{error}'])
         } else if (typeof cont === 'string') {
             content = content(this);
         }
