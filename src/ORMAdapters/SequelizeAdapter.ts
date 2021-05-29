@@ -59,7 +59,6 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
     }
 
     public isAttributeRequired(model, attribute) {
-        console.log('saiar', model.rawAttributes, attribute)
         return !model.rawAttributes[attribute].allowNull;
     }
 
@@ -77,7 +76,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
     }
 
     public getActiveValidators(model, attribute) {
-        const validators = model.rawAttributes[attribute].validate;
+        const validators = { ...model.rawAttributes[attribute].validate };
         if (model.rawAttributes[attribute].allowNull === false)
             validators.notNull = true;
         return validators;

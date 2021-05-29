@@ -23,7 +23,8 @@ export default class ActiveForm extends Widget{
     public validationUrl;
     public validateOnSubmit = true;
     public validateOnChange = true;
-    public validationOnType = false;
+    public validateOnType = false;
+    public validateOnBlur = true;
     public validationDelay = 500;
     public ajaxParam = 'ajax';
     public ajaxDataType = 'json';
@@ -36,32 +37,34 @@ export default class ActiveForm extends Widget{
         await super.init.call(this);
         if (this.options.id === undefined)
             this.options.id = this.getId();
-        console.log('af-init', this.options);
     }
 
     public async run() {
         if (this._fields.length === 0)
-        throw new Error('Each beginField() should have a matching endField() call.');
+            throw new Error('Each beginField() should have a matching endField() call.');
     }
 
     public async begin() {
-        console.log('af-begin', this.options);
         let html = Html.beginForm(this.action, this.method, this.options);
-        if (this.enableClientScript)
-            await this.registerClientScript();
         return html;
     }
 
-    public end() {
+    public async end() {
         const html = Html.endForm();
+        if (this.enableClientScript)
+            await this.registerClientScript();
         return html;
     }
 
     public async registerClientScript() {
         const id = this.options.id;
         const options = JSON.stringify(this.getClientOptions());
-        const attributes = JSON.stringify(this.attributes);
+        let attributes = JSON.stringify(this.attributes);
+        attributes = attributes.replace(/\"(function.*?\})\"/g, `$1`).replace(/(\\":?!)|({?!\\")|(\\")/g, '"');
+        console.log('af-rcs', attributes);
+        await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/activeForm.js'));
+        await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/validation.js'));
         Pwoli.view.registerJs(`jQuery('#${id}').pwoliActiveForm(${attributes}, ${options});`);
     }
 

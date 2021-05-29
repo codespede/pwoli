@@ -20,7 +20,6 @@ export default class View extends Component {
 
   public async init() {
     await super.init.call(this);
-    console.log('view-init', this.jsFiles);
     await this.publishAndRegisterFile(path.join(__dirname, 'assets/js/jquery.js'), 'head');
     this.registerFile('js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js');
     await this.publishAndRegisterFile(path.join(__dirname, 'assets/js/pwoli.js'), 'head');
@@ -38,10 +37,10 @@ export default class View extends Component {
   public registerFile(type: 'js' | 'css', url, options: any = {}, key = null) {
     key = key === null ? url : key;
     const position = DataHelper.remove(options, 'position', 'end');
-    if (type === 'js') this.jsFiles[position].push(Html.jsFile(url, options));
-    else this.cssFiles.push(Html.cssFile(url, options));
-    if (type === 'css')
-      console.log('rf', this.cssFiles);
+    if (type === 'js')
+      this.jsFiles[position].push(Html.jsFile(url, options));
+    else
+      this.cssFiles.push(Html.cssFile(url, options));
   }
 
   public async registerJs(js, position = 'ready', key = null) {
@@ -52,7 +51,7 @@ export default class View extends Component {
 
   public renderHeadHtml() {
     const lines = [];
-    console.log('rhh', this.cssFiles, this.jsFiles);
+    console.log('cssFiles', this.cssFiles);
     if (this.cssFiles.length > 0) lines.push(this.cssFiles.join('\n'));
     if (this.jsFiles.head.length > 0) lines.push(this.jsFiles.head.join('\n'));
     return lines.length > 0 ? lines.join('\n') : '';
@@ -113,7 +112,6 @@ export default class View extends Component {
 
   public async renderFile(viewFile, params: any = {}) {
     params.pwoliView = this;
-    console.log('vrf', this.cssFiles);
     return await ejs.renderFile(viewFile, params, { async: true });
   }
 

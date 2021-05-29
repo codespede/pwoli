@@ -26,18 +26,36 @@ export default class ActiveField extends Component {
     private _skipLabelFor = false;
     private clientValidators = {
         is: (params) => {
-            return `yii.validation.regularExpression(value, messages, ${JSON.stringify({ pattern: params.criteria })});`;
+            params.options = {
+                message: `The value entered is invalid.`,
+                pattern: params.criteria.source,
+                ...params.options
+            };
+            return `pwoli.validation.regularExpression(value, messages, ${JSON.stringify(params.options)});`;
         },
         not: (params) => {
-            return `yii.validation.regularExpression(value, messages, ${JSON.stringify({ pattern: params.criteria, not: true })});`;
+            console.log('not-params', params);
+            params.options = {
+                message: `The value entered is invalid.`,
+                pattern: params.criteria.source,
+                not: true,
+                ...params.options
+            };
+            console.log('not-params-after', params.options);
+            return `pwoli.validation.regularExpression(value, messages, ${JSON.stringify(params.options)});`;
+        },
+        notNull: (params) => {
+            params.options = { message: `This field cannot be blank.`, ...params.options };
+            return `pwoli.validation.required(value, messages, ${JSON.stringify(params.options)});`;
         },
         isEmail: (params) => {
             params.options = {
+                pattern: '^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$',
+                fullPattern: '^[^@]*<[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$',
+                message: `Entered value should be an Email`,
                 ...params.options,
-                'pattern': '/^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/',
-                'fullPattern': '/^[^@]*<[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/',
             };
-            return `yii.validation.email(value, messages, ${JSON.stringify(params.options)});`;
+            return `pwoli.validation.email(value, messages, ${JSON.stringify(params.options)});`;
         },
     };
 
@@ -59,7 +77,6 @@ export default class ActiveField extends Component {
             content = await DataHelper.replaceAsync(this.template, /{\w+}/g, async (match) => {
                 return this.parts[match] !== undefined ? this.parts[match] : '';
             });
-            console.log('af-render', this.parts['{error}'])
         } else if (typeof cont === 'string') {
             content = content(this);
         }
@@ -70,9 +87,11 @@ export default class ActiveField extends Component {
         let clientOptions;
         if (this.form.enableClientScript) {
             clientOptions = this.getClientOptions();
-            if (clientOptions.length > 0)
+            console.log('af-begin', clientOptions, this.model.activeAttributes());
+            if (clientOptions !== undefined)
                 this.form.attributes.push(clientOptions);
         }
+        console.log('af-begin', this.form.attributes);
         const inputId = this.getInputId();
         const attribute = Html.getAttributeName(this.attribute);
         const options = this.options;
@@ -110,7 +129,7 @@ export default class ActiveField extends Component {
             this.parts['{error'] = '';
             return this;
         }
-        options = { ...this.errorOptions, options };
+        options = { ...this.errorOptions, ...options };
         this.parts['{error}'] = Html.error(this.model, this.attribute, options);
         return this;
     }
@@ -127,7 +146,7 @@ export default class ActiveField extends Component {
         return this;
     }
 
-    public input(type, options: any = []) {
+    public input(type, options: any = {}) {
         options = { ...this.inputOptions, ...options };
         if (this.form.validateionStateOn === 'input')
             this.addErrorClassIfNeeded(options);
@@ -290,6 +309,7 @@ export default class ActiveField extends Component {
                     validators.push(js);
                 }
             }
+            console.log('af-gco-av', activeValidators, validators);
         }
 
         if (!ajaxValidation && (!clientValidation || validators.length === 0)) {
@@ -297,7 +317,7 @@ export default class ActiveField extends Component {
         }
 
         let options = [];
-
+        //console.log('af-gco', validators);
         const inputID = this.getInputId();
         options['id'] = Html.getInputId(this.model, this.attribute);
         options['name'] = this.attribute;
@@ -317,18 +337,18 @@ export default class ActiveField extends Component {
             options['enableAjaxValidation'] = true;
         }
         for(let name of ['validateOnChange', 'validateOnBlur', 'validateOnType', 'validationDelay']) {
-            options[name] = this[name] === null ? this.form.name : this[name];
+            options[name] = this[name] === undefined ? this.form[name] : this[name];
         }
 
         if (validators.length > 0) {
-            options['validate'] = `function (attribute, value, messages, deferred, $form) { ${validators.join('')} }`;
+            options['validate'] = `function(attribute, value, messages, deferred, $form) { ${validators.join('')} }`;
         }
 
         if (this.addAriaAttributes === false) {
             options['updateAriaInvalid'] = false;
         }
-
-        // only get the options that are different from the default ones (set in yii.activeForm.js)
+        console.log('af-gco', options);
+        // only get the options that are different from the default ones (set in activeForm.js)
         return {
             'validateOnChange': true,
             'validateOnBlur': true,
@@ -346,19 +366,21 @@ export default class ActiveField extends Component {
         let options: any = {};
         if (this.clientValidators[validator] !== undefined) {
             const params = ormAdapter.getClientValidationParams(criteria);
+            console.log('cva', params);
             if(Object.keys(params).length > 0)
                 js += this.clientValidators[validator](params);
         }
+        console.log('cva-js', js, validator, criteria)
         return js;
     }
 
     protected isClientValidationEnabled() {
-        return this.enableClientValidation || this.enableClientValidation === null && this.form.enableClientValidation;
+        return this.enableClientValidation || this.enableClientValidation === undefined && this.form.enableClientValidation;
     }
 
     protected isAjaxValidationEnabled() {
-        return this.enableAjaxValidation || this.enableAjaxValidation === null && this.form.enableAjaxValidation;
-    }
+        return this.enableAjaxValidation || this.enableAjaxValidation === undefined && this.form.enableAjaxValidation;
+    }undefined
 
     protected getInputId() {
         return this._inputId ? this._inputId : Html.getInputId(this.model, this.attribute);

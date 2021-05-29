@@ -53,7 +53,6 @@ export default class GridView extends CollectionView {
     
     await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/gridView.js'));
     await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
-    console.log('gvr', Pwoli.view.cssFiles);
     //await this.initialization;
     const id = this.options.id;
     const options = { ...this.getClientOptions(), filterOnfocusOut: this.filterOnfocusOut };

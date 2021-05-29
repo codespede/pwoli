@@ -119,7 +119,7 @@ export default class Html extends Component {
         "'": '&#039;',
         };
         return html.replace(/[&<>"']/g, (m) => {
-        return map[m];
+            return map[m];
         });
     }
 
@@ -142,7 +142,7 @@ export default class Html extends Component {
     public static activeInput(type, model, attribute, options: any = {}) {
         const name = options.name !== undefined ? options.name : this.getInputName(model, attribute);
         const value = options.value !== undefined ? options.value : this.getAttributeValue(model, attribute);
-        if (options.id === null) options.id = this.getInputId(model, attribute);
+        if (options.id === undefined) options.id = this.getInputId(model, attribute);
         this.setActivePlaceholder(model, attribute, options);
         return this.input(type, name, value, options);
     }
@@ -150,7 +150,7 @@ export default class Html extends Component {
     public static input(type, name = null, value = null, options: any = {}) {
         if (options.type === undefined) options.type = type;
         options.name = name;
-        options.value = value === null ? null : value.toString();
+        options.value = value === undefined ? null : value.toString();
         return this.tag('input', '', options);
     }
 
@@ -173,7 +173,7 @@ export default class Html extends Component {
         '[]': '',
         '][': '-',
         '[': '-',
-        ']': '-',
+        ']': '',
         ' ': '-',
         '.': '-',
         };
@@ -209,7 +209,7 @@ export default class Html extends Component {
         delete options.header;
     }
 
-    public static script(content, options = []) {
+    public static script(content, options: any = {}) {
         return this.tag('script', content, options);
     }
 
@@ -360,14 +360,14 @@ export default class Html extends Component {
         return result === '' ? null : result.trimRight();
     }
 
-    public static activeLabel(model, attribute, options = []){
+    public static activeLabel(model, attribute, options: any = {}){
         let forValue = DataHelper.remove(options, 'for', this.getInputId(model, attribute));
         attribute = this.getAttributeName(attribute);
         let label = DataHelper.remove(options, 'label', this.encode(model.getAttributeLabel(attribute)));
         return this.label(label, forValue, options);
     }
 
-    public static error(model: Model, attribute, options = []){
+    public static error(model: Model, attribute, options: any = {}){
         attribute = this.getAttributeName(attribute);
         let errorSource = DataHelper.remove(options, 'errorSource');
         let error;
@@ -376,6 +376,7 @@ export default class Html extends Component {
         } else {
             error = model.getFirstError(attribute);
         }
+        
         let tag = DataHelper.remove(options, 'tag', 'div');
         let encode = DataHelper.remove(options, 'encode', true);
         return Html.tag(tag, encode ? Html.encode(error) : error, options);
@@ -386,7 +387,7 @@ export default class Html extends Component {
         return this.tag('textarea', Html.encode(value), options);
     }
 
-    public static activeHint(model, attribute, options = []){
+    public static activeHint(model, attribute, options: any = {}){
         attribute = this.getAttributeName(attribute);
         let hint = (options['hint'] !== undefined) ? options['hint'] : model.getAttributeHint(attribute);
         if (hint.length === 0) {
