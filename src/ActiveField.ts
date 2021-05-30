@@ -25,7 +25,7 @@ export default class ActiveField extends Component {
     private _inputId;
     private _skipLabelFor = false;
     private clientValidators = {
-        is: (params) => {
+        regex: (params) => {
             params.options = {
                 message: `The value entered is invalid.`,
                 pattern: params.criteria.source,
@@ -33,7 +33,7 @@ export default class ActiveField extends Component {
             };
             return `pwoli.validation.regularExpression(value, messages, ${JSON.stringify(params.options)});`;
         },
-        not: (params) => {
+        regexInverse: (params) => {
             console.log('not-params', params);
             params.options = {
                 message: `The value entered is invalid.`,
@@ -44,11 +44,11 @@ export default class ActiveField extends Component {
             console.log('not-params-after', params.options);
             return `pwoli.validation.regularExpression(value, messages, ${JSON.stringify(params.options)});`;
         },
-        notNull: (params) => {
+        required: (params) => {
             params.options = { message: `This field cannot be blank.`, ...params.options };
             return `pwoli.validation.required(value, messages, ${JSON.stringify(params.options)});`;
         },
-        isEmail: (params) => {
+        email: (params) => {
             params.options = {
                 pattern: '^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$',
                 fullPattern: '^[^@]*<[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$',
@@ -58,6 +58,11 @@ export default class ActiveField extends Component {
             return `pwoli.validation.email(value, messages, ${JSON.stringify(params.options)});`;
         },
     };
+
+    public constructor(config) {
+        super(config);
+        Object.assign(this, config);
+    }
 
     public async __toString() {
         return await this.render();

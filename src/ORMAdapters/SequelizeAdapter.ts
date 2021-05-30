@@ -3,6 +3,13 @@ import IORMAdapter from "./IORMAdapter";
 import ORMAdapter from "./ORMAdapter";
 export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
     
+    private validatorMap = {
+        'is': 'regex',
+        'not': 'regexInverse',
+        'notEmpty': 'required',
+        'isEmail': 'email'
+    };
+
     public constructor(config) {
         super(config);
         Object.assign(this, config);
@@ -78,7 +85,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
     public getActiveValidators(model, attribute) {
         const validators = { ...model.rawAttributes[attribute].validate };
         if (model.rawAttributes[attribute].allowNull === false)
-            validators.notNull = true;
+            validators.notEmpty = true;
         return validators;
     }
 
@@ -90,6 +97,25 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         } else if (criteria === false)
             return {};
         return { criteria, options };
+    }
+
+    public async validate(model) {
+        try {
+            await model.validate();
+        } catch (error) {
+            let errors = {};
+            console.log('validate-errors', error.errors);
+            error.errors.forEach(error => {
+                errors[error.path] = error.message;
+            });
+            for (let attribute in model.dataValues) {
+                if (model.rawAttributes[attribute].allowNull !== undefined && model.rawAttributes[attribute].allowNull === false
+                    && (model.dataValues[attribute] === null || model.dataValues[attribute] === ''))
+                    errors[attribute] = `This value is required.`
+            }
+            model._errors = errors;
+        }
+        return model;
     }
 
 }

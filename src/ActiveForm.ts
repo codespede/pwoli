@@ -33,6 +33,11 @@ export default class ActiveForm extends Widget{
     public attributes = [];
     private _fields = [];
 
+    public constructor(config) {
+        super(config);
+        Object.assign(this, config);
+    }
+
     public async init() {
         await super.init.call(this);
         if (this.options.id === undefined)
@@ -129,18 +134,13 @@ export default class ActiveForm extends Widget{
         throw new Error('Mismatching endField() call.');
     }
 
-    public static validate(model, attributes = null) {
-        let result = [];
-        let models;
-        if (attributes instanceof Model) {
-            models = arguments;
-            attributes = null;
-        } else
-            models = [model];
+    public static async validate(model, attributes = null) {
+        let result = {};
+        let models = [model];
         for (let model of models) {
-            model.validate(attributes);
-            for (let attribute in model.errors)
-                result[Html.getInputId(model, attribute)] = model.errors[attribute];
+            await model.verify(attributes);
+            for (let attribute in model._errors)
+                result[Html.getInputId(model, attribute)] = model._errors[attribute];
         }
         return result;
     }

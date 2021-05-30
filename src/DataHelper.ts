@@ -18,7 +18,10 @@ export default class DataHelper extends Component {
   }
 
   public static parseUrl(queryString) {
-    const params = url.parse(queryString, true).query;
+    return this.parseQueryParams(url.parse(queryString, true).query);
+  }
+
+  public static parseQueryParams(params) {
     let parsedParams = {};
     for (let param in params) {
       let matches = param.match(/(.*)\[(.*)\]/);
