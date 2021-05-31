@@ -140,7 +140,7 @@ export default class ActiveForm extends Widget{
         for (let model of models) {
             await model.verify(attributes);
             for (let attribute in model._errors)
-                result[Html.getInputId(model, attribute)] = model._errors[attribute];
+                result[Html.getInputId(model, attribute)] = [model._errors[attribute]];
         }
         return result;
     }
