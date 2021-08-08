@@ -1,7 +1,8 @@
 import Inflector = require('inflected');
 import path = require('path');
-import { Html, Model } from '.';
+import Html from './Html';
 import Widget from './Widget';
+import Model from './Model';
 import Pwoli from './Application';
 import ActiveField from './ActiveField';
 export default class ActiveForm extends Widget{
@@ -12,7 +13,7 @@ export default class ActiveForm extends Widget{
     public fieldConfig: any = {};
     public encodeErrorSummary = true;
     public errorSummaryCssClass = 'error-summary';
-    public requiredCssClass = 'has-error';
+    public requiredCssClass = 'required';
     public successCssClass = 'has-success';
     public errorCssClass = 'has-error';
     public validatingCssClass = 'validating';
@@ -66,7 +67,7 @@ export default class ActiveForm extends Widget{
         const options = JSON.stringify(this.getClientOptions());
         let attributes = JSON.stringify(this.attributes);
         attributes = attributes.replace(/\"(function.*?\})\"/g, `$1`).replace(/(\\":?!)|({?!\\")|(\\")/g, '"');
-        console.log('af-rcs', attributes);
+        //console.log('af-rcs', attributes);
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/css/bootstrap.css'));
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/activeForm.js'));
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, 'assets/js/validation.js'));

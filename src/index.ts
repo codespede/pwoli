@@ -19,4 +19,5 @@ import Pagination from "./Pagination";
 import Sort from "./Sort";
 import View from "./View";
 import Widget from "./Widget";
+import Serializer from "./Serializer";
 export { ActiveDataProvider, ActiveForm, Application, ArrayDataProvider, CollectionView, Column, Component, Controller, DataColumn, DataHelper, DataProvider, GridView, Html, LinkPager, LinkSorter, ListView, Model, Pagination, Sort, View, Widget };

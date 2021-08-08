@@ -51,7 +51,7 @@ export default class View extends Component {
 
   public renderHeadHtml() {
     const lines = [];
-    console.log('cssFiles', this.cssFiles);
+    //console.log('cssFiles', this.cssFiles);
     if (this.cssFiles.length > 0) lines.push(this.cssFiles.join('\n'));
     if (this.jsFiles.head.length > 0) lines.push(this.jsFiles.head.join('\n'));
     return lines.length > 0 ? lines.join('\n') : '';

@@ -1,7 +1,7 @@
 import Inflector = require('inflected');
 import { emptyDir } from 'fs-extra';
 import Application from './Application';
-import { ActiveDataProvider } from '.';
+import ActiveDataProvider from './ActiveDataProvider';
 const ormAdapter = Application.getORMAdapter();
 const ORMModel = ormAdapter.extendableModelClass();
 export default class Model extends ORMModel {
@@ -92,7 +92,7 @@ export default class Model extends ORMModel {
         if (attributeNames === null)
             attributeNames = this.activeAttributes();
         await ormAdapter.validate(this);
-        console.log('model-verify', this, this.hasErrors());
+        //console.log('model-verify', this, this.hasErrors());
         return !this.hasErrors();
     }
 

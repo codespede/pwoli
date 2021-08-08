@@ -1,5 +1,5 @@
-import { DataHelper, DataProvider } from '.';
-
+import DataProvider from './DataProvider';
+import DataHelper from './DataHelper';
 export default class ArrayDataProvider extends DataProvider {
 
     public key;
@@ -51,7 +51,7 @@ export default class ArrayDataProvider extends DataProvider {
     {
         const orders = sort.getOrders();
         if (orders.length > 0)
-            DataHelper.multisort(models, Object.keys(orders), orders, sort.sortFlags);
+            DataHelper.multiSort(models, Object.keys(orders), orders, sort.sortFlags);
         return models;
     }
   

@@ -1,6 +1,6 @@
 import { emptyDir } from 'fs-extra';
 import path = require('path');
-import { DataHelper } from '.';
+import DataHelper from './DataHelper';
 import Pwoli from './Application';
 import CollectionView from './CollectionView';
 import Component from './Component';

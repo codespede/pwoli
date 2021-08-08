@@ -104,7 +104,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
             await model.validate();
         } catch (error) {
             let errors = {};
-            console.log('validate-errors', error.errors);
+            //console.log('validate-errors', error.errors);
             error.errors.forEach(error => {
                 errors[error.path] = error.message;
             });
