@@ -14,12 +14,7 @@ export default class Application extends Component {
     public static ormAdapterClasses = { sequelize: SequelizeAdapter };
     private static _ormAdapter;
     public static ormModelClass;
-    //public static serializer;// = new Serializer({});
-
-    // public async init() {
-    //     super.init.call(this);
-    //     Application.serializer = new Serializer({});
-    // }
+    public static serializer = new Serializer({});
 
     public static getFullUrlOfRequest() {
         const req = this.request;
@@ -55,18 +50,20 @@ export default class Application extends Component {
         return this._ormAdapter;
     }
 
-    public static respond(nativeResponse, data = null) {
-        
+    public static async respond(nativeResponse, data = null) {
+        console.log('ares', data);
         if (typeof data === 'string')
             this.response.data = data;
         else if (typeof data === 'function') {
+            console.log('aresf--------------------->', data);
             nativeResponse = this.responsify(nativeResponse);
             return data(nativeResponse);
         } else if (data !== null) {
-            const serializer = new Serializer({});
-            serializer.response = this.response;
-            //this.response = serializer.serialize(data);
+            this.serializer.request = this.request;
+            this.serializer.response = this.response;
+            this.response.data = JSON.stringify(await this.serializer.serialize(data));
         }
+        console.log('aresa', this.response);
         nativeResponse = this.responsify(nativeResponse);
         nativeResponse.write(this.response.data);
         nativeResponse.end();
@@ -74,7 +71,7 @@ export default class Application extends Component {
 
     public static responsify(response) {
         for (let header in this.response.headers)
-            response.setHeader(header, this.response.headers[header]);
+            response.setHeader(header, this.response.headers[header] || "");
         if (this.response.status !== null)
             response.status = this.response.status;
         return response;

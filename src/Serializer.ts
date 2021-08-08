@@ -24,20 +24,19 @@ export default class Serializer extends Component {
 
     public async init()
     {
-        if (this.request === null) {
+        if (this.request === undefined) {
             this.request = Pwoli.request;
         }
     }
 
-    public serialize(data)
+    public async serialize(data)
     {
-        this.serializeDataProvider(data);
         if (data.constructor.name === 'Model' && data.hasErrors()) {
             return this.serializeModelErrors(data);
+        } else if (data instanceof DataProvider) {
+            return await this.serializeDataProvider(data);
         } else if (typeof data === 'object') {
             return this.serializeModel(data);
-        } else if (data instanceof DataProvider) {
-            return this.serializeDataProvider(data);
         } else if (Array.isArray(data)) {
             let serializedObject = [];
             for(let key in data)
@@ -60,31 +59,34 @@ export default class Serializer extends Component {
         };
     }
 
-    protected serializeDataProvider(dataProvider) {
+    protected async serializeDataProvider(dataProvider) {
         let models;
+        //console.log('sdpbb------------', await dataProvider.getModels())
         if (this.preserveKeys)
-            models = dataProvider.getModels();
+            models = await dataProvider.getModels();
         else
-            models = Object.values(dataProvider.getModels());
+            models = Object.values(await dataProvider.getModels());
+        
         models = this.serializeModels(models);
         let pagination = dataProvider.getPagination()
         if (pagination !== false) {
             this.addPaginationHeaders(pagination);
         }
 
-        if (this.request.getIsHead()) {
+        if (this.request.method === 'HEAD') {
             return null;
         } else if (this.collectionEnvelope === undefined) {
+            console.log('sdp------------', models)
             return models;
         }
 
         let result = {
             [this.collectionEnvelope]: models,
         };
+        
         if (pagination !== false) {
             return { ...result, ...this.serializePagination(pagination) };
         }
-
         return result;
     }
 
@@ -116,12 +118,12 @@ export default class Serializer extends Component {
 
     protected serializeModel(model)
     {
-        if (this.request.getIsHead()) {
+        if (this.request.method === 'HEAD') {
             return null;
         }
 
         const { fields, expand } = this.getRequestedFields();
-        return model.toArray(fields, expand);
+        return model; //.toArray(fields, expand);
     }
 
     protected serializeModelErrors(model)
@@ -144,7 +146,7 @@ export default class Serializer extends Component {
         let i = 0;
         for(let model of models) {
             if (model.constructor.name === 'Model') {
-                models[i] = model.toArray(fields, expand);
+                models[i] = model; //.toArray(fields, expand);
             }
             i++;
         }
