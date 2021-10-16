@@ -1,58 +1,60 @@
+import { GridView } from 'pkgtest-lib';
+import { Model } from 'src';
 import Component from './Component';
 import Html from './Html';
 
 export default class Column extends Component {
-  public grid;
-  public header;
-  public footer;
-  public content;
+  public grid: GridView;
+  public header: string;
+  public footer: string;
+  public content: string | CallableFunction;
   public visible = true;
-  public options: any = [];
-  public headerOptions: any = [];
-  public contentOptions: any = [];
-  public footerOptions: any = [];
-  public filterOptions: any = [];
+  public options: { [key: string]: any } = {};
+  public headerOptions: { [key: string]: any } = {};
+  public contentOptions: { [key: string]: any } = {};
+  public footerOptions: { [key: string]: any } = {};
+  public filterOptions: { [key: string]: any } = {};
 
   public constructor(config) {
     super(config);
     Object.assign(this, config);
   }
 
-  public async renderHeaderCell() {
+  public async renderHeaderCell(): Promise<string> {
     return Html.tag('th', await this.renderHeaderCellContent(), this.headerOptions);
   }
 
-  public renderFooterCell() {
+  public renderFooterCell(): string {
     return Html.tag('td', this.renderFooterCellContent(), this.footerOptions);
   }
 
-  public async renderDataCell(model, key, index) {
+  public async renderDataCell(model: Model, key: string, index: number): Promise<string> {
     const options = this.contentOptions;
     return Html.tag('td', await this.renderDataCellContent(model, key, index), options);
   }
 
-  public renderFilterCell() {
+  public renderFilterCell(): string {
     return Html.tag('td', this.renderFilterCellContent(), this.filterOptions);
   }
 
-  protected async renderHeaderCellContent() {
+  protected async renderHeaderCellContent(): Promise<string> {
     return (this.header !== undefined ? this.header : await this.getHeaderCellLabel()).trim();
   }
 
-  protected getHeaderCellLabel() {
+  protected async getHeaderCellLabel(): Promise<string> {
     return this.grid.emptyCell;
   }
 
-  protected renderFooterCellContent() {
+  protected renderFooterCellContent(): string {
     return (this.footer !== undefined ? this.footer : this.grid.emptyCell).trim();
   }
 
-  protected renderDataCellContent(model, key, index) {
-    if (this.content !== undefined) return this.content(model, key, index, this);
+  protected async renderDataCellContent(model: Model, key: string, index: number): Promise<string> {
+    if (this.content !== undefined) return (this.content as CallableFunction)(model, key, index, this);
     return this.grid.emptyCell;
   }
 
-  protected renderFilterCellContent() {
+  protected renderFilterCellContent(): string {
     return this.grid.emptyCell;
   }
 }

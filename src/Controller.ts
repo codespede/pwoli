@@ -1,11 +1,11 @@
+import { Model } from 'src';
 import Component from './Component';
 export default class Controller extends Component {
-  mixpanel;
-  public constructor(config) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }
-  async validate(model) {
+  public async validate(model: Model): Promise<Model> {
     try {
       await model.validate();
     } catch (error) {

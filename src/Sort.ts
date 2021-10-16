@@ -12,6 +12,7 @@ export default class Sort extends Component {
   public separator = ',';
   public params;
   private _attributeOrders;
+  public sortFlags = 'SORT_REGULAR';
 
   public constructor(config) {
     super(config);
@@ -130,7 +131,6 @@ export default class Sort extends Component {
     let directions = this.getAttributeOrders();
     let direction: any = false;
     let i = 0;
-    if (attribute === 'title') 
     for (const dir of directions) {
       if (dir !== undefined && dir[0] === attribute) {
         direction = dir[1];

@@ -1,9 +1,10 @@
 //import { ActiveDataProvider } from "..";
+import { ActiveDataProvider, Model, Sort } from "src";
 import IORMAdapter from "./IORMAdapter";
 import ORMAdapter from "./ORMAdapter";
 export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
     
-    private validatorMap = {
+    private validatorMap: { [key: string]: string } = {
         'is': 'regex',
         'not': 'regexInverse',
         'notEmpty': 'required',
@@ -15,11 +16,11 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         Object.assign(this, config);
     }
 
-    public async findAll(query) {
+    public async findAll(query: { [key: string]: any }): Promise<Model[]> {
         return await this.modelClass.findAll(query);
     }
 
-    public applySort(query, sort) {
+    public applySort(query: { [key: string]: any }, sort: Sort): { [key: string]: any } {
         if (query.order === undefined)
             query.order = sort.getOrders();
         else
@@ -27,25 +28,25 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         return query;
     }
 
-    public applyPagination(query, pagination) {
+    public applyPagination(query: { [key: string]: any }, pagination): { [key: string]: any } {
         query.limit = pagination.getLimit();
         query.offset = pagination.getOffset();
         return query;
     }
 
-    public primaryKey() {
+    public primaryKey(): string {
         return this.modelClass.primaryKey();
     }
 
-    public async count(query) {
+    public async count(query: { [key: string]: any }): Promise<number> {
         return await this.modelClass.count(query);
     }
 
-    public attributes() {
+    public attributes(): string[] {
         return Object.keys(this.modelClass.rawAttributes);
     }
 
-    public setAttributes(model, values) {
+    public setAttributes(model: Model, values: { [key: string]: any }): Model {
         for (let attribute in values) {
             if (values[attribute] !== undefined)
                 model.dataValues[attribute] = values[attribute];
@@ -53,7 +54,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         return model;
     }
 
-    public search(model, params = {}, dataProvider) {
+    public search(model, params = {}, dataProvider: ActiveDataProvider): ActiveDataProvider {
         const { Op } = require("sequelize");
         dataProvider.query.where = dataProvider.query.where !== undefined? dataProvider.query.where : {};
         if (params[this.modelClass.name] !== undefined) {
@@ -65,11 +66,11 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         return dataProvider;
     }
 
-    public isAttributeRequired(model, attribute) {
+    public isAttributeRequired(model: Model, attribute: string): boolean {
         return !model.rawAttributes[attribute].allowNull;
     }
 
-    public activeAttributes(model) {
+    public activeAttributes(model: Model): string[] {
         const attributes = [];
         for (let attribute in model.rawAttributes) {
             if (this.isAttributeActive(model, attribute))
@@ -78,28 +79,28 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{
         return attributes;
     }
 
-    public isAttributeActive(model, attribute) {
+    public isAttributeActive(model: Model, attribute: string): boolean {
         return model.rawAttributes[attribute].allowNull === false || model.rawAttributes[attribute].validate !== undefined;
     }
 
-    public getActiveValidators(model, attribute) {
+    public getActiveValidators(model: Model, attribute: string): Array<{ [key: string]: any }> {
         const validators = { ...model.rawAttributes[attribute].validate };
         if (model.rawAttributes[attribute].allowNull === false)
             validators.notEmpty = true;
         return validators;
     }
 
-    public getClientValidationParams(criteria) {
-        const options: any = {};
-        if (criteria.msg !== undefined) {
-            options.message = criteria.msg;
-            criteria = criteria.args;
+    public getClientValidationParams(criteria: boolean | { [key: string]: any }): { [key: string]: any } {
+        const options: { [key: string]: any } = {};
+        if ((criteria as { [key: string]: any }).msg !== undefined) {
+            options.message = (criteria as { [key: string]: any }).msg;
+            criteria = (criteria as { [key: string]: any }).args;
         } else if (criteria === false)
             return {};
         return { criteria, options };
     }
 
-    public async validate(model) {
+    public async validate(model: Model): Promise<Model> {
         try {
             await model.validate();
         } catch (error) {

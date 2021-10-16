@@ -3,13 +3,14 @@ import SequelizeAdapter from './ORMAdapters/SequelizeAdapter';
 import View from './View';
 import Serializer from './Serializer';
 import url = require('url');
+import IORMAdapter from 'pkgtest-lib/ORMAdapters/IORMAdapter';
 export default class Application extends Component {
-    public static request;
-    public static response: any = { data: null, headers: {}, status: null };
+    public static request: { [key: string]: any };
+    public static response: { [key: string]: any } = { data: null, headers: {}, status: null };
     public static charset = 'UTF-8';
     public static view = new View({});
     public static aliases = {};
-    public static viewPath;
+    public static viewPath: string;
     public static orm: 'sequelize' | 'other' = 'sequelize';
     public static ormAdapterClasses = { sequelize: SequelizeAdapter };
     private static _ormAdapter;
@@ -51,11 +52,11 @@ export default class Application extends Component {
     }
 
     public static async respond(nativeResponse, data = null) {
-        console.log('ares', data);
+        //console.log('ares', data);
         if (typeof data === 'string')
             this.response.data = data;
         else if (typeof data === 'function') {
-            console.log('aresf--------------------->', data);
+            console.log('aresf--------------------->', nativeResponse);
             nativeResponse = this.responsify(nativeResponse);
             return data(nativeResponse);
         } else if (data !== null) {
@@ -63,7 +64,7 @@ export default class Application extends Component {
             this.serializer.response = this.response;
             this.response.data = JSON.stringify(await this.serializer.serialize(data));
         }
-        console.log('aresa', this.response);
+        //console.log('aresa', this.response);
         nativeResponse = this.responsify(nativeResponse);
         nativeResponse.write(this.response.data);
         nativeResponse.end();

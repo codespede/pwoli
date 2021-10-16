@@ -1,12 +1,12 @@
-import { Application as Pwoli, Column, Html } from ".";
+import { Application as Pwoli, Column, Html, Model } from ".";
 
 export default class CheckboxColumn extends Column {
     public name = 'selection';
-    public checkboxOptions: any = {};
+    public checkboxOptions: {[key: string]: any} = {};
     public multiple = true;
-    public cssClass;
+    public cssClass: string;
 
-    public constructor(config) {
+    public constructor(config: {[key: string]: any}) {
         super(config);
         Object.assign(this, config);
     }
@@ -20,13 +20,13 @@ export default class CheckboxColumn extends Column {
         this.registerClientScript();
     }
 
-    protected async renderHeaderCellContent() {
+    protected async renderHeaderCellContent(): Promise<string> {
         if (this.header !== undefined || !this.multiple)
             return await super.renderHeaderCellContent();
         return Html.checkbox(this.getHeaderCheckBoxName(), false, { class: 'select-on-check-all' });
     }
 
-    protected async renderDataCellContent(model, key, index) {
+    protected async renderDataCellContent(model: Model, key: string, index: number): Promise<string> {
         if (this.content !== undefined)
             return super.renderDataCellContent(model, key, index);
         let options;
@@ -41,7 +41,7 @@ export default class CheckboxColumn extends Column {
         return Html.checkbox(this.name, options.checked !== undefined, options);
     }
 
-    protected getHeaderCheckBoxName() {
+    protected getHeaderCheckBoxName(): string {
         let name = this.name;
         let matches = name.match(/(.*)\[\]$/);
         if (matches.length > 0)
@@ -56,7 +56,7 @@ export default class CheckboxColumn extends Column {
         return name;
     }
 
-    public registerClientScript() {
+    public registerClientScript(): void {
         const id = this.grid.options.id;
         const options = JSON.stringify({ name: this.name, class: this.cssClass, multiple: this.multiple, checkAll: this.grid.showHeader ? this.getHeaderCheckBoxName() : null });
         Pwoli.view.registerJs(`jQuery('#${id}').pwoliGridView('setSelectionColumn', ${options});`);

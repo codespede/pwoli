@@ -1,12 +1,13 @@
 import DataProvider from './DataProvider';
 import DataHelper from './DataHelper';
+import { Model, Sort } from 'src';
 export default class ArrayDataProvider extends DataProvider {
 
-    public key;
-    public allModels;
-    public modelClass;
+    public key: string | CallableFunction;
+    public allModels: Model[];
+    public modelClass: Model;
 
-    public prepareModels()
+    public async prepareModels(): Promise<Model[]>
     {
         let models = this.allModels;
         if (models === undefined) {
@@ -26,7 +27,7 @@ export default class ArrayDataProvider extends DataProvider {
         return models;
     }
 
-    public prepareKeys(models)
+    public prepareKeys(models: Model[]): string[]
     {
         if (this.key !== null) {
             const keys = [];
@@ -43,11 +44,11 @@ export default class ArrayDataProvider extends DataProvider {
         return Object.keys(models);
     }
 
-    public async prepareTotalCount() {
+    public async prepareTotalCount(): Promise<number> {
         return new Promise<number>((resolve) => { resolve(Array.isArray(this.allModels) ? this.allModels.length : 0); });
     }
 
-    protected sortModels(models, sort)
+    protected sortModels(models: Model[], sort: Sort): Model[]
     {
         const orders = sort.getOrders();
         if (orders.length > 0)
@@ -55,7 +56,7 @@ export default class ArrayDataProvider extends DataProvider {
         return models;
     }
   
-    public constructor(config) {
+    public constructor(config: {[key: string]: any}) {
       super(config);
       Object.assign(this, config);
     }

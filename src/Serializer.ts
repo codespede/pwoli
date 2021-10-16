@@ -13,8 +13,8 @@ export default class Serializer extends Component {
     public collectionEnvelope;
     public linksEnvelope = '_links';
     public metaEnvelope = '_meta';
-    public request;
-    public response;
+    public request: { [key: string]: any };
+    public response: { [key: string]: any };
     public preserveKeys = false;
     
     public constructor(config) {
@@ -76,7 +76,7 @@ export default class Serializer extends Component {
         if (this.request.method === 'HEAD') {
             return null;
         } else if (this.collectionEnvelope === undefined) {
-            console.log('sdp------------', models)
+            //console.log('sdp------------', models)
             return models;
         }
 
@@ -106,13 +106,14 @@ export default class Serializer extends Component {
     protected addPaginationHeaders(pagination)
     {
         let links = [];
-        for(let rel in pagination.getLinks(true)) {
-            links.push(`<${url}>; rel=${rel}`);
+        let paginationLinks = pagination.getLinks(true);
+        for(let rel in paginationLinks) {
+            links.push(`<${paginationLinks[rel]}>; rel=${rel}`);
         }
         this.response.headers[this.totalCountHeader] = pagination.totalCount;
         this.response.headers[this.pageCountHeader] = pagination.getPageCount();
         this.response.headers[this.currentPageHeader] = pagination.getPage() + 1;
-        this.response.headers[this.perPageHeader] = pagination.pageSize;
+        this.response.headers[this.perPageHeader] = pagination.getPageSize();
         this.response.headers.link = links.join(', ');
     }
 

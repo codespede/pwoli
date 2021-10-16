@@ -7,32 +7,31 @@ import Component from './Component';
 import DataColumn from './DataColumn';
 import Html from './Html';
 import Model from './Model';
+import { Column } from 'src';
 
+type column = Column | { [key: string]: any }
 export default class GridView extends CollectionView {
   public dataColumnClass = DataColumn;
   public caption = '';
-  public captionOptions: any = {};
-  public tableOptions: any = { class: 'table table-striped table-bordered' };
-  public options: any = { class: 'grid-view' };
-  public headerRowOptions: any = {};
-  public footerRowOptions: any = {};
-  public rowOptions: any = {};
-  public beforeRow;
-  public afterRow;
+  public captionOptions: { [key: string]: any } = {};
+  public tableOptions: { [key: string]: any } = { class: 'table table-striped table-bordered' };
+  public options: { [key: string]: any } = { class: 'grid-view' };
+  public headerRowOptions: { [key: string]: any } = {};
+  public footerRowOptions: { [key: string]: any } = {};
+  public rowOptions: { [key: string]: any } = {};
   public showHeader = true;
-  public showFooter = true;
+  public showFooter = false;
   public placeFooterAfterBody = false;
   public showOnEmpty = true;
-  // public formatter;
-  public columns: any = ['id'];
+  public columns: Array<column | string>;
   public emptyCell = '&nbsp;';
-  public filterModel;
-  public filterUrl;
-  public filterSelector;
+  public filterModel: Model;
+  public filterUrl: string;
+  public filterSelector: string;
   public filterPosition = 'body';
-  public filterRowOptions: any = { class: 'filters' };
-  public filterErrorSummaryOptions: any = { class: 'error-summary' };
-  public filterErrorOptions: any = { class: 'help-block' };
+  public filterRowOptions: { [key: string]: any } = { class: 'filters' };
+  public filterErrorSummaryOptions: { [key: string]: any } = { class: 'error-summary' };
+  public filterErrorOptions: { [key: string]: any } = { class: 'help-block' };
   public filterOnfocusOut = true;
   public layout = '{summary}\n{items}\n{pager}';
 
@@ -68,7 +67,7 @@ export default class GridView extends CollectionView {
     return await super.render.call(this);
   }
 
-  public async renderSection(name) {
+  public async renderSection(name: string): Promise<string> {
     switch (name) {
       case '{errors}':
         return this.renderErrors();
@@ -77,7 +76,7 @@ export default class GridView extends CollectionView {
     }
   }
 
-  protected getClientOptions() {
+  protected getClientOptions(): {filterUrl: string, filterSelector: string} {
     const filterUrl = this.filterUrl !== undefined ? this.filterUrl : (Pwoli.request.originalUrl || Pwoli.request.url);
     const id = this.filterRowOptions.id;
     let filterSelector = `#${id} input, #${id} select`;
@@ -85,7 +84,7 @@ export default class GridView extends CollectionView {
     return { filterUrl, filterSelector };
   }
 
-  public async renderItems() {
+  public async renderItems(): Promise<string> {
     const caption = this.renderCaption();
     const columnGroup = await this.renderColumnGroup();
     const tableHeader = this.showHeader ? await this.renderTableHeader() : false;
@@ -101,26 +100,26 @@ export default class GridView extends CollectionView {
     return Html.tag('table', content.join('\n'), this.tableOptions);
   }
 
-  public renderCaption() {
+  public renderCaption(): string | false {
     if (this.caption.length > 0) return Html.tag('caption', this.caption, this.captionOptions);
     return false;
   }
 
-  public async renderColumnGroup() {
+  public async renderColumnGroup(): Promise<string | false> {
     
     for (const column of this.columns) {
-      if (column.options !== undefined && column.options.length > 0) {
+      if ((column as column).options !== undefined && (column as column).options.length > 0) {
         const cols = [];
-        for (const col of this.columns) cols.push(Html.tag('col', '', col.options));
+        for (const col of this.columns) cols.push(Html.tag('col', '', (col as column).options));
         return Html.tag('colgroup', cols.join('\n'));
       }
     }
     return false;
   }
 
-  public async renderTableHeader() {
+  public async renderTableHeader(): Promise<string> {
     const cells = [];
-    for (const column of this.columns) cells.push(await column.renderHeaderCell());
+    for (const column of this.columns) cells.push(await (column as column).renderHeaderCell());
     let content = Html.tag('tr', cells.join(''), this.headerRowOptions);
     if (this.filterPosition === 'header') content = (await this.renderFilters()) + content;
     else if (this.filterPosition === 'body') content = content + (await this.renderFilters());
@@ -128,24 +127,24 @@ export default class GridView extends CollectionView {
     return `<thead>\n${content}\n</thead>`;
   }
 
-  public async renderTableFooter() {
+  public async renderTableFooter(): Promise<string> {
     const cells = [];
-    for (const column of this.columns) cells.push(await column.renderFooterCell());
+    for (const column of this.columns) cells.push(await (column as column).renderFooterCell());
     let content = Html.tag('tr', cells.join(''), this.footerRowOptions);
     if (this.filterPosition === 'footer') content = await this.renderFilters();
     return `<tfoot>\n${content}\n</tfoot>`;
   }
 
-  public async renderFilters() {
+  public async renderFilters(): Promise<string> {
     if (this.filterModel !== undefined) {
       const cells = [];
-      for (const column of this.columns) cells.push(await column.renderFilterCell());
+      for (const column of this.columns) cells.push(await (column as column).renderFilterCell());
       return Html.tag('tr', cells.join(''), this.filterRowOptions);
     }
     return '';
   }
 
-  public async renderTableBody() {
+  public async renderTableBody(): Promise<string> {
     const models = this._models;
     const keys = this.dataProvider.getKeys();
 
@@ -162,9 +161,9 @@ export default class GridView extends CollectionView {
     return `<tbody\n${rows.join('\n')}\n</tbody>`;
   }
 
-  public async renderTableRow(model, key, index) {
+  public async renderTableRow(model, key, index): Promise<string> {
     const cells = [];
-    for (const column of this.columns) cells.push(await column.renderDataCell(model, key, index));
+    for (const column of this.columns) cells.push(await (column as column).renderDataCell(model, key, index));
     const options = this.rowOptions;
     options['data-key'] = key;
     
@@ -182,7 +181,7 @@ export default class GridView extends CollectionView {
             const columnClass = DataHelper.remove(column, 'class', this.dataColumnClass);
             column = new columnClass({ grid: this, ...column });
         }
-        if (!column.visible) {
+        if (!(column as column).visible) {
             delete this.columns[i];
             continue;
         }
@@ -191,7 +190,7 @@ export default class GridView extends CollectionView {
     }
   }
 
-  protected createDataColumn(text) {
+  protected createDataColumn(text: string) {
     const matches = text.match(/^([^:]+)(:(\w*))?(:(.*))?$/);
     if (matches.length === 0)
       throw new Error(

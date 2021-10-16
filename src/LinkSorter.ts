@@ -1,11 +1,12 @@
+import { Sort } from 'src';
 import Html from './Html';
 import Widget from './Widget';
 
 export default class LinkSorter extends Widget {
-  public sort;
-  public attributes;
-  public options: any = { class: 'sorter' };
-  public linkOptions: any = {};
+  public sort: Sort;
+  public attributes: string[];
+  public options: { [key: string]: any } = { class: 'sorter' };
+  public linkOptions: { [key: string]: any } = {};
 
   public constructor(config) {
     super(config);

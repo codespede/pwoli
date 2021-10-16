@@ -17,7 +17,7 @@ export default class DataColumn extends Column {
   public filterInputOptions: any = { class: 'form-control', id: null };
   public filterAttribute;
 
-  public constructor(config) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }
@@ -27,7 +27,7 @@ export default class DataColumn extends Column {
     if (this.filterAttribute === undefined) this.filterAttribute = this.attribute;
   }
 
-  protected async renderHeaderCellContent() {
+  protected async renderHeaderCellContent(): Promise<string> {
     if (this.header !== undefined || (this.label === undefined && this.attribute === undefined))
       return super.renderHeaderCellContent();
     let label = await this.getHeaderCellLabel();
@@ -40,7 +40,7 @@ export default class DataColumn extends Column {
     return label;
   }
 
-  protected async getHeaderCellLabel() {
+  protected async getHeaderCellLabel(): Promise<string> {
     const provider = this.grid.dataProvider;
     let modelClass;
     let model;
@@ -69,7 +69,7 @@ export default class DataColumn extends Column {
     return label;
   }
 
-  protected renderFilterCellContent() {
+  protected renderFilterCellContent(): string {
     if (typeof this.filter === 'string') return this.filter;
     const model = this.grid.filterModel;
     if (this.filter !== false && model instanceof Model && this.filterAttribute !== undefined) {
@@ -79,7 +79,7 @@ export default class DataColumn extends Column {
     return super.renderFilterCellContent.call(this);
   }
 
-  public getDataCellvalue(model, key, index) {
+  public getDataCellvalue(model: Model, key: string, index: number): string | null {
     if (this.value !== undefined) {
       if (typeof this.value === 'string') return this.value;
       return this.value(model, key, index, this);
@@ -87,7 +87,7 @@ export default class DataColumn extends Column {
     return null;
   }
 
-  protected renderDataCellContent(model, key, index) {
+  protected async renderDataCellContent(model: Model, key: string, index: number): Promise<string> {
     if (this.content === undefined) return this.getDataCellvalue(model, key, index);
     return super.renderDataCellContent.call(this, model, key, index);
   }

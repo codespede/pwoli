@@ -15,7 +15,7 @@ export default class DataColumn extends Column {
             throw new Error('The "name" property must be set.');
     }
 
-    protected renderDataCellContent(model, key, index) {
+    protected async renderDataCellContent(model, key, index) {
         if (this.content !== undefined)
             return super.renderDataCellContent(model, key, index);
         let options;

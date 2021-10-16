@@ -1,30 +1,32 @@
 import Pwoli from './Application';
 import Component from './Component';
+import ActiveForm from './ActiveForm';
+import Model from './Model';
 import DataHelper from './DataHelper';
 import Html from './Html';
 const ormAdapter = Pwoli.getORMAdapter();
 export default class ActiveField extends Component {
-    public form;
-    public model;
-    public attribute;
-    public options: any = { class: 'form-group' };
+    public form: ActiveForm;
+    public model: Model;
+    public attribute: string;
+    public options: { [key: string]: any } = { class: 'form-group' };
     public template = "{label}\n{input}\n{hint}\n{error}";
-    public inputOptions: any = { class: 'form-control' };
-    public errorOptions: any = { class: 'help-block' };
-    public labelOptions: any = { class: 'control-label' };
-    public hintOptions: any = { class: 'hint-block' };
-    public enableClientValidation;
-    public enableAjaxValidation;
-    public validateOnChange;
-    public validateOnBlur;
-    public validateOnType;
-    public validationDelay;
-    public selectors: any = {};
-    public parts: any = {};
+    public inputOptions: { [key: string]: any } = { class: 'form-control' };
+    public errorOptions: { [key: string]: any } = { class: 'help-block' };
+    public labelOptions: { [key: string]: any } = { class: 'control-label' };
+    public hintOptions: { [key: string]: any } = { class: 'hint-block' };
+    public enableClientValidation: boolean;
+    public enableAjaxValidation: boolean;
+    public validateOnChange: boolean;
+    public validateOnBlur: boolean;
+    public validateOnType: boolean;
+    public validationDelay: number;
+    public selectors: { [key: string]: string } = {};
+    public parts: { [key: string]: string } = {};
     public addAriaAttributes = true;
-    private _inputId;
+    private _inputId: string;
     private _skipLabelFor = false;
-    private clientValidators = {
+    private clientValidators: { [key: string]: ((params: { [key: string]: any }) => string) } = {
         regex: (params) => {
             params.options = {
                 message: `The value entered is invalid.`,
@@ -153,7 +155,7 @@ export default class ActiveField extends Component {
 
     public input(type, options: any = {}) {
         options = { ...this.inputOptions, ...options };
-        if (this.form.validateionStateOn === 'input')
+        if (this.form.validationStateOn === 'input')
             this.addErrorClassIfNeeded(options);
         this.doAddAriaAttributes(options);
         this.adjustLabelFor(options);

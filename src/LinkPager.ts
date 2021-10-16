@@ -1,24 +1,25 @@
+import { Pagination } from 'src';
 import Html from './Html';
 import Widget from './Widget';
 
 export default class LinkPager extends Widget {
-  public pagination;
-  public options: any = { class: 'pagination' };
-  public linkContainerOptions: any = {};
-  public linkOptions = {};
-  public pageCssClass;
+  public pagination: Pagination;
+  public options: { [key: string]: any } = { class: 'pagination' };
+  public linkContainerOptions: { [key: string]: any } = {};
+  public linkOptions: { [key: string]: any } = {};
+  public pageCssClass: string;
   public firstPageCssClass = 'first';
   public lastPageCssClass = 'last';
   public prevPageCssClass = 'prev';
   public nextPageCssClass = 'next';
   public activePageCssClass = 'active';
   public disabledPageCssClass = 'disabled';
-  public disabledListItemSubTagOptions: any = {};
+  public disabledListItemSubTagOptions: { [key: string]: any } = {};
   public maxButtonCount = 10;
-  public nextPageLabel: any = '&raquo;';
-  public prevPageLabel: any = '&laquo;';
-  public firstPageLabel: any = false;
-  public lastPageLabel: any = false;
+  public nextPageLabel: string | boolean = '&raquo;';
+  public prevPageLabel: string | boolean = '&laquo;';
+  public firstPageLabel: string | boolean = false;
+  public lastPageLabel: string | boolean = false;
   public registerLinkTags = false;
   public hideOnSinglePage = true;
   public disableCurrentPageButton = false;

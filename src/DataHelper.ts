@@ -2,40 +2,42 @@ import Component from './Component';
 import url = require('url');
 import { link } from 'fs';
 export default class DataHelper extends Component {
-  public static remove(object, key, defaultValue = null) {
-    const value = object[key] !== undefined ? object[key] : defaultValue;
-    delete object[key];
-    return value;
-  }
-
-  public static async replaceAsync(str, regex, asyncFn) {
-    const promises = [];
-    str.replace(regex, (match, ...args) => {
-      const promise = asyncFn(match, ...args);
-      promises.push(promise);
-    });
-    const data = await Promise.all(promises);
-    return str.replace(regex, () => data.shift());
-  }
-
-  public static parseUrl(queryString) {
-    return this.parseQueryParams(url.parse(queryString, true).query);
-  }
-
-  public static parseQueryParams(params) {
-    let parsedParams = {};
-    for (let param in params) {
-      let matches = param.match(/(.*)\[(.*)\]/);
-      if (matches) {
-        parsedParams[matches[1]] = parsedParams[matches[1]] !== undefined? parsedParams[matches[1]] : {};
-        parsedParams[matches[1]][matches[2]] = params[param];
-      }else
-        parsedParams[param] = params[param];
+    public static remove(object: {[key: string]: any}, key: string, defaultValue: any = null) {
+        const value = object[key] !== undefined ? object[key] : defaultValue;
+        delete object[key];
+        return value;
     }
-    return parsedParams;
-  }
 
-    public static multiSort(array, key, direction: string | {} = 'SORT_ASC', sortFlag: string | {} = 'SORT_REGULAR') {
+    public static async replaceAsync(string: string, regex, asyncFn: CallableFunction) {
+        const promises = [];
+        let string2 = string;
+        string2.replace(regex, (match, ...args) => {
+        const promise = asyncFn(match, ...args);
+            promises.push(promise);
+            return "";
+        });
+        const data = await Promise.all(promises);
+        return string.replace(regex, () => data.shift());
+    }
+
+    public static parseUrl(queryString: string): {[key: string]: string}  {
+        return this.parseQueryParams(url.parse(queryString, true).query);
+    }
+
+    public static parseQueryParams(params: {[key: string]: string | string[] | undefined}): {[key: string]: string} {
+        let parsedParams = {};
+        for (let param in params) {
+        let matches = param.match(/(.*)\[(.*)\]/);
+        if (matches) {
+            parsedParams[matches[1]] = parsedParams[matches[1]] !== undefined? parsedParams[matches[1]] : {};
+            parsedParams[matches[1]][matches[2]] = params[param];
+        }else
+            parsedParams[param] = params[param];
+        }
+        return parsedParams;
+    }
+
+    public static multiSort(array: Array<any>, key: Array<string | number> | string | number, direction: string | {} = 'SORT_ASC', sortFlag: string | {} = 'SORT_REGULAR') {
         const keys = Array.isArray(key) ? key : [key];
         if (keys.length === 0 || array.length === 0) {
             return;
@@ -71,14 +73,14 @@ export default class DataHelper extends Component {
         this.arrayMultiSort.apply(null, args);
     }
 
-    public static getColumn(array, name) {
+    public static getColumn(array: Array<any>, name: string | number): {[key: string]: any} {
         const result = {};
         for(let k in array)
             result[k] = array[k][name];
         return result;
     }
 
-    public static arrayMultiSort(arr) {
+    public static arrayMultiSort(arr: Array<any>) {
         var g, i, j, k, l, sal, vkey, elIndex, lastSorts, tmpArray, zlast;
 
         var sortFlag = [0];
@@ -391,7 +393,7 @@ export default class DataHelper extends Component {
         return matrix
     }
 
-    public static serializeLinks(links) {
+    public static serializeLinks<T extends {[key: string]: any}>(links: T): T {
         for (let rel in links) {
             if (Array.isArray(links[rel])) {
                 for (let i = 0; i <= links[rel].length; i++)

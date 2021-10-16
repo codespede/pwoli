@@ -1,12 +1,13 @@
+import { Model } from 'src';
 import Application from './Application';
 import DataProvider from './DataProvider';
 import ORMAdapter from './ORMAdapters/ORMAdapter';
 import SequelizeAdapter from './ORMAdapters/SequelizeAdapter';
 
 export default class ActiveDataProvider extends DataProvider {
-  public query: any = {};
+  public query: { [key: string]: any } = {};
   public key: string;
-  public ormAdapter: ORMAdapter | undefined;
+  public ormAdapter;
 
   public constructor(config) {
     super(config);
@@ -17,6 +18,7 @@ export default class ActiveDataProvider extends DataProvider {
     await super.init.call(this)
     if (this.ormAdapter === undefined) {
       this.ormAdapter = Application.getORMAdapter();
+      console.log('adpi', this.ormAdapter)
       this.ormAdapter.modelClass = this.modelClass;
     }
   }
@@ -59,7 +61,7 @@ export default class ActiveDataProvider extends DataProvider {
     super.setSort.call(this, value);
     const sort = this.getSort();
     if (sort !== false) {
-      const model = new this.modelClass();
+      const model = new (this.modelClass as any)();
       
       if (Object.keys(sort.attributes).length === 0) {
         const attributes = this.ormAdapter.attributes();

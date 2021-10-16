@@ -65,7 +65,7 @@ export default class Pagination extends Component {
     }
   }
 
-  public createUrl(page, pageSize, absolute = false) {
+  public createUrl(page, pageSize = undefined, absolute = false) {
     page = parseInt(page, 10);
     // pageSize = parseInt(pageSize, 10);
     let params = this.params;

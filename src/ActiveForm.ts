@@ -8,9 +8,9 @@ import ActiveField from './ActiveField';
 export default class ActiveForm extends Widget{
     public action = '';
     public method = 'post';
-    public options: any = {};
+    public options: { [key: string]: any } = {};
     public fieldClass = ActiveField;
-    public fieldConfig: any = {};
+    public fieldConfig: { [key: string]: any } = {};
     public encodeErrorSummary = true;
     public errorSummaryCssClass = 'error-summary';
     public requiredCssClass = 'required';
@@ -21,7 +21,7 @@ export default class ActiveForm extends Widget{
     public enableClientValidation = true;
     public enableAjaxValidation = false;
     public enableClientScript = true;
-    public validationUrl;
+    public validationUrl: string;
     public validateOnSubmit = true;
     public validateOnChange = true;
     public validateOnType = false;
