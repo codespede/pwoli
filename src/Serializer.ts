@@ -2,6 +2,8 @@ import Component from './Component';
 import DataHelper from './DataHelper';
 import DataProvider from './DataProvider';
 import Pwoli from './Application';
+import Model from './Model';
+import Pagination from './Pagination';
 import url = require('url');
 export default class Serializer extends Component {
     public fieldsParam = 'fields';
@@ -17,7 +19,7 @@ export default class Serializer extends Component {
     public response: { [key: string]: any };
     public preserveKeys = false;
     
-    public constructor(config) {
+    public constructor(config: {[key: string]: any}) {
         super(config);
         Object.assign(this, config);
     }
@@ -29,17 +31,17 @@ export default class Serializer extends Component {
         }
     }
 
-    public async serialize(data)
+    public async serialize(data: Model | DataProvider | Array<any>): Promise<{ [key: string]: any }>
     {
-        if (data.constructor.name === 'Model' && data.hasErrors()) {
-            return this.serializeModelErrors(data);
+        if (data.constructor.name === 'Model' && (data as Model).hasErrors()) {
+            return this.serializeModelErrors(data as Model);
         } else if (data instanceof DataProvider) {
             return await this.serializeDataProvider(data);
         } else if (typeof data === 'object') {
-            return this.serializeModel(data);
+            return this.serializeModel(data as Model);
         } else if (Array.isArray(data)) {
             let serializedObject = [];
-            for(let key in data)
+            for(let key in (data as Array<any>))
                 serializedObject[key] = this.serialize(data[key]);
             return serializedObject;
         }
@@ -47,7 +49,7 @@ export default class Serializer extends Component {
         return this.response;
     }
 
-    protected getRequestedFields()
+    protected getRequestedFields(): {fields: string[], expand: string[]}
     {
         const params = url.parse(this.request.url, true).query;
         const fields = params[this.fieldsParam];
@@ -59,7 +61,7 @@ export default class Serializer extends Component {
         };
     }
 
-    protected async serializeDataProvider(dataProvider) {
+    protected async serializeDataProvider(dataProvider: DataProvider): Promise<{ [key: string]: any }> {
         let models;
         //console.log('sdpbb------------', await dataProvider.getModels())
         if (this.preserveKeys)
@@ -90,7 +92,7 @@ export default class Serializer extends Component {
         return result;
     }
 
-    protected serializePagination(pagination)
+    protected serializePagination(pagination: Pagination): { [key: string]: any }
     {
         return {
             [this.linksEnvelope]: DataHelper.serializeLinks(pagination.getLinks(true)),
@@ -103,7 +105,7 @@ export default class Serializer extends Component {
         };
     }
 
-    protected addPaginationHeaders(pagination)
+    protected addPaginationHeaders(pagination: Pagination)
     {
         let links = [];
         let paginationLinks = pagination.getLinks(true);
@@ -117,7 +119,7 @@ export default class Serializer extends Component {
         this.response.headers.link = links.join(', ');
     }
 
-    protected serializeModel(model)
+    protected serializeModel(model: Model): Model
     {
         if (this.request.method === 'HEAD') {
             return null;
@@ -127,7 +129,7 @@ export default class Serializer extends Component {
         return model; //.toArray(fields, expand);
     }
 
-    protected serializeModelErrors(model)
+    protected serializeModelErrors(model: Model): { [key: string]: any }
     {
         this.response.setStatusCode(422, 'Data Validation Failed.');
         let result = [];
@@ -141,7 +143,7 @@ export default class Serializer extends Component {
         return result;
     }
 
-    protected serializeModels(models)
+    protected serializeModels(models: Model[]): Model[]
     {
         const { fields, expand } = this.getRequestedFields();
         let i = 0;

@@ -1,5 +1,5 @@
-import { GridView } from 'pkgtest-lib';
-import { Model } from 'src';
+import GridView from './GridView';
+import Model from './Model';
 import Component from './Component';
 import Html from './Html';
 

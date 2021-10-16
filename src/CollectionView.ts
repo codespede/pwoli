@@ -1,4 +1,9 @@
-import { Column, Component, DataProvider, Model, Pagination, Sort } from 'src';
+import Column from './Column';
+import Component from './Component';
+import DataProvider from './DataProvider';
+import Model from './Model';
+import Pagination from './Pagination';
+import Sort from './Sort';
 import DataHelper from './DataHelper';
 import Html from './Html';
 import LinkPager from './LinkPager';
@@ -22,7 +27,7 @@ export default class CollectionView extends Widget {
      * Test doc
      * @param config test
      */
-    public constructor(config) {
+    public constructor(config: {[key: string]: any}) {
         super(config);
         Object.assign(this, config);
     }

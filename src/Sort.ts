@@ -10,11 +10,11 @@ export default class Sort extends Component {
   public sortParam = 'sort';
   public defaultOrder = []; // [['id','desc'], ['title', 'asc']];
   public separator = ',';
-  public params;
-  private _attributeOrders;
+  public params: {[key: string]: any};
+  private _attributeOrders: Array<any>;
   public sortFlags = 'SORT_REGULAR';
 
-  public constructor(config) {
+  public constructor(config: {[key: string]: any}) {
     super(config);
     Object.assign(this, config);
   }
@@ -35,7 +35,7 @@ export default class Sort extends Component {
     this.attributes = attributes;
   }
 
-  public getOrders(recalculate = false) {
+  public getOrders(recalculate = false): Array<any> {
     const attributeOrders = this.getAttributeOrders(recalculate);
     const orders = [];
     for (const attribute of attributeOrders) {
@@ -55,7 +55,7 @@ export default class Sort extends Component {
     return orders;
   }
 
-  public getAttributeOrders(recalculate = false) {
+  public getAttributeOrders(recalculate = false): Array<any> {
     if (this._attributeOrders === undefined || recalculate) {
       this._attributeOrders = [];
       // Component.request;
@@ -82,16 +82,16 @@ export default class Sort extends Component {
     return this._attributeOrders;
   }
 
-  protected parseSortParam(param) {
+  protected parseSortParam(param: string): string[] {
     return typeof param === 'string' ? param.split(this.separator) : [];
   }
 
-  public getAttributeOrder(attribute) {
+  public getAttributeOrder(attribute: string): string {
     const orders = this.getAttributeOrders();
     return orders[attribute] !== undefined ? orders[attribute] : null;
   }
 
-  public link(attribute, options) {
+  public link(attribute: string, options: {[key: string]: any}): string {
     const direction = this.getAttributeOrder(attribute);
     if (direction !== null) {
       const className = direction;
@@ -114,7 +114,7 @@ export default class Sort extends Component {
     return Html.a(label, sortUrl.href, options); // `<a href='${sortUrl.href}' ${optionsHtml}>${label}</a>`;
   }
 
-  public createUrl(attribute, absolute = false) {
+  public createUrl(attribute: string, absolute = false): URL {
     let params = this.params;
     if (params === undefined) params = url.parse(Application.request.url, true).query;
       params[this.sortParam] = this.createSortParam(attribute);
@@ -124,7 +124,7 @@ export default class Sort extends Component {
     return sortUrl;
   }
 
-  public createSortParam(attribute) {
+  public createSortParam(attribute: string): string {
     if (this.attributes[attribute] === undefined) throw new Error(`Unknown sort attribute: ${attribute}`);
 
     const definition = this.attributes[attribute];
@@ -143,14 +143,14 @@ export default class Sort extends Component {
       
       direction = direction === 'desc' ? 'asc' : 'desc';
     } else direction = definition.default !== undefined ? definition.default : 'asc';
-    directions = this.enableMultiSort ? [[attribute, direction]].push(directions) : [[attribute, direction]];
+    directions = (this.enableMultiSort ? [[attribute, direction]].push(directions) : [[attribute, direction]]) as Array<any>;
 
     const sorts = [];
     for (const dir of directions) if (dir[0] !== undefined) sorts.push(dir[1] === 'desc' ? `-${dir[0]}` : dir[0]);
     return sorts.join(this.separator);
   }
 
-  public hasAttribute(name) {
+  public hasAttribute(name: string): boolean {
     return this.attributes[name] !== undefined;
   }
 }

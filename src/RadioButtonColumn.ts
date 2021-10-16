@@ -1,10 +1,10 @@
-import { Column, Html } from ".";
+import { Column, Html, Model } from ".";
 
 export default class DataColumn extends Column {
     public name = 'radioButtonSelection';
-    public radioOptions: any = {};
+    public radioOptions: {[key: string]: any} = {};
     
-    public constructor(config) {
+    public constructor(config: {[key: string]: any}) {
         super(config);
         Object.assign(this, config);
     }
@@ -15,7 +15,7 @@ export default class DataColumn extends Column {
             throw new Error('The "name" property must be set.');
     }
 
-    protected async renderDataCellContent(model, key, index) {
+    protected async renderDataCellContent(model: Model, key: string, index: number) {
         if (this.content !== undefined)
             return super.renderDataCellContent(model, key, index);
         let options;

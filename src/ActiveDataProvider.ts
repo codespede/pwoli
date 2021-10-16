@@ -1,4 +1,4 @@
-import { Model } from 'src';
+import Model from './Model';
 import Application from './Application';
 import DataProvider from './DataProvider';
 import ORMAdapter from './ORMAdapters/ORMAdapter';

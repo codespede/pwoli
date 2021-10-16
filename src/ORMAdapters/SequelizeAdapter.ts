@@ -1,5 +1,6 @@
-//import { ActiveDataProvider } from "..";
-import { ActiveDataProvider, Model, Sort } from "src";
+import ActiveDataProvider from "../ActiveDataProvider";
+import Model from "../Model";
+import Sort from "../Sort";
 import IORMAdapter from "./IORMAdapter";
 import ORMAdapter from "./ORMAdapter";
 export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter{

@@ -1,3 +1,4 @@
+import Model from './Model';
 import Application from './Application';
 import CollectionView from './CollectionView';
 import DataHelper from './DataHelper';
@@ -5,18 +6,17 @@ import DataProvider from './DataProvider';
 import Html from './Html';
 
 export default class ListView extends CollectionView {
-  public itemOptions: any = {};
-  public itemView;
-  public viewParams = {};
+  public itemOptions: {[key: string]: any} = {};
+  public itemView: string | CallableFunction | undefined;
+  public viewParams: {[key: string]: any} = {};
   public separator = '\n';
-  public options;
-  any = { class: 'list-view' };
+  public options: {[key: string]: any} = { class: 'list-view' };
 
-  public constructor(config) {
+  public constructor(config: {[key: string]: any}) {
     super(config);
     Object.assign(this, config);
   }
-  public async renderItems(): Promise<any> {
+  public async renderItems(): Promise<string> {
     const models = await this.dataProvider.getModels();
     const keys = this.dataProvider.getKeys();
     const rows = [];
@@ -29,7 +29,7 @@ export default class ListView extends CollectionView {
     return rows.join(this.separator);
   }
 
-  public async renderItem(model, key, index) {
+  public async renderItem(model: Model, key: string, index: number): Promise<string> {
     let content;
     let options;
     if (this.itemView === undefined) content = key;

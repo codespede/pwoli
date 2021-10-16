@@ -1,6 +1,7 @@
 import DataProvider from './DataProvider';
 import DataHelper from './DataHelper';
-import { Model, Sort } from 'src';
+import Model from './Model';
+import Sort from './Sort';
 export default class ArrayDataProvider extends DataProvider {
 
     public key: string | CallableFunction;

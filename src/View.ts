@@ -6,14 +6,14 @@ import path = require('path');
 import Application from './Application';
 const ejs = require('ejs');
 export default class View extends Component {
-  public cssFiles = [];
-  public jsFiles = { head: [], end: [] };
-  public js = { head: [], begin: [], ready: [], load: [], end: [] };
-  public css = [];
+  public cssFiles: string[] = [];
+  public jsFiles: { head: string[], end: string[] } = { head: [], end: [] };
+  public js: { head: string[], begin: string[], ready: string[], load: string[], end: string[] } = { head: [], begin: [], ready: [], load: [], end: [] };
+  public css: string[] = [];
   public basePath = 'static';
-  public layout;
+  public layout: string;
 
-  public constructor(config) {
+  public constructor(config: {[key: string]: any}) {
     super(config);
     Object.assign(this, config);
   }

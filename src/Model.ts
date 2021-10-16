@@ -5,9 +5,9 @@ import ActiveDataProvider from './ActiveDataProvider';
 const ormAdapter = Application.getORMAdapter();
 const ORMModel = ormAdapter.extendableModelClass();
 export default class Model extends ORMModel {
-    public _errors = {};
-    protected attributeLabels = {};
-    protected attributeHints = {};
+    public _errors: {[key: string]: any} = {};
+    protected attributeLabels: {[key: string]: string} = {};
+    protected attributeHints: {[key: string]: string} = {};
     static init;
     public static hooks = {};
     public toJSON() {
@@ -17,21 +17,21 @@ export default class Model extends ORMModel {
         return newJson;
     }
 
-    public getAttributeLabel(attribute) {
+    public getAttributeLabel(attribute: string): string {
         return this.attributeLabels[attribute] !== undefined
         ? this.attributeLabels[attribute]
         : Inflector.humanize(attribute);
     }
 
-    public static primaryKey() {
+    public static primaryKey(): string {
         return 'id';
     }
 
-    public getFormName() {
+    public getFormName(): string {
         return this.constructor.name;
     }
 
-    public load(data, formName = null) {
+    public load(data: {[key: string]: any}, formName: string | null = null): boolean {
         
         const scope = formName === null ? this.getFormName() : formName;
         console.group('model-load', data, scope, data[scope]);
@@ -45,38 +45,38 @@ export default class Model extends ORMModel {
         return false;
     }
 
-    public search(params: {}): ActiveDataProvider {
+    public search(params: {[key: string]: string}): ActiveDataProvider {
         this.load(params);
         ormAdapter.modelClass = this.constructor;
         return ormAdapter.search(this, params, new ActiveDataProvider({modelClass: this.constructor}));
     }
     
-    public setAttributeValues(values: {}) {
+    public setAttributeValues(values: {[key: string]: any}): Model {
         return ormAdapter.setAttributes(this, values);
     }
 
-    public getFirstError(attribute) {
+    public getFirstError(attribute: string): string | null {
         return this._errors[attribute] !== undefined? this._errors[attribute] : null;
     }
 
-    public getAttributeHint(attribute) {
+    public getAttributeHint(attribute): string {
         let hints = this.attributeHints;
         return (hints[attribute] !== undefined) ? hints[attribute] : '';
     }
 
-    public isAttributeRequired(attribute) {
+    public isAttributeRequired(attribute: string): boolean {
         return ormAdapter.isAttributeRequired(this, attribute);
     }
 
-    public hasErrors(attribute = null) {
+    public hasErrors(attribute: string | null = null): boolean {
         return attribute === null ? Object.keys(this._errors).length > 0 : this._errors[attribute] !== undefined;
     }
 
-    public activeAttributes() {
+    public activeAttributes(): string[] {
         return ormAdapter.activeAttributes(this);
     }
 
-    public getActiveValidators(attribute = null) {
+    public getActiveValidators(attribute: string | null = null): {[key: string]: any} {
         const ormValidators = ormAdapter.getActiveValidators(this, attribute);
         const validators = {};
         for (let validator in ormValidators) {
@@ -86,7 +86,7 @@ export default class Model extends ORMModel {
         return validators;
     }
 
-    public async verify(attributeNames = null, clearErrors = true) {
+    public async verify(attributeNames: string[] | null = null, clearErrors = true): Promise<boolean> {
         if (clearErrors)
             this.clearErrors();
         if (attributeNames === null)
@@ -96,7 +96,7 @@ export default class Model extends ORMModel {
         return !this.hasErrors();
     }
 
-    public clearErrors(attribute = null) {
+    public clearErrors(attribute: string | null = null) {
         if (attribute === null)
             this._errors = {};
         else

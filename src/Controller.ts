@@ -1,4 +1,4 @@
-import { Model } from 'src';
+import Model from './Model';
 import Component from './Component';
 export default class Controller extends Component {
   public constructor(config: { [key: string]: any }) {

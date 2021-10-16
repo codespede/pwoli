@@ -1,4 +1,4 @@
-import { Pagination } from 'src';
+import Pagination from './Pagination';
 import Html from './Html';
 import Widget from './Widget';
 
@@ -24,7 +24,7 @@ export default class LinkPager extends Widget {
   public hideOnSinglePage = true;
   public disableCurrentPageButton = false;
 
-  public constructor(config) {
+  public constructor(config: {[key: string]: any}) {
     super(config);
     Object.assign(this, config);
   }
@@ -34,7 +34,7 @@ export default class LinkPager extends Widget {
     if (this.pagination === undefined) throw new Error('The "pagination" property must be set.');
   }
 
-  public async run() {
+  public async run(): Promise<string> {
     if (this.registerLinkTags) this.doRegisterLinkTags();
     return await this.renderPageButtons();
   }
@@ -43,11 +43,8 @@ export default class LinkPager extends Widget {
     
   }
 
-  protected async renderPageButtons() {
+  protected async renderPageButtons(): Promise<string> {
     const pageCount = await this.pagination.getPageCount();
-    // setTimeout(() => {
-    //     
-    // }, 1000);
 
     if (pageCount < 2 && this.hideOnSinglePage) return '';
     const buttons = [];
@@ -114,7 +111,7 @@ export default class LinkPager extends Widget {
     return Html.tag(tag, buttons.join('\n'), options);
   }
 
-  protected async renderPageButton(label, page, cssClass, disabled, active) {
+  protected async renderPageButton(label: string | number | boolean, page: number, cssClass: string, disabled: boolean, active: boolean): Promise<string> {
     let options: any = {};
     options = Object.assign(options, this.linkContainerOptions);
     
@@ -127,14 +124,14 @@ export default class LinkPager extends Widget {
       const disabledItemOptions = this.disabledListItemSubTagOptions;
       const tag = disabledItemOptions.tag !== undefined ? disabledItemOptions.tag : 'span';
       delete disabledItemOptions.tag;
-      return Html.tag(linkWrapTag, Html.tag(tag, label, disabledItemOptions), options);
+      return Html.tag(linkWrapTag, Html.tag(tag, label as string, disabledItemOptions), options);
     }
     const linkOptions = this.linkOptions;
     linkOptions['data-page'] = page;
     return Html.tag(linkWrapTag, Html.a(label, this.pagination.createUrl(page), linkOptions), options);
   }
 
-  protected getPageRange() {
+  protected getPageRange(): [number, number] {
     const currentPage = this.pagination.getPage();
     const pageCount = this.pagination.getPageCount();
     
