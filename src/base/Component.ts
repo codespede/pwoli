@@ -5,7 +5,5 @@ export default class Component {
     this.initialization = this.init();
   }
 
-  public async init() {
-    
-  }
+  public async init() {}
 }

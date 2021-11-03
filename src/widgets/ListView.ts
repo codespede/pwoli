@@ -5,13 +5,13 @@ import DataHelper from '../helpers/DataHelper';
 import Html from '../helpers/Html';
 
 export default class ListView extends CollectionView {
-  public itemOptions: {[key: string]: any} = {};
+  public itemOptions: { [key: string]: any } = {};
   public itemView: string | CallableFunction | undefined;
-  public viewParams: {[key: string]: any} = {};
+  public viewParams: { [key: string]: any } = {};
   public separator = '\n';
-  public options: {[key: string]: any} = { class: 'list-view' };
+  public options: { [key: string]: any } = { class: 'list-view' };
 
-  public constructor(config: {[key: string]: any}) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }

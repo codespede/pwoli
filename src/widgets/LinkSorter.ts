@@ -8,7 +8,7 @@ export default class LinkSorter extends Widget {
   public options: { [key: string]: any } = { class: 'sorter' };
   public linkOptions: { [key: string]: any } = {};
 
-  public constructor(config: {[key: string]: any}) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }

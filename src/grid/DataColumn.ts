@@ -3,6 +3,7 @@ import ActiveDataProvider from '../data/ActiveDataProvider';
 import ArrayDataProvider from '../data/ArrayDataProvider';
 import Column from './Column';
 import Html from '../helpers/Html';
+import DataHelper from '../helpers/DataHelper';
 import Model from '../base/Model';
 
 export default class DataColumn extends Column {
@@ -34,7 +35,7 @@ export default class DataColumn extends Column {
 
     if (this.encodeLabel) label = Html.encode(label);
     const sort = this.grid.dataProvider.getSort();
-    
+
     if (this.attribute !== undefined && this.enableSorting && sort !== false && sort.hasAttribute(this.attribute))
       return sort.link(this.attribute, { ...this.sortLinkOptions, label });
     return label;
@@ -83,11 +84,12 @@ export default class DataColumn extends Column {
     if (this.value !== undefined) {
       if (typeof this.value === 'string') return this.value;
       return this.value(model, key, index, this);
-    } else if (this.attribute !== undefined) return model[this.attribute];
+    } else if (this.attribute !== undefined) return DataHelper.getValue(model, this.attribute);
     return null;
   }
 
   protected async renderDataCellContent(model: Model, key: string, index: number): Promise<string> {
+    console.log('rdcc', model, key, index, this.attribute, this.content)
     if (this.content === undefined) return this.getDataCellvalue(model, key, index);
     return super.renderDataCellContent.call(this, model, key, index);
   }

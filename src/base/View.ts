@@ -7,13 +7,19 @@ import Application from './Application';
 const ejs = require('ejs');
 export default class View extends Component {
   public cssFiles: string[] = [];
-  public jsFiles: { head: string[], end: string[] } = { head: [], end: [] };
-  public js: { head: string[], begin: string[], ready: string[], load: string[], end: string[] } = { head: [], begin: [], ready: [], load: [], end: [] };
+  public jsFiles: { head: string[]; end: string[] } = { head: [], end: [] };
+  public js: { head: string[]; begin: string[]; ready: string[]; load: string[]; end: string[] } = {
+    head: [],
+    begin: [],
+    ready: [],
+    load: [],
+    end: [],
+  };
   public css: string[] = [];
   public basePath = 'static';
   public layout: string;
 
-  public constructor(config: {[key: string]: any}) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }
@@ -37,10 +43,8 @@ export default class View extends Component {
   public registerFile(type: 'js' | 'css', url, options: any = {}, key = null) {
     key = key === null ? url : key;
     const position = DataHelper.remove(options, 'position', 'end');
-    if (type === 'js')
-      this.jsFiles[position].push(Html.jsFile(url, options));
-    else
-      this.cssFiles.push(Html.cssFile(url, options));
+    if (type === 'js') this.jsFiles[position].push(Html.jsFile(url, options));
+    else this.cssFiles.push(Html.cssFile(url, options));
   }
 
   public async registerJs(js, position = 'ready', key = null) {
@@ -59,7 +63,7 @@ export default class View extends Component {
 
   public renderEndHtml(ajaxMode) {
     const lines = [];
-    
+
     if (this.jsFiles.end.length > 0) lines.push(this.jsFiles.end.join('\n'));
     if (ajaxMode) {
       const scripts = [];
@@ -97,8 +101,7 @@ export default class View extends Component {
     if (withLayout && this.layout !== undefined) {
       params.body = await this.renderFile(this.findViewFile(view), params);
       return await this.renderFile(this.findViewFile(this.layout), params);
-    }else
-      return await this.renderFile(this.findViewFile(view), params);
+    } else return await this.renderFile(this.findViewFile(view), params);
   }
 
   public findViewFile(view) {

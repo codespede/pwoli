@@ -10,11 +10,11 @@ export default class Sort extends Component {
   public sortParam = 'sort';
   public defaultOrder = []; // [['id','desc'], ['title', 'asc']];
   public separator = ',';
-  public params: {[key: string]: any};
+  public params: { [key: string]: any };
   private _attributeOrders: Array<any>;
   public sortFlags = 'SORT_REGULAR';
 
-  public constructor(config: {[key: string]: any}) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }
@@ -42,14 +42,13 @@ export default class Sort extends Component {
       // if (attributeOrders[attribute] === undefined)
       //     continue;
       const definition = this.attributes[attribute[0]];
-      
-      
+
       const columns = this.attributes[attribute[0]][attribute[1]];
       // if (typeof columns === 'object')
       //     for (const name in columns)
       //         orders[name] = columns[name];
       // else
-      
+
       orders.push(columns);
     }
     return orders;
@@ -61,7 +60,7 @@ export default class Sort extends Component {
       // Component.request;
       let params = this.params;
       if (params === undefined) params = url.parse(Application.request.url, true).query;
-      
+
       if (params[this.sortParam] !== undefined) {
         for (let attribute of this.parseSortParam(params[this.sortParam])) {
           let descending = false;
@@ -78,7 +77,7 @@ export default class Sort extends Component {
       }
       if (this._attributeOrders.length === 0 && this.defaultOrder.length > 0) this._attributeOrders = this.defaultOrder;
     }
-    
+
     return this._attributeOrders;
   }
 
@@ -91,7 +90,7 @@ export default class Sort extends Component {
     return orders[attribute] !== undefined ? orders[attribute] : null;
   }
 
-  public link(attribute: string, options: {[key: string]: any}): string {
+  public link(attribute: string, options: { [key: string]: any }): string {
     const direction = this.getAttributeOrder(attribute);
     if (direction !== null) {
       const className = direction;
@@ -117,8 +116,8 @@ export default class Sort extends Component {
   public createUrl(attribute: string, absolute = false): URL {
     let params = this.params;
     if (params === undefined) params = url.parse(Application.request.url, true).query;
-      params[this.sortParam] = this.createSortParam(attribute);
-      
+    params[this.sortParam] = this.createSortParam(attribute);
+
     const sortUrl = new URL(Application.getFullUrlOfRequest());
     for (const param in params) sortUrl.searchParams.set(param, params[param]);
     return sortUrl;
@@ -140,10 +139,11 @@ export default class Sort extends Component {
     }
     delete directions[i];
     if (direction !== false) {
-      
       direction = direction === 'desc' ? 'asc' : 'desc';
     } else direction = definition.default !== undefined ? definition.default : 'asc';
-    directions = (this.enableMultiSort ? [[attribute, direction]].push(directions) : [[attribute, direction]]) as Array<any>;
+    directions = (
+      this.enableMultiSort ? [[attribute, direction]].push(directions) : [[attribute, direction]]
+    ) as Array<any>;
 
     const sorts = [];
     for (const dir of directions) if (dir[0] !== undefined) sorts.push(dir[1] === 'desc' ? `-${dir[0]}` : dir[0]);

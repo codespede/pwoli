@@ -24,7 +24,7 @@ export default class LinkPager extends Widget {
   public hideOnSinglePage = true;
   public disableCurrentPageButton = false;
 
-  public constructor(config: {[key: string]: any}) {
+  public constructor(config: { [key: string]: any }) {
     super(config);
     Object.assign(this, config);
   }
@@ -39,9 +39,7 @@ export default class LinkPager extends Widget {
     return await this.renderPageButtons();
   }
 
-  protected doRegisterLinkTags() {
-    
-  }
+  protected doRegisterLinkTags() {}
 
   protected async renderPageButtons(): Promise<string> {
     const pageCount = await this.pagination.getPageCount();
@@ -111,10 +109,16 @@ export default class LinkPager extends Widget {
     return Html.tag(tag, buttons.join('\n'), options);
   }
 
-  protected async renderPageButton(label: string | number | boolean, page: number, cssClass: string, disabled: boolean, active: boolean): Promise<string> {
+  protected async renderPageButton(
+    label: string | number | boolean,
+    page: number,
+    cssClass: string,
+    disabled: boolean,
+    active: boolean,
+  ): Promise<string> {
     let options: any = {};
     options = Object.assign(options, this.linkContainerOptions);
-    
+
     const linkWrapTag = options.tag !== undefined ? options.tag : 'li';
     delete options.tag;
     Html.addCssClass(options, cssClass === undefined ? this.pageCssClass : cssClass);
@@ -134,7 +138,7 @@ export default class LinkPager extends Widget {
   protected getPageRange(): [number, number] {
     const currentPage = this.pagination.getPage();
     const pageCount = this.pagination.getPageCount();
-    
+
     let beginPage = Math.max(0, currentPage - this.maxButtonCount / 2);
     let endPage = beginPage + this.maxButtonCount - 1;
     if (endPage >= pageCount) {

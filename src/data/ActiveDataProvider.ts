@@ -15,30 +15,26 @@ export default class ActiveDataProvider extends DataProvider {
   }
 
   public async init() {
-    await super.init.call(this)
+    await super.init.call(this);
     if (this.ormAdapter === undefined) {
       this.ormAdapter = Application.getORMAdapter();
-      console.log('adpi', this.ormAdapter)
       this.ormAdapter.modelClass = this.modelClass;
     }
   }
 
   public async prepareModels() {
-    
     const pagination = this.getPagination();
     if (pagination !== false) {
       this.totalCountPromise = this.getTotalCount();
       pagination.totalCount = await this.totalCountPromise;
-      
+
       if (pagination.totalCount === 0) return [];
       this.query.limit = pagination.getLimit();
       this.query.offset = pagination.getOffset();
       this.setPagination(pagination);
     }
     const sort = this.getSort();
-    if (sort !== false && sort.getOrders().length > 0)
-      this.query = this.ormAdapter.applySort(this.query, sort);
-    
+    if (sort !== false && sort.getOrders().length > 0) this.query = this.ormAdapter.applySort(this.query, sort);
     return await this.ormAdapter.findAll(this.query);
   }
 
@@ -53,7 +49,7 @@ export default class ActiveDataProvider extends DataProvider {
 
   public async prepareTotalCount() {
     const totalCount = await this.ormAdapter.count(this.query);
-    
+
     return totalCount;
   }
 
@@ -62,15 +58,15 @@ export default class ActiveDataProvider extends DataProvider {
     const sort = this.getSort();
     if (sort !== false) {
       const model = new (this.modelClass as any)();
-      
+
       if (Object.keys(sort.attributes).length === 0) {
         const attributes = this.ormAdapter.attributes();
         for (const attribute of attributes) {
-            sort.attributes[attribute] = {
-              asc: [attribute, 'asc'],
-              desc: [attribute, 'desc'],
-              label: model.getAttributeLabel(attribute),
-            };
+          sort.attributes[attribute] = {
+            asc: [attribute, 'asc'],
+            desc: [attribute, 'desc'],
+            label: model.getAttributeLabel(attribute),
+          };
         }
       } else {
         for (const attribute in sort.attributes) {
