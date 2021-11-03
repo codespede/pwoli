@@ -135,7 +135,7 @@ export default class GridView extends CollectionView {
      * ```
      * Note: Format is now restricted to 'text' only. You can convert the data to a specific format by using
      * callbacks as of now:
-     * 
+     *
      * [
      *     'id',
      *     'title:text:Company Name',
@@ -144,7 +144,7 @@ export default class GridView extends CollectionView {
      *         value: (model, attribute) => (new Date(form.startDate.value)).toString('dd MMMM yyyy')
      *     }
      * ]
-     * 
+     *
      * When using a [[dataProvider]] with active records, you can also display values from related records,
      * e.g. the `name` attribute of the `author` relation:
      *
@@ -263,10 +263,10 @@ export default class GridView extends CollectionView {
     /** @inheritdoc */
     public async renderSection(name: string): Promise<string> {
         switch (name) {
-        case '{errors}':
-            return this.renderErrors();
-        default:
-            return await super.renderSection.call(this, name);
+            case '{errors}':
+                return this.renderErrors();
+            default:
+                return await super.renderSection.call(this, name);
         }
     }
     /**
@@ -274,7 +274,8 @@ export default class GridView extends CollectionView {
      * @return the options
      */
     protected getClientOptions(): { filterUrl: string; filterSelector: string } {
-        const filterUrl = this.filterUrl !== undefined ? this.filterUrl : Pwoli.request.originalUrl || Pwoli.request.url;
+        const filterUrl =
+            this.filterUrl !== undefined ? this.filterUrl : Pwoli.request.originalUrl || Pwoli.request.url;
         const id = this.filterRowOptions.id;
         let filterSelector = `#${id} input, #${id} select`;
         if (this.filterSelector !== undefined) filterSelector += `, ${this.filterSelector}`;
@@ -292,10 +293,10 @@ export default class GridView extends CollectionView {
         let tableFooter: boolean | string = false;
         let tableFooterAfterBody: boolean | string = false;
         if (this.showFooter)
-        if (this.placeFooterAfterBody) tableFooterAfterBody = await this.renderTableFooter();
-        else tableFooter = await this.renderTableFooter();
+            if (this.placeFooterAfterBody) tableFooterAfterBody = await this.renderTableFooter();
+            else tableFooter = await this.renderTableFooter();
         const content = [caption, columnGroup, tableHeader, tableFooter, tableBody, tableFooterAfterBody].filter(
-        (item) => item,
+            (item) => item,
         );
         return Html.tag('table', content.join('\n'), this.tableOptions);
     }
@@ -351,9 +352,9 @@ export default class GridView extends CollectionView {
      */
     public async renderFilters(): Promise<string> {
         if (this.filterModel !== undefined) {
-        const cells = [];
-        for (const column of this.columns) cells.push(await (column as column).renderFilterCell());
-        return Html.tag('tr', cells.join(''), this.filterRowOptions);
+            const cells = [];
+            for (const column of this.columns) cells.push(await (column as column).renderFilterCell());
+            return Html.tag('tr', cells.join(''), this.filterRowOptions);
         }
         return '';
     }
@@ -369,12 +370,12 @@ export default class GridView extends CollectionView {
         let i = 0;
 
         for (const model of models) {
-        const key = keys[i];
-        rows.push(await this.renderTableRow(model, key, i));
-        i++;
+            const key = keys[i];
+            rows.push(await this.renderTableRow(model, key, i));
+            i++;
         }
         if (rows.length === 0 && this.emptyText !== false)
-        return `<tbody>\n<tr><td colspan="${this.columns.length}">${this.renderEmpty()}</td></tr>\n</tbody>`;
+            return `<tbody>\n<tr><td colspan="${this.columns.length}">${this.renderEmpty()}</td></tr>\n</tbody>`;
         return `<tbody\n${rows.join('\n')}\n</tbody>`;
     }
     /**
@@ -398,17 +399,17 @@ export default class GridView extends CollectionView {
         if (this.columns.length === 0) this.guessColumns();
         let i = 0;
         for (let column of this.columns) {
-        if (typeof column === 'string') column = this.createDataColumn(column);
-        else {
-            const columnClass = DataHelper.remove(column, 'class', this.dataColumnClass);
-            column = new columnClass({ grid: this, ...column });
-        }
-        if (!(column as column).visible) {
-            delete this.columns[i];
-            continue;
-        }
-        this.columns[i] = column;
-        i++;
+            if (typeof column === 'string') column = this.createDataColumn(column);
+            else {
+                const columnClass = DataHelper.remove(column, 'class', this.dataColumnClass);
+                column = new columnClass({ grid: this, ...column });
+            }
+            if (!(column as column).visible) {
+                delete this.columns[i];
+                continue;
+            }
+            this.columns[i] = column;
+            i++;
         }
     }
     /**
@@ -438,6 +439,6 @@ export default class GridView extends CollectionView {
         const models = this._models;
         const model = models[1];
         for (const name in model)
-        if (model[name] === null || /boolean|number|string/.test(typeof model[name])) this.columns.push(name);
+            if (model[name] === null || /boolean|number|string/.test(typeof model[name])) this.columns.push(name);
     }
 }

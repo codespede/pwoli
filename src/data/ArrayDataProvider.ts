@@ -82,9 +82,9 @@ export default class ArrayDataProvider extends DataProvider {
             const keys = [];
             for (let model of models) {
                 if (typeof this.key === 'string') {
-                keys.push(model[this.key]);
+                    keys.push(model[this.key]);
                 } else {
-                keys.push(this.key(model));
+                    keys.push(this.key(model));
                 }
             }
             return keys;
@@ -97,7 +97,7 @@ export default class ArrayDataProvider extends DataProvider {
      */
     public async prepareTotalCount(): Promise<number> {
         return new Promise<number>((resolve) => {
-        resolve(Array.isArray(this.allModels) ? this.allModels.length : 0);
+            resolve(Array.isArray(this.allModels) ? this.allModels.length : 0);
         });
     }
     /**

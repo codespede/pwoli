@@ -2,7 +2,24 @@ import Model from '../base/Model';
 import Component from '../base/Component';
 import Pagination from './Pagination';
 import Sort from './Sort';
-
+/**
+ * BaseDataProvider provides a base class for [[ActiveDataProvider]] and [[ArrayDataProvider]]
+ *
+ * For more details and usage information on BaseDataProvider, see the [guide article on data providers](guide:output-data-providers).
+ *
+ * @property-read int $count The number of data models in the current page. This property is read-only.
+ * @property array $keys The list of key values corresponding to [[models]]. Each data model in [[models]] is
+ * uniquely identified by the corresponding key value in this array.
+ * @property array $models The list of data models in the current page.
+ * @property Pagination|false $pagination The pagination object. If this is false, it means the pagination is
+ * disabled. Note that the type of this property differs in getter and setter. See [[getPagination()]] and
+ * [[setPagination()]] for details.
+ * @property Sort|bool $sort The sorting object. If this is false, it means the sorting is disabled. Note that
+ * the type of this property differs in getter and setter. See [[getSort()]] and [[setSort()]] for details.
+ * @property int $totalCount Total number of possible data models.
+ *
+ * @author Mahesh S Warrier <https://github.com/codespede>
+ */
 export default class DataProvider extends Component {
     /**
      * Number of data providers on the current page. Used to generate unique IDs.
@@ -37,8 +54,8 @@ export default class DataProvider extends Component {
     public async init() {
         await super.init.call(this);
         if (this.id === null) {
-        if (DataProvider.counter > 0) this.id = `dp-${DataProvider.counter}`;
-        DataProvider.counter++;
+            if (DataProvider.counter > 0) this.id = `dp-${DataProvider.counter}`;
+            DataProvider.counter++;
         }
     }
     /**
@@ -53,10 +70,10 @@ export default class DataProvider extends Component {
      */
     public async prepare(forcePrepare = false) {
         if (forcePrepare || this._models.length === 0) {
-        this._models = await this.prepareModels();
+            this._models = await this.prepareModels();
         }
         if (forcePrepare || (this._keys as Array<string>).length === 0) {
-        this._keys = this.prepareKeys(this._models);
+            this._keys = this.prepareKeys(this._models);
         }
     }
     /**
