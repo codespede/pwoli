@@ -2,6 +2,24 @@ import Column from './Column';
 import Html from '../helpers/Html';
 import DataHelper from '../helpers/DataHelper';
 
+/**
+ * ActionColumn is a column for the [[GridView]] widget that displays buttons for viewing and manipulating the items.
+ *
+ * To add an ActionColumn to the gridview, add it to the [[GridView::columns|columns]] configuration as follows:
+ *
+ * ```js
+ * columns: [
+ *     // ...
+ *     {
+ *         class: ActionColumn.class,
+ *         // you may configure additional properties here
+ *     },
+ * ]
+ * ```
+ *
+ * For more details and usage information on ActionColumn, see the [guide article on data widgets](guide:output-data-widgets).
+ *
+ */
 export default class ActionColumn extends Column {
   public headerOptions: { [key: string]: any } = { class: 'action-column' };
   public route;
@@ -10,6 +28,21 @@ export default class ActionColumn extends Column {
     update: 'update/{id}',
     delete: 'delete/{id}',
   };
+  /**
+   * The template used for composing each cell in the action column.
+   * Tokens enclosed within curly brackets are treated as controller action IDs (also called *button names*
+   * in the context of action column). They will be replaced by the corresponding button rendering callbacks
+   * specified in [[buttons]]. For example, the token `{view}` will be replaced by the result of
+   * the callback `buttons['view']`. If a callback cannot be found, the token will be replaced with an empty string.
+   *
+   * As an example, to only have the view, and update button you can add the ActionColumn to your GridView columns as follows:
+   *
+   * ```js
+   * {class: 'ActionColumn', 'template': '{view} {update}'},
+   * ```
+   *
+   * @see [[buttons]]
+   */
   public template = '{view} {update} {delete}';
   public buttons: { [key: string]: any } = {};
   public icons: { [key: string]: string } = {
