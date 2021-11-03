@@ -52,7 +52,9 @@ export default class CollectionView extends Widget {
     const tag = options.tag !== undefined ? options.tag : 'div';
     return Html.tag(tag, content, options);
   }
-
+  /**
+   * test renderSection
+   */
   public async renderSection(name: string): Promise<string> {
     name = name.replace(/\{|\}/g, '');
 
