@@ -17,7 +17,7 @@ export default class DataHelper extends Component {
      * ```js
      * // array = {type: 'A', options: [1, 2]};
      * // working with array
-     * $type = ArrayHelper.remove(array, 'type');
+     * type = DataHelper.remove(array, 'type');
      * // array content
      * // array = {options: [1, 2]];
      * ```
@@ -124,15 +124,15 @@ export default class DataHelper extends Component {
      * For example,
      *
      * ```js
-     * array = {
+     * let array = [
      *     {id: '123', data: 'abc'},
      *     {id: '345', data: 'def'},
-     * }
-     * result = ArrayHelper.getColumn(array, 'id');
+     * ]
+     * let result = DataHelper.getColumn(array, 'id');
      * // the result is: ['123', '345']
      *
-     * // using anonymous function
-     * result = ArrayHelper.getColumn(array, function (element) {
+     * // using callback
+     * result = DataHelper.getColumn(array, (element) => {
      *     return element['id'];
      * });
      * ```
@@ -493,7 +493,7 @@ export default class DataHelper extends Component {
      * value = ArrayHelper.getValue(versions, ['1.0', 'date']);
      * ```
      *
-     * @param array array or object to extract value from
+     * @param object array or object to extract value from
      * @param key key name of the array element, an array of keys or property name of the object,
      * or an anonymous function returning the value. The anonymous function signature should be:
      * `function(array, defaultValue)`.
