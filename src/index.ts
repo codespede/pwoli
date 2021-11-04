@@ -5,7 +5,6 @@ import ArrayDataProvider from './data/ArrayDataProvider';
 import CollectionView from './widgets/CollectionView';
 import Column from './grid/Column';
 import Component from './base/Component';
-import Controller from './base/Controller';
 import DataColumn from './grid/DataColumn';
 import DataHelper from './helpers/DataHelper';
 import DataProvider from './data/DataProvider';
@@ -42,7 +41,6 @@ export {
     CollectionView,
     Column,
     Component,
-    Controller,
     DataColumn,
     DataHelper,
     DataProvider,

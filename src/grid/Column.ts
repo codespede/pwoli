@@ -129,7 +129,6 @@ export default class Column extends Component {
      * @return the rendering result
      */
     protected async renderDataCellContent(model: Model, key: string, index: number): Promise<string> {
-        console.log('rdcc', this.content, key, model);
         if (this.content !== undefined) return (this.content as CallableFunction)(model, key, index, this);
         return this.grid.emptyCell;
     }

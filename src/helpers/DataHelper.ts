@@ -1,7 +1,32 @@
 import Component from '../base/Component';
 import url = require('url');
 import { link } from 'fs';
+/**
+ * BaseArrayHelper provides concrete implementation for [[ArrayHelper]].
+ *
+ * Do not use BaseArrayHelper. Use [[ArrayHelper]] instead.
+ *
+ */
 export default class DataHelper extends Component {
+    /**
+     * Removes an item from an array and returns the value. If the key does not exist in the array, the default value
+     * will be returned instead.
+     *
+     * Usage examples,
+     *
+     * ```js
+     * // array = {type: 'A', options: [1, 2]};
+     * // working with array
+     * $type = ArrayHelper.remove(array, 'type');
+     * // array content
+     * // array = {options: [1, 2]];
+     * ```
+     *
+     * @param array array the array to extract value from
+     * @param key key name of the array element
+     * @param default the default value to be returned if the specified key does not exist
+     * @return the value of the element if found, default value otherwise
+     */
     public static remove(object: { [key: string]: any }, key: string, defaultValue: any = null) {
         const value = object[key] !== undefined ? object[key] : defaultValue;
         delete object[key];
@@ -37,7 +62,21 @@ export default class DataHelper extends Component {
         }
         return parsedParams;
     }
-
+    /**
+     * Sorts an array of objects or arrays (with the same structure) by one or several keys.
+     * @param array array the array to be sorted. The array will be modified after calling this method.
+     * @param key the key(s) to be sorted by. This refers to a key name of the sub-array
+     * elements, a property name of the objects, or an anonymous function returning the values for comparison
+     * purpose. The anonymous function signature should be: `function(item)`.
+     * To sort by multiple keys, provide an array of keys here.
+     * @param direction the sorting direction. It can be either `SORT_ASC` or 'SORT_DESC'.
+     * When sorting by multiple keys with different sorting directions, use an array of sorting directions.
+     * @param sortFlag the JS sort flag. Valid values include
+     * 'SORT_REGULAR', 'SORT_NUMERIC', 'SORT_STRING', 'SORT_LOCALE_STRING', 'SORT_NATURAL' and 'SORT_FLAG_CASE'.
+     * for more details. When sorting by multiple keys with different sort flags, use an array of sort flags.
+     * @throws InvalidArgumentException if the direction or sortFlag parameters do not have
+     * correct number of elements as that of key.
+     */
     public static multiSort(
         array: Array<any>,
         key: Array<string | number> | string | number,
@@ -78,7 +117,32 @@ export default class DataHelper extends Component {
         args.push(array);
         this.arrayMultiSort.apply(null, args);
     }
-
+    /**
+     * Returns the values of a specified column in an array.
+     * The input array should be multidimensional or an array of objects.
+     *
+     * For example,
+     *
+     * ```js
+     * array = {
+     *     {id: '123', data: 'abc'},
+     *     {id: '345', data: 'def'},
+     * }
+     * result = ArrayHelper.getColumn(array, 'id');
+     * // the result is: ['123', '345']
+     *
+     * // using anonymous function
+     * result = ArrayHelper.getColumn(array, function (element) {
+     *     return element['id'];
+     * });
+     * ```
+     *
+     * @param array array
+     * @param name
+     * @param keepKeys whether to maintain the array keys. If false, the resulting array
+     * will be re-indexed with integers.
+     * @return the list of column values
+     */
     public static getColumn(array: Array<any>, name: string | number): { [key: string]: any } {
         const result = {};
         for (let k in array) result[k] = array[k][name];
@@ -399,7 +463,44 @@ export default class DataHelper extends Component {
         }
         return links;
     }
-
+    /**
+     * Retrieves the value of an array element or object property with the given key or property name.
+     * If the key does not exist in the array, the default value will be returned instead.
+     * Not used when getting value from an object.
+     *
+     * The key may be specified in a dot format to retrieve the value of a sub-array or the property
+     * of an embedded object. In particular, if the key is `x.y.z`, then the returned value would
+     * be `array['x']['y']['z']` or `array.x.y.z` (if `array` is an object). If `array['x']`
+     * or `array.x` is neither an array nor an object, the default value will be returned.
+     * Note that if the array already has an element `x.y.z`, then its value will be returned
+     * instead of going through the sub-arrays. So it is better to be done specifying an array of key names
+     * like `['x', 'y', 'z']`.
+     *
+     * Below are some usage examples,
+     *
+     * ```js
+     * // working with array
+     * username = ArrayHelper.getValue(POST, 'username');
+     * // working with object
+     * username = ArrayHelper.getValue(user, 'username');
+     * // working with anonymous function
+     * fullName = ArrayHelper.getValue(user, function (user, defaultValue) {
+     *     return user.firstName . ' ' . user.lastName;
+     * });
+     * // using dot format to retrieve the property of embedded object
+     * street = ArrayHelper.getValue(users, 'address.street');
+     * // using an array of keys to retrieve the value
+     * value = ArrayHelper.getValue(versions, ['1.0', 'date']);
+     * ```
+     *
+     * @param array array or object to extract value from
+     * @param key key name of the array element, an array of keys or property name of the object,
+     * or an anonymous function returning the value. The anonymous function signature should be:
+     * `function(array, defaultValue)`.
+     * @param default the default value to be returned if the specified array key does not exist. Not used when
+     * getting value from an object.
+     * @return the value of the element if found, default value otherwise
+     */
     public static getValue(object, key, defaultValue = null) {
         if (typeof key === 'function') {
             return key(object, defaultValue);

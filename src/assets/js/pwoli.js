@@ -89,19 +89,16 @@ window.pwoli = (function ($) {
          * that should be submitted as hidden inputs. For example, you may use the following code to generate
          * such a link:
          *
-         * ```php
-         * use pwoli\helpers\Html;
-         * use pwoli\helpers\Json;
-         *
-         * echo Html::a('submit', ['site/foobar'], [
-         *     'data' => [
-         *         'method' => 'post',
-         *         'params' => [
-         *             'name1' => 'value1',
-         *             'name2' => 'value2',
-         *         ],
-         *     ],
-         * ]);
+         * ```js
+         * <%- Html.a('submit', 'my-route', {
+         *     'data': {
+         *         'method': 'post',
+         *         'params': {
+         *             'name1': 'value1',
+         *             'name2': 'value2',
+         *         },
+         *     },
+         * });
          * ```
          *
          * @param $e the jQuery representation of the element
@@ -143,7 +140,6 @@ window.pwoli = (function ($) {
                     );
                 }
             });
-
             if (usePjax) {
                 pjaxContainer = $e.data('pjax-container');
                 if (pjaxContainer === undefined || !pjaxContainer.length) {

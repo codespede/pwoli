@@ -185,7 +185,6 @@ export default class DataColumn extends Column {
     }
     /** @inheritdoc */
     protected async renderDataCellContent(model: Model, key: string, index: number): Promise<string> {
-        console.log('rdcc', model, key, index, this.attribute, this.content);
         if (this.content === undefined) return this.getDataCellvalue(model, key, index);
         return super.renderDataCellContent.call(this, model, key, index);
     }
