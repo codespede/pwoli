@@ -2,3 +2,5 @@ node_modules
 /lib
 pkgtest*
 static
+docs
+api-docs
