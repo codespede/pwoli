@@ -2,9 +2,9 @@ import Component from '../base/Component';
 import url = require('url');
 import { link } from 'fs';
 /**
- * BaseArrayHelper provides concrete implementation for [[ArrayHelper]].
+ * BaseDataHelper provides concrete implementation for [[DataHelper]].
  *
- * Do not use BaseArrayHelper. Use [[ArrayHelper]] instead.
+ * Do not use BaseDataHelper. Use [[DataHelper]] instead.
  *
  */
 export default class DataHelper extends Component {
@@ -15,14 +15,14 @@ export default class DataHelper extends Component {
      * Usage examples,
      *
      * ```js
-     * // array = {type: 'A', options: [1, 2]};
+     * // let array = {type: 'A', options: [1, 2]};
      * // working with array
-     * type = DataHelper.remove(array, 'type');
+     * let type = DataHelper.remove(array, 'type');
      * // array content
      * // array = {options: [1, 2]];
      * ```
      *
-     * @param array array the array to extract value from
+     * @param array the array to extract value from
      * @param key key name of the array element
      * @param default the default value to be returned if the specified key does not exist
      * @return the value of the element if found, default value otherwise
@@ -64,10 +64,10 @@ export default class DataHelper extends Component {
     }
     /**
      * Sorts an array of objects or arrays (with the same structure) by one or several keys.
-     * @param array array the array to be sorted. The array will be modified after calling this method.
+     * @param array the array to be sorted. The array will be modified after calling this method.
      * @param key the key(s) to be sorted by. This refers to a key name of the sub-array
-     * elements, a property name of the objects, or an anonymous function returning the values for comparison
-     * purpose. The anonymous function signature should be: `function(item)`.
+     * elements, a property name of the objects, or a callback function returning the values for comparison
+     * purpose. The callback function signature should be: `function(item)`.
      * To sort by multiple keys, provide an array of keys here.
      * @param direction the sorting direction. It can be either `SORT_ASC` or 'SORT_DESC'.
      * When sorting by multiple keys with different sorting directions, use an array of sorting directions.
@@ -137,7 +137,7 @@ export default class DataHelper extends Component {
      * });
      * ```
      *
-     * @param array array
+     * @param array
      * @param name
      * @param keepKeys whether to maintain the array keys. If false, the resulting array
      * will be re-indexed with integers.
@@ -480,22 +480,22 @@ export default class DataHelper extends Component {
      *
      * ```js
      * // working with array
-     * username = ArrayHelper.getValue(POST, 'username');
+     * let username = DataHelper.getValue(POST, 'username');
      * // working with object
-     * username = ArrayHelper.getValue(user, 'username');
-     * // working with anonymous function
-     * fullName = ArrayHelper.getValue(user, function (user, defaultValue) {
+     * username = DataHelper.getValue(user, 'username');
+     * // working with callback function
+     * let fullName = DataHelper.getValue(user, (user, defaultValue) => {
      *     return user.firstName . ' ' . user.lastName;
      * });
      * // using dot format to retrieve the property of embedded object
-     * street = ArrayHelper.getValue(users, 'address.street');
+     * let street = DataHelper.getValue(users, 'address.street');
      * // using an array of keys to retrieve the value
-     * value = ArrayHelper.getValue(versions, ['1.0', 'date']);
+     * let value = DataHelper.getValue(versions, ['1.0', 'date']);
      * ```
      *
      * @param object array or object to extract value from
      * @param key key name of the array element, an array of keys or property name of the object,
-     * or an anonymous function returning the value. The anonymous function signature should be:
+     * or a callback function returning the value. The callback function signature should be:
      * `function(array, defaultValue)`.
      * @param default the default value to be returned if the specified array key does not exist. Not used when
      * getting value from an object.

@@ -110,7 +110,7 @@ export default class Html extends Component {
      * overriding of such key will have no effect. For example:
      *
      * ```js
-     * options = {class: {persistent: 'initial'}};
+     * let options = {class: {persistent: 'initial'}};
      * Html.addCssClass(options, {persistent: 'override'});
      * console.log(options['class']); // outputs: {persistent: 'initial'};
      * ```
