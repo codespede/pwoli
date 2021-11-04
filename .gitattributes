@@ -1,2 +1,2 @@
-docs linguist-detectable=false
-api-docs linguist-detectable=false
+docs linguist-documentation
+api-docs linguist-documentation
