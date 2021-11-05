@@ -1,14 +1,17 @@
 ## Pwoli
 
-Pwoli is a Node JS framework written in TypeScript which can work independantly on a raw Node JS environement OR, in co-ordination with other frameworks like Express.js.
+Pwoli is a Node JS framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with other frameworks like Express.js.
 
-Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](//pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
+Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
 
-### Features
+### Main Features
 
 -   Fully flexible because of the OOP based architecture.
--   Has
+-   Frontend widgets like ActiveForm, GridView, ListView for SSR applications.
+-   [DataProviders](/pwoli/api-docs/classes/DataProvider.html) and [Serializers](/pwoli/api-docs/classes/Serializer.html) for SPA applications.
+-   Works on both NodeJS and TypeScript applications.
 -   Has reasonable defaults.
+-   Well documented and typed code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
