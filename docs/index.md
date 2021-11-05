@@ -1,10 +1,14 @@
-## Welcome to GitHub Pages
+## Pwoli
 
-You can use the [editor on GitHub](https://github.com/internetmango/pwoli/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+Pwoli is a Node JS framework written in TypeScript which can work independantly on a raw Node JS environement OR, in co-ordination with other frameworks like Express.js.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](//pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
 
-### Markdown
+### Features
+
+-   Fully flexible because of the OOP based architecture.
+-   Has
+-   Has reasonable defaults.
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
@@ -12,11 +16,13 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
 Syntax highlighted code block
 
 # Header 1
+
 ## Header 2
+
 ### Header 3
 
-- Bulleted
-- List
+-   Bulleted
+-   List
 
 1. Numbered
 2. List
