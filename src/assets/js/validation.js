@@ -203,7 +203,6 @@ pwoli.validation = (function ($) {
                     valid =
                         new RegExp(options.pattern).test(value) ||
                         (options.allowName && new RegExp(options.fullPattern).test(value));
-                    //console.log('validation', value, (new RegExp(options.pattern, 'ig')).test(value), options.allowName, (new RegExp(options.fullPattern)).test(value));
                 }
             }
 

@@ -166,7 +166,7 @@ export default class Serializer extends Component {
      */
     protected async serializeDataProvider(dataProvider: DataProvider): Promise<{ [key: string]: any }> {
         let models;
-        //console.log('sdpbb------------', await dataProvider.getModels())
+
         if (this.preserveKeys) models = await dataProvider.getModels();
         else models = Object.values(await dataProvider.getModels());
 
@@ -179,7 +179,6 @@ export default class Serializer extends Component {
         if (this.request.method === 'HEAD') {
             return null;
         } else if (this.collectionEnvelope === undefined) {
-            //console.log('sdp------------', models)
             return models;
         }
 

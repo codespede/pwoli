@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-import Model from '../Model';
+import Model from '../base/Model';
 import { DataTypes } from 'sequelize';
 let sequelize = new Sequelize(null, null, null, { dialect: 'mysql' });
 export default class Model1 extends Model {}

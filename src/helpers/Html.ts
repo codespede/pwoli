@@ -112,7 +112,7 @@ export default class Html extends Component {
      * ```js
      * let options = {class: {persistent: 'initial'}};
      * Html.addCssClass(options, {persistent: 'override'});
-     * console.log(options['class']); // outputs: {persistent: 'initial'};
+
      * ```
      *
      * @param options the options to be modified.
@@ -381,9 +381,8 @@ export default class Html extends Component {
         if (matches.length === 0) throw new Error('Attribute name must contain word characters only.');
         attribute = matches[2];
         let value = model[attribute];
-        //console.log('gav', model)
+
         if (matches[3] !== '') {
-            console.log('gav3', attribute);
             for (const id of matches[3].trim().split(']['))
                 if (Array.isArray(value) && value[id] !== undefined) value = value[id];
                 else return null;

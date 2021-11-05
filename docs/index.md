@@ -6,14 +6,37 @@ Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM A
 
 ### Main Features
 
--   Fully flexible because of the OOP based architecture.
+-   Fully flexible and extensible - thanks to the OOP based architecture.
 -   Frontend widgets like ActiveForm, GridView, ListView for SSR applications.
--   [DataProviders](/pwoli/api-docs/classes/DataProvider.html) and [Serializers](/pwoli/api-docs/classes/Serializer.html) for SPA applications.
+-   [DataProviders](/pwoli/api-docs/classes/DataProvider.html) and [Serializers](/pwoli/api-docs/classes/Serializer.html) for the backends of SPA applications.
 -   Works on both NodeJS and TypeScript applications.
 -   Has reasonable defaults.
--   Well documented and typed code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
+-   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+
+### Installation
+
+```markdown
+npm install pwoli
+```
+
+Enter these lines in your application's entry script(most probably index.ts or index.js)
+
+```markdown
+import { Application as Pwoli } from 'pwoli';
+import { Model } from 'sequelize'; // If your ORM is Sequelize. Otherwise, the corresponding base model class of your ORM.
+Application.setORMModelClass(Model);
+Application.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
+
+You're ready to go!
+```
+
+### Get Started
+
+-   Please note: If you are building an SPA, click here to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
+
+Click on one of our guides below for learning how to use the Widgets and using DataProvider for delivering data for them.
 
 ```markdown
 Syntax highlighted code block

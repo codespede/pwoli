@@ -117,10 +117,8 @@ export default class Application extends Component {
      * Responds to the client(eg:- browser) depending on the data.
      */
     public static async respond(nativeResponse, data = null) {
-        //console.log('ares', data);
         if (typeof data === 'string') this.response.data = data;
         else if (typeof data === 'function') {
-            console.log('aresf--------------------->', nativeResponse);
             nativeResponse = this.responsify(nativeResponse);
             return data(nativeResponse);
         } else if (data !== null) {
@@ -128,7 +126,7 @@ export default class Application extends Component {
             this.serializer.response = this.response;
             this.response.data = JSON.stringify(await this.serializer.serialize(data));
         }
-        //console.log('aresa', this.response);
+
         nativeResponse = this.responsify(nativeResponse);
         nativeResponse.write(this.response.data);
         nativeResponse.end();
@@ -140,5 +138,9 @@ export default class Application extends Component {
         for (let header in this.response.headers) response.setHeader(header, this.response.headers[header] || '');
         if (this.response.status !== null) response.status = this.response.status;
         return response;
+    }
+
+    public static setORMModelClass(modelClass: Object) {
+        Application.ormModelClass = modelClass;
     }
 }

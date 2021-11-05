@@ -1,13 +1,10 @@
-import ActiveField from '../ActiveField';
-import ActiveForm from '../ActiveForm';
-import Application from '../Application';
+import Application from '../base/Application';
 import { DataTypes, Model } from 'sequelize';
 Application.ormModelClass = Model;
 import Model1 from './Models.jestignore';
 import { ActiveDataProvider } from '..';
 
 test('ModelsSetGetTest', async () => {
-    console.log('orma', Application.getORMAdapter());
     const dataProvider = new ActiveDataProvider({
         modelClass: Model1,
     });

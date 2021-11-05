@@ -208,7 +208,7 @@ export default class ActiveForm extends Widget {
         const options = JSON.stringify(this.getClientOptions());
         let attributes = JSON.stringify(this.attributes);
         attributes = attributes.replace(/\"(function.*?\})\"/g, `$1`).replace(/(\\":?!)|({?!\\")|(\\")/g, '"');
-        //console.log('af-rcs', attributes);
+
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, '/../assets/css/bootstrap.css'));
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, '/../assets/js/activeForm.js'));
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, '/../assets/js/validation.js'));

@@ -9,7 +9,6 @@ export default class ORMAdapter extends Component {
     }
 
     public extendableModelClass() {
-        if (Application.ormModelClass === undefined) throw new Error("'Application.ormModelClass' should be set.");
         return Application.ormModelClass;
     }
 }

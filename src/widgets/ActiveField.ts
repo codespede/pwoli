@@ -160,14 +160,13 @@ export default class ActiveField extends Component {
             return `pwoli.validation.regularExpression(value, messages, ${JSON.stringify(params.options)});`;
         },
         regexInverse: (params) => {
-            //console.log('not-params', params);
             params.options = {
                 message: `The value entered is invalid.`,
                 pattern: params.criteria.source,
                 not: true,
                 ...params.options,
             };
-            //console.log('not-params-after', params.options);
+
             return `pwoli.validation.regularExpression(value, messages, ${JSON.stringify(params.options)});`;
         },
         required: (params) => {
@@ -238,10 +237,10 @@ export default class ActiveField extends Component {
         let clientOptions;
         if (this.form.enableClientScript) {
             clientOptions = this.getClientOptions();
-            //console.log('af-begin', clientOptions, this.model.activeAttributes());
+
             if (clientOptions !== undefined) this.form.attributes.push(clientOptions);
         }
-        //console.log('af-begin', this.form.attributes);
+
         const inputId = this.getInputId();
         const attribute = Html.getAttributeName(this.attribute);
         const options = this.options;
@@ -692,7 +691,7 @@ export default class ActiveField extends Component {
         if (this.addAriaAttributes === false) {
             options['updateAriaInvalid'] = false;
         }
-        //console.log('af-gco', options);
+
         // only get the options that are different from the default ones (set in activeForm.js)
         return {
             validateOnChange: true,
@@ -741,10 +740,10 @@ export default class ActiveField extends Component {
         let options: any = {};
         if (this.clientValidators[validator] !== undefined) {
             const params = ormAdapter.getClientValidationParams(criteria);
-            //console.log('cva', params);
+
             if (Object.keys(params).length > 0) js += this.clientValidators[validator](params);
         }
-        //console.log('cva-js', js, validator, criteria)
+
         return js;
     }
     /**
