@@ -9,7 +9,6 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
     "doc": "rm -rf docs && npx typedoc"
   },
   "author": "Mahesh S Warrier (codespede)",
