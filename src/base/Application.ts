@@ -57,7 +57,14 @@ export default class Application extends Component {
      * Application.ormModelClass = Model;
      * ```
      */
-    public static ormModelClass = SequelizeModel;
+    public static ormModelClass = () => {
+        try {
+            return require("../../../orm-model-config").default;
+        } catch (e) {
+            console.log('omc-error', e)
+            return SequelizeModel;
+        }
+    }//SequelizeModel;
     /**
      * The [[Serializer]] that should be used for RESTful operations.
      */

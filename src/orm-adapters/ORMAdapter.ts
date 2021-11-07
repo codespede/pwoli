@@ -10,6 +10,6 @@ export default class ORMAdapter extends Component {
     }
 
     public extendableModelClass() {
-        return Application.ormModelClass || Pwoli.config.ormModelClass;
+        return (Application.ormModelClass)()
     }
 }

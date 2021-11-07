@@ -2,7 +2,6 @@ import ActiveField from '../widgets/ActiveField';
 import ActiveForm from '../widgets/ActiveForm';
 import Application from '../base/Application';
 import { DataTypes, Model } from 'sequelize';
-Application.ormModelClass = Model;
 import Model1 from './Models.jestignore';
 
 test('FormFieldInstances', () => {
