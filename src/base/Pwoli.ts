@@ -1,6 +1,7 @@
-export default class Pwoli {
-    public static config: { [key: string]: any } = {
+class Pwoli {
+    public config: { [key: string]: any } = {
         ormModelClass: null,
         viewPath: 'views'
     }
 }
+export default new Pwoli()
