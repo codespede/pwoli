@@ -49,7 +49,7 @@ export default class View extends Component {
      * This property mainly affects the behavior of [[render]].
      * If false, no layout will be applied.
      */
-    public layout: string | false = '/main.ejs';
+    public layout: string | false = '/layouts/main.ejs';
 
     public constructor(config: { [key: string]: any }) {
         super(config);
