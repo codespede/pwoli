@@ -1,3 +1,4 @@
+import Pwoli from "./Pwoli";
 import Component from './Component';
 import SequelizeAdapter from '../orm-adapters/SequelizeAdapter';
 import View from './View';
@@ -60,6 +61,11 @@ export default class Application extends Component {
      * The [[Serializer]] that should be used for RESTful operations.
      */
     public static serializer = new Serializer({});
+    /** @inheritdoc */
+    public async init() {
+        if(Pwoli.config.viewPath)
+            Application.viewPath = Pwoli.config.viewPath;
+    }
     /**
      * Returns the full URL of the request.
      */

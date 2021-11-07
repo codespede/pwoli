@@ -1,9 +1,11 @@
+import Pwoli from "./Pwoli";
 import Inflector = require('inflected');
 import { emptyDir } from 'fs-extra';
 import { Application } from '..';
 import { ActiveDataProvider } from '..';
 const ormAdapter = Application.getORMAdapter();
-const ORMModel = ormAdapter.extendableModelClass();
+const ORMModel = Pwoli.config.ormModelClass;
+console.log('ormModel', ORMModel)
 /**
  * Model is the base class for classes representing relational data in terms of objects.
  *
