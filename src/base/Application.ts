@@ -1,6 +1,7 @@
 import Pwoli from "./Pwoli";
 import Component from './Component';
 import SequelizeAdapter from '../orm-adapters/SequelizeAdapter';
+import { Model as SequelizeModel } from "sequelize";
 import View from './View';
 import Serializer from '../rest/Serializer';
 import url = require('url');
@@ -56,7 +57,7 @@ export default class Application extends Component {
      * Application.ormModelClass = Model;
      * ```
      */
-    public static ormModelClass;
+    public static ormModelClass = SequelizeModel;
     /**
      * The [[Serializer]] that should be used for RESTful operations.
      */
@@ -146,7 +147,7 @@ export default class Application extends Component {
         return response;
     }
 
-    public static setORMModelClass(modelClass: Object) {
+    public static setORMModelClass(modelClass: any) {
         Application.ormModelClass = modelClass;
     }
 }

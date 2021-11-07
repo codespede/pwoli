@@ -31,7 +31,7 @@
     "inflected": "^2.1.0",
     "mysql2": "^2.2.5",
     "path": "^0.12.7",
-    "sequelize": "^6.6.2",
+    "sequelize": "*",
     "url": "^0.11.0"
   },
   "files": [
