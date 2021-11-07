@@ -3,7 +3,7 @@ import Application from '../base/Application';
 import CollectionView from './CollectionView';
 import DataHelper from '../helpers/DataHelper';
 import Html from '../helpers/Html';
-import { Widget } from 'src';
+import Widget from '../base/Widget';
 /**
  * The ListView widget is used to display data from data
  * provider. Each data model is rendered using the view
