@@ -1,3 +1,4 @@
+import Pwoli from '../base/Pwoli';
 import Application from '../base/Application';
 import Component from '../base/Component';
 import IORMAdapter from './IORMAdapter';
@@ -9,6 +10,6 @@ export default class ORMAdapter extends Component {
     }
 
     public extendableModelClass() {
-        return Application.ormModelClass;
+        return Application.ormModelClass || Pwoli.config.ormModelClass;
     }
 }
