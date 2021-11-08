@@ -74,7 +74,14 @@ export default class View extends Component {
         this.registerFile(path.extname(file) === '.js' ? 'js' : 'css', `${this.basePath}/${path.basename(file)}`, {
             position,
         });
-
+        if (!fs.existsSync(`${this.basePath}`)) {
+            fs.mkdir(this.basePath, (err) => {
+                if (err) {
+                    return console.error('pwoli: assets-path-does-not-exists', err);
+                }
+                console.log('Directory created successfully!');
+            });
+        }
         fs.copyFileSync(file, `${this.basePath}/${path.basename(file)}`);
     }
     /**
