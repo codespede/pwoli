@@ -18,16 +18,15 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
 ### Installation
 
 ```markdown
-npm install pwoli
+npm install pwoli@latest
 ```
 
+If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](/pwoli/using-another-orm)
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
 ```markdown
 import { Application as Pwoli } from 'pwoli';
-import { Model } from 'sequelize'; // If your ORM is Sequelize. Otherwise, the corresponding base model class of your ORM.
-Application.setORMModelClass(Model);
-Application.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
+Pwoli.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
 
 You're ready to go!
 ```
