@@ -77,9 +77,9 @@ export default class View extends Component {
         if (!fs.existsSync(`${this.basePath}`)) {
             fs.mkdir(this.basePath, (err) => {
                 if (err) {
-                    return console.error('pwoli: assets-path-does-not-exists', err);
+                    return console.error(`pwoli: assets-path-does-not-exists - ${this.basePath}`, err);
                 }
-                console.log('Directory created successfully!');
+                console.log('pwoli: assets-dir-created-successfully');
             });
         }
         fs.copyFileSync(file, `${this.basePath}/${path.basename(file)}`);

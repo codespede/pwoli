@@ -25,7 +25,12 @@ If you are using an ORM other than Sequelize or even a customized version of Seq
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
 ```markdown
-import { Application as Pwoli } from 'pwoli';
+import { Application as Pwoli } from 'pwoli'; //if using ES6 modules or "type": "module" is set in your package.json
+//if the above doesn't work, try the below two lines as you might be using CJS:
+const pkg = require('pwoli'); //if using CommonJS
+const Pwoli = pkg.Application;
+// Pwoli is loaded!
+//Now set the viewPath for finding the views:
 Pwoli.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
 
 You're ready to go!
@@ -33,7 +38,7 @@ You're ready to go!
 
 ### Get Started
 
--   Please note: If you are building an SPA, click here to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
+-   Please note: If you are building an SPA, [click here](/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
 
 Click on one of our guides below for learning how to use the Widgets and using DataProvider for delivering data for them.
 

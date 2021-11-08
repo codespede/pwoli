@@ -87,7 +87,7 @@ export default class Application extends Component {
         return decodeURIComponent(
             url.format({
                 protocol: req.protocol || 'http',
-                host: req.host || req.headers.host,
+                host: req.headers.host || req.host,
                 pathname: req.originalUrl || req.url,
             }),
         );
