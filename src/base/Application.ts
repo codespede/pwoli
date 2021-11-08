@@ -41,7 +41,7 @@ export default class Application extends Component {
      * The ORM that should be used by the application. Defaults to 'sequelize'
      * Any other ORM if used should have an [[ORMAdapter]] defined in [[ormAdapterClasses]]
      */
-    public static orm: 'sequelize' | 'other' = 'sequelize';
+    public static orm: string = 'sequelize';
     /**
      * The adapters for any ORMs used by this application.
      * The key of the adapter to be used should be specified in [[orm]]
@@ -125,12 +125,19 @@ export default class Application extends Component {
         return this.viewPath;
     }
     /**
-     * Returns the viewPath.
-     * @return The actual viewPath.
+     * Returns the ORM Adapter.
+     * @return The ORM Adapter class.
      */
     public static getORMAdapter() {
         if (this._ormAdapter === undefined) this._ormAdapter = new this.ormAdapterClasses[this.orm]({});
         return this._ormAdapter;
+    }
+    /**
+     * Sets the ORM Adapter.
+     * @paramadapter The ORM Adapter class to be set.
+     */
+    public static setORMAdapter(adapter) {
+        this._ormAdapter = adapter;
     }
     /**
      * Responds to the client(eg:- browser) depending on the data.

@@ -1,68 +1,11 @@
-Data widgets
-============
+# Data widgets
 
 Pwoli provides a set of [widgets](structure-widgets.md) that can be used to display data.
-While the [DetailView](#detail-view) widget can be used to display data for a single record,
+
 [ListView](#list-view) and [GridView](#grid-view) can be used to display a list or table of data records
 providing features like pagination, sorting and filtering.
 
-
-DetailView <span id="detail-view"></span>
-----------
-
-The [[DetailView|DetailView]] widget displays the details of a single data [[DetailView.model|model]].
-
-It is best used for displaying a model in a regular format (e.g. each model attribute is displayed as a row in a table).
-The model can be either an instance or subclass of [[Model]] such as an [active record](db-active-record.md) or an associative array.
-
-DetailView uses the [[DetailView.attributes|attributes]] property to determine which model attributes should be displayed and how they
-should be formatted. See the [formatter section](output-formatting.md) for available formatting options.
-
-A typical usage of DetailView is as follows:
-
-```js
-console.log DetailView.widget({
-    model: model,
-    attributes: [
-        'title',                                           // title attribute (in plain text)
-        {
-            description:html
-        },                                // description attribute formatted as HTML
-        {                                                  // the owner name of the model
-            label: 'Owner',
-            value: model.owner.name,            
-            contentOptions: {class: 'bg-red'},     // HTML attributes to customize value tag
-            captionOptions: {tooltip: 'Tooltip'},  // HTML attributes to customize label tag
-        },
-        created_at:datetime,                             // creation date formatted as datetime
-    ],
-});
-```
-
-Remember that unlike [[GridView|GridView]] which processes a set of models,
-[[DetailView|DetailView]] processes just one. So most of the time there is no need for using closure since
-`model` is the only one model for display and available in view as a variable.
-
-However some cases can make using of closure useful. For example when `visible` is specified and you want to prevent
-`value` calculations in case it evaluates to `false`:
-
-```js
-console.log(DetailView.widget({
-    model: model,
-    attributes: [
-        {
-            attribute: 'owner',
-            value: function (model) {
-                return model.owner.name;
-            },
-            visible: \Pwoli.app.user.can('posts.owner.view'),
-        },
-    ],
-}));
-```
-
-ListView <span id="list-view"></span>
---------
+## ListView <span id="list-view"></span>
 
 The [[ListView|ListView]] widget is used to display data from a [data provider](output-data-providers.md).
 Each data model is rendered using the specified [[ListView.$itemView|view file]].
@@ -80,34 +23,38 @@ let dataProvider = new ActiveDataProvider({
         pageSize: 20,
     },
 });
-console.log(ListView.widget({
+let list = new ListView({
     dataProvider: dataProvider,
     itemView: '_post',
-}));
+});
+
+//In the view file:
+<%- list.render() %>
+
 ```
 
 The `_post` view file could contain the following:
 
-
 ```js
+// The class `Html` should be passed to the view while rendering it
 <div class="post">
     <h2><%- Html.encode(model.title) %></h2>
 
-    <%- model.text %> 
+    <%- model.text %>
 </div>
 ```
 
 In the view file above, the current data model is available as `model`. Additionally the following variables are available:
 
-- `key`: mixed, the key value associated with the data item.
-- `index`: integer, the zero-based index of the data item in the items array returned by the data provider.
-- `widget`: ListView, this widget instance.
+-   `key`: mixed, the key value associated with the data item.
+-   `index`: integer, the zero-based index of the data item in the items array returned by the data provider.
+-   `widget`: ListView, this widget instance.
 
 If you need to pass additional data to each view, you can use the [[ListView.viewParams|viewParams]] property
 to pass key value pairs like the following:
 
 ```js
-console.log(ListView.widget({
+new ListView({
     dataProvider: dataProvider,
     itemView: '_post',
     viewParams: [
@@ -115,14 +62,12 @@ console.log(ListView.widget({
         context: 'main-page',
         // ...
     ],
-}));
+});
 ```
 
 These are then also available as variables in the view.
 
-
-GridView <span id="grid-view"></span>
---------
+## GridView <span id="grid-view"></span>
 
 Data grid or [[GridView]] is one of the most powerful Pwoli widgets. It is extremely useful if you need to quickly build the admin
 section of the system. It takes data from a [data provider](output-data-providers.md) and renders each row using a set of [[GridView.columns|columns]]
@@ -134,23 +79,24 @@ the item (some columns may correspond to complex expressions of attributes or st
 The minimal code needed to use GridView is as follows:
 
 ```js
-import GridView;
-import \data\ActiveDataProvider;
+import { GridView, ActiveDataProvider } from 'pwoli';
 
-dataProvider = new ActiveDataProvider({
-    query: Post.find(),
+let dataProvider = new ActiveDataProvider({
+    query: { where: { status: 1 } },
     pagination: {
         pageSize: 20,
     },
 });
-console.log(GridView.widget({
+let grid = GridView.{
     dataProvider: dataProvider,
-}));
+});
+
+//In the view file:
+<%- grid.render() %>
 ```
 
 The above code first creates a data provider and then uses GridView to display every attribute in every row taken from
 the data provider. The displayed table is equipped with sorting and pagination functionality out of the box.
-
 
 ### Grid columns <span id="grid-columns"></span>
 
@@ -160,10 +106,10 @@ Depending on column type and settings these are able to present data differently
 The default class is [[DataColumn]], which represents a model attribute and can be sorted and filtered by.
 
 ```js
-console.log GridView.widget({
+let grid = GridView({
     dataProvider: dataProvider,
     columns: [
-        {class: 'SerialColumn'},
+        { class: 'SerialColumn' },
         // Simple columns defined by the data contained in dataProvider.
         // Data from the model's column will be used.
         'id',
@@ -172,7 +118,7 @@ console.log GridView.widget({
         {
             class: 'DataColumn', // can be omitted, as it is the default
             value: function (data) {
-                return data.name; // data['name'] for array data, e.g. using SqlDataProvider.
+                return data.name; // data['name'] for array data, e.g. using ArrayDataProvider.
             },
         },
     ],
@@ -182,19 +128,18 @@ console.log GridView.widget({
 Note that if the [[GridView.columns|columns]] part of the configuration isn't specified,
 Pwoli tries to show all possible columns of the data provider's model.
 
-
 ### Column classes <span id="column-classes"></span>
 
 Grid columns could be customized by using different column classes:
 
 ```js
-console.log(GridView.widget({
+let grid = new GridView({
     dataProvider: dataProvider,
-    columns: 
-        {       
+    columns:
+        {
             class: 'SerialColumn', // <-- here
             // you may configure additional properties here
-        }})),
+        }}),
 ```
 
 In addition to column classes provided by Pwoli that we'll review below, you can create your own column classes.
@@ -202,24 +147,23 @@ In addition to column classes provided by Pwoli that we'll review below, you can
 Each column class extends from [[Column]] so that there are some common options you can set while configuring
 grid columns.
 
-- [[Column.header|header]] allows to set content for header row.
-- [[Column.footer|footer]] allows to set content for footer row.
-- [[Column.visible|visible]] defines if the column should be visible.
-- [[Column.content|content]] allows you to pass a valid JS callback that will return data for a row. The format is the following:
+-   [[Column.header|header]] allows to set content for header row.
+-   [[Column.footer|footer]] allows to set content for footer row.
+-   [[Column.visible|visible]] defines if the column should be visible.
+-   [[Column.content|content]] allows you to pass a valid JS callback that will return data for a row. The format is the following:
 
-  ```js
-  function (model, key, index, column) {
-      return 'a string';
-  }
-  ```
+    ```js
+    function (model, key, index, column) {
+        return 'a string';
+    }
+    ```
 
 You may specify various container HTML options by passing arrays to:
 
-- [[Column.headerOptions|headerOptions]]
-- [[Column.footerOptions|footerOptions]]
-- [[Column.filterOptions|filterOptions]]
-- [[Column.contentOptions|contentOptions]]
-
+-   [[Column.headerOptions|headerOptions]]
+-   [[Column.footerOptions|footerOptions]]
+-   [[Column.filterOptions|filterOptions]]
+-   [[Column.contentOptions|contentOptions]]
 
 #### Data column <span id="data-column"></span>
 
@@ -264,7 +208,7 @@ Use [[DataColumn.filter|filter]] and [[DataColumn.filterInputOptions|filterInput
 control HTML for the filter input.
 
 By default, column headers are rendered by [[Sort.link]]. It could be adjusted using [[Column.header]].
-To change header text you should set [[DataColumn.$label]] like in the example above. 
+To change header text you should set [[DataColumn.$label]] like in the example above.
 By default the label will be populated from data model. For more details see [[DataColumn.getHeaderCellLabel]].
 
 #### Action column <span id="action-column"></span>
@@ -272,58 +216,59 @@ By default the label will be populated from data model. For more details see [[D
 [[ActionColumn|Action column]] displays action buttons such as update or delete for each row.
 
 ```js
-console.log(GridView.widget({
-    dataProvider: dataProvider,
-    columns: 
-        {
+console.log(
+    GridView.widget({
+        dataProvider: dataProvider,
+        columns: {
             class: 'ActionColumn',
             // you may configure additional properties here
         },
-}))
+    }),
+);
 ```
 
 Available properties you can configure are:
 
-- [[ActionColumn.controller|controller]] is the ID of the controller that should handle the actions. If not set, it will use the currently active
-  controller.
-- [[ActionColumn.template|template]] defines the template used for composing each cell in the action column. Tokens enclosed within curly brackets are
-  treated as controller action IDs (also called *button names* in the context of action column). They will be replaced
-  by the corresponding button rendering callbacks specified in [[ActionColumn.buttons|buttons]]. For example, the token `{view}` will be
-  replaced by the result of the callback `buttons['view']`. If a callback cannot be found, the token will be replaced
-  with an empty string. The default tokens are `{view} {update} {delete}`.
-- [[ActionColumn.buttons|buttons]] is an array of button rendering callbacks. The array keys are the button names (without curly brackets),
-  and the values are the corresponding button rendering callbacks. The callbacks should use the following signature:
+-   [[ActionColumn.controller|controller]] is the ID of the controller that should handle the actions. If not set, it will use the currently active
+    controller.
+-   [[ActionColumn.template|template]] defines the template used for composing each cell in the action column. Tokens enclosed within curly brackets are
+    treated as controller action IDs (also called _button names_ in the context of action column). They will be replaced
+    by the corresponding button rendering callbacks specified in [[ActionColumn.buttons|buttons]]. For example, the token `{view}` will be
+    replaced by the result of the callback `buttons['view']`. If a callback cannot be found, the token will be replaced
+    with an empty string. The default tokens are `{view} {update} {delete}`.
+-   [[ActionColumn.buttons|buttons]] is an array of button rendering callbacks. The array keys are the button names (without curly brackets),
+    and the values are the corresponding button rendering callbacks. The callbacks should use the following signature:
 
-  ```js
-  function (url, model, key) {
-      // return the button HTML code
-  }
-  ```
+    ```js
+    function (url, model, key) {
+        // return the button HTML code
+    }
+    ```
 
-  In the code above, `url` is the URL that the column creates for the button, `model` is the model object being
-  rendered for the current row, and `key` is the key of the model in the data provider array.
+    In the code above, `url` is the URL that the column creates for the button, `model` is the model object being
+    rendered for the current row, and `key` is the key of the model in the data provider array.
 
-- [[ActionColumn.urlCreator|urlCreator]] is a callback that creates a button URL using the specified model information. The signature of
-  the callback should be the same as that of [[ActionColumn.createUrl]]. If this property is not set,
-  button URLs will be created using [[ActionColumn.createUrl]].
-- [[ActionColumn.visibleButtons|visibleButtons]] is an array of visibility conditions for each button.
-  The array keys are the button names (without curly brackets), and the values are the boolean `true`/`false` or the
-  anonymous function. When the button name is not specified in this array it will be shown by default.
-  The callbacks must use the following signature:
+-   [[ActionColumn.urlCreator|urlCreator]] is a callback that creates a button URL using the specified model information. The signature of
+    the callback should be the same as that of [[ActionColumn.createUrl]]. If this property is not set,
+    button URLs will be created using [[ActionColumn.createUrl]].
+-   [[ActionColumn.visibleButtons|visibleButtons]] is an array of visibility conditions for each button.
+    The array keys are the button names (without curly brackets), and the values are the boolean `true`/`false` or the
+    anonymous function. When the button name is not specified in this array it will be shown by default.
+    The callbacks must use the following signature:
 
-  ```js
-  function (model, key, index) {
-      return model.status === 'editable';
-  }
-  ```
+    ```js
+    function (model, key, index) {
+        return model.status === 'editable';
+    }
+    ```
 
-  Or you can pass a boolean value:
+    Or you can pass a boolean value:
 
-  ```js
-  {
-      update: \Pwoli.app.user.can('update')
-  }
-  ```
+    ```js
+    {
+        update: \Pwoli.app.user.can('update')
+    }
+    ```
 
 #### Checkbox column <span id="checkbox-column"></span>
 
@@ -335,7 +280,7 @@ To add a CheckboxColumn to the GridView, add it to the [[GridView.columns|column
 console.log(GridView.widget([
     id: 'grid',
     dataProvider: dataProvider,
-    columns: 
+    columns:
         {
             class: 'CheckboxColumn',
             // you may configure additional properties here
@@ -365,150 +310,82 @@ console.log(GridView.widget({
         // ...
 ```
 
-
-### Sorting data <span id="sorting-data"></span>
-
-> Note: This section is under development.
->
-> - https://github.com/yiisoft/yii2/issues/1576
-
 ### Filtering data <span id="filtering-data"></span>
 
-For filtering data, the GridView needs a [model](structure-models.md) that represents the search criteria which is
+For filtering data, the GridView needs a [filterModel](/pwoli/api-docs/classes/GridView.html#filterModel) that represents the search criteria which is
 usually taken from the filter fields in the GridView table.
-A common practice when using [active records](db-active-record.md) is to create a search Model class
-that provides needed functionality (it can be generated for you by [Gii](start-gii.md)). This class defines the validation
-rules to show filter controls on the GridView table and to provide a `search()` method that will return the data 
+Pwoli declares a `search()` method in the [IORMAdapter](/pwoli/api-docs/interfaces/IORMAdapter.html#search) that will return the data
 provider with an adjusted query that processes the search criteria.
 
-To add the search capability for the `Post` model, we can create a `PostSearch` model like the following example:
-
-```js
-<?php
-
-namespace app\models;
-
-import Pwoli;
-import yii\base\Model;
-import ActiveDataProvider;
-
-class PostSearch extends Post
-{
-    public function rules()
-    { 
-        // only fields in rules() are searchable
-        return [
-            [['id'], 'integer'],
-            [['title', 'creation_date'], 'safe'],
-        ];
-    }
-
-    function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model.scenarios();
-    }
-
-    public function search(params)
-    {
-        query = Post.find();
-
-        dataProvider = new ActiveDataProvider({
-            query: query,
-        });
-
-        // load the search form data and validate
-        if (!(this.load(params) && this.validate())) {
-            return dataProvider;
-        }
-
-        // adjust the query by adding the filters
-        query.andFilterWhere({id: this.id});
-        query.andFilterWhere(['like', 'title', this.title])
-              .andFilterWhere(['like', 'creation_date', this.creation_date]);
-
-        return dataProvider;
-    }
-}
-```
-
-> Tip: See [Query Builder](db-query-builder.md) and especially [Filter Conditions](db-query-builder.md#filter-conditions)
-> to learn how to build filtering query.
+So each Model you extend from Pwoli's base [Model](/pwoli/api-docs/classes/Model.html) has this default search method built-in.
 
 You can use this function in the controller to get the dataProvider for the GridView:
 
 ```js
-let searchModel = new PostSearch();
-let dataProvider = searchModel.search(Pwoli.app.request.get());
+let filterModel = new Post();
+let dataProvider = filterModel.search(DataHelper.parseUrl(request.url));
 
 return this.render('myview', {
     dataProvider: dataProvider,
-    searchModel: searchModel,
+    filterModel: filterModel,
 });
 ```
 
-And in the view you then assign the `dataProvider` and `searchModel` to the GridView:
+And in the view you then assign the `dataProvider` and `filterModel` to the GridView:
 
 ```js
-console.log(GridView.widget({
-    dataProvider: dataProvider,
-    filterModel: searchModel,
-    columns: [
-        // ...
-    ],
-}));
+console.log(
+    GridView.widget({
+        dataProvider: dataProvider,
+        filterModel: filterModel,
+        columns: [
+            // ...
+        ],
+    }),
+);
 ```
 
 ### Separate filter form <span id="separate-filter-form"></span>
 
 Most of the time using GridView header filters is enough, but in case you need a separate filter form,
-you can easily add it as well. You can create partial view `_search.php` with the following contents:
+you can easily add it as well. You can create partial view `_search.ejs` with the following contents:
 
 ```js
-<?php
+let form = new ActiveForm({
+    action: 'index',
+    method: 'get',
+});
 
-use yii\helpers\Html;
-use ActiveForm;
-
-/* let this yii\web\View */
-/* let model app\models\PostSearch */
-/* let form ActiveForm */
-%>
-
+//In the view:
+//pass ActiveForm, Html classes too when rendering this view..
 <div class="post-search">
-    <?php form = ActiveForm.begin({
-        action: ['index'],
-        method: 'get',
-    }); %>
+    <%- await form.begin(); %>
 
-    <%- form.field(model, 'title') %>
+    <%- await form.field(model, 'title') %>
 
-    <%- form.field(model, 'creation_date') %>
+    <%- await form.field(model, 'creation_date') %>
 
     <div class="form-group">
         <%- Html.submitButton('Search', {class: 'btn btn-primary'}) %>
         <%- Html.submitButton('Reset', {class: 'btn btn-default'}) %>
     </div>
 
-    <?php ActiveForm.end(); %>
+    <%- await form.end(); %>
 </div>
 ```
 
-and include it in `index.php` view like so:
+and include it in the main view like so:
 
 ```js
-<%- this.render('_search', {model: searchModel}) %>
+let searchView = await Pwoli.view.render('/_search.ejs', { form, model, Html }, false); //the last argument `false` indicates that this view should be rendered partially without layouts.
 ```
-
-> Note: if you use Gii to generate CRUD code, the separate filter form (`_search.php`) is generated by default,
-but is commented in `index.php` view. Uncomment it and it's ready to use!
 
 Separate filter form is useful when you need to filter by fields, that are not displayed in GridView
 or for special filtering conditions, like date range. For filtering by date range we can add non DB attributes
 `createdFrom` and `createdTo` to the search model:
 
 ```js
-class PostSearch extends Post
+class Post extends Model
 {
     /**
      * @var string
@@ -525,16 +402,19 @@ class PostSearch extends Post
 Extend query conditions in the `search()` method like so:
 
 ```js
-query.andFilterWhere(['>=', 'creation_date', this.createdFrom])
-      .andFilterWhere(['<=', 'creation_date', this.createdTo]);
+query.where = {
+    ...query.where,
+    creation_date: { [Op.gte]: this.createdFrom },
+    creation_date: { [Op.lte]: this.createdTo },
+};
 ```
 
 And add the representative fields to the filter form:
 
 ```js
-<%- form.field(model, 'creationFrom') %>
+<%- await form.field(model, 'creationFrom') %>
 
-<%- form.field(model, 'creationTo') %>
+<%- await form.field(model, 'creationTo') %>
 ```
 
 ### Working with model relations <span id="working-with-model-relations"></span>
@@ -544,167 +424,65 @@ columns such as the post author's name instead of just his `id`.
 You do this by defining the attribute name in [[GridView.columns]] as `author.name` when the `Post` model
 has a relation named `author` and the author model has an attribute `name`.
 The GridView will then display the name of the author but sorting and filtering are not enabled by default.
-You have to adjust the `PostSearch` model that has been introduced in the last section to add this functionality.
+You have to adjust the `filterModel` that has been introduced in the last section to add this functionality.
 
-To enable sorting on a related column you have to join the related table and add the sorting rule
+To enable sorting on a related column you have to include(in the case of Sequelize) the related table and add the sorting rule
 to the Sort component of the data provider:
 
 ```js
-let query = Post.find();
+let query = { where: { status: 1 }};
 let dataProvider = new ActiveDataProvider({
     query: query,
 });
 
 // join with relation `author` that is a relation to the table `users`
 // and set the table alias to be `author`
-query.joinWith({author: function(query) { query.from({author: 'users'}); }});
-// since version 2.0.7, the above line can be simplified to query.joinWith('author AS author');
+query = { ...query, include: [{ model: Author, as: 'author' }]};
+
 // enable sorting for the related column
 dataProvider.sort.attributes['author.name'] = {
-    asc: {author.name: SORT_ASC},
-    desc: {author.name: SORT_DESC},
+    asc: {author.name: 'asc'},
+    desc: {author.name: 'desc'},
 };
 
 // ...
 ```
 
-Filtering also needs the joinWith call as above. You also need to define the searchable column in attributes and rules like this:
+For filtering with relations, you just need to override the `search()` as it needs to have the additional logic for filtering with foreign columns:
+
+So, in the `Post` model:
 
 ```js
-public function attributes()
-{
-    // add related fields to searchable attributes
-    return array_merge(parent.attributes(), ['author.name']);
-}
-
-public function rules()
-{
-    return [
-        [['id'], 'integer'],
-        [['title', 'creation_date', 'author.name'], 'safe'],
-    ];
+class Post extends Model{
+    ...
+    public search(params) {
+        let provider = super.search.call(params); // calling the default implementation of search
+        provider.query = {
+            ...provider.query,
+            include: [{ model: Author, as: 'author' }], // adding the extra `include` required
+            where: { 'author.name': params['author.name'] } // adding the extra `where` required
+        }
+        return provider;
+    }
+    ...
 }
 ```
 
-In `search()` you then just add another filter condition with:
-
-```js
-query.andFilterWhere(['LIKE', 'author.name', this.getAttribute('author.name')]);
-```
-
-> Info: In the above we use the same string for the relation name and the table alias; however, when your alias and relation name
-> differ, you have to pay attention to where you use the alias and where you use the relation name.
-> A simple rule for this is to use the alias in every place that is used to build the database query and the
-> relation name in all other definitions such as `attributes()` and `rules()` etc.
->
-> For example, if you use the alias `au` for the author relation table, the joinWith statement looks like the following:
->
-> ```js
-> query.joinWith(['author au']);
-> ```
->
-> It is also possible to just call `query.joinWith(['author']);` when the alias is defined in the relation definition.
->
-> The alias has to be used in the filter condition but the attribute name stays the same:
->
-> ```js
-> query.andFilterWhere(['LIKE', 'au.name', this.getAttribute('author.name')]);
-> ```
->
-> The same is true for the sorting definition:
->
-> ```js
-> dataProvider.sort.attributes['author.name'] = {
->      asc: {au.name: SORT_ASC},
->      desc: {au.name: SORT_DESC},
-> };
-> ```
->
-> Also, when specifying the [[Sort.defaultOrder|defaultOrder]] for sorting, you need to use the relation name
+> When specifying the [[Sort.defaultOrder|defaultOrder]] for sorting, you need to use the relation name
 > instead of the alias:
 >
 > ```js
-> dataProvider.sort.defaultOrder = {author.name: SORT_ASC};
+> dataProvider.sort.defaultOrder = { 'author.name': 'asc' };
 > ```
-
-> Info: For more information on `joinWith` and the queries performed in the background, check the
-> [active record docs on joining with relations](db-active-record.md#joining-with-relations).
-
-#### Using SQL views for filtering, sorting and displaying data <span id="using-sql-views"></span>
-
-There is also another approach that can be faster and more useful - SQL views. For example, if we need to show the gridview
-with users and their profiles, we can do so in this way:
-
-```sql
-CREATE OR REPLACE VIEW vw_user_info AS
-    SELECT user.*, user_profile.lastname, user_profile.firstname
-    FROM user, user_profile
-    WHERE user.id = user_profile.user_id
-```
-
-Then you need to create the ActiveRecord that will be representing this view:
-
-```js
-
-namespace app\models\views\grid;
-
-import yii\db\ActiveRecord;
-
-class UserView extends ActiveRecord
-{
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'vw_user_info';
-    }
-
-    public static function primaryKey()
-    {
-        return ['id'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            // define here your rules
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            // define here your attribute labels
-        ];
-    }
-
-
-}
-```
-
-After that you can use this UserView active record with search models, without additional specification of sorting and filtering attributes.
-All attributes will be working out of the box. Note that this approach has several pros and cons:
-
-- you don't need to specify different sorting and filtering conditions. Everything works out of the box;
-- it can be much faster because of the data size, count of sql queries performed (for each relation you will not need any additional query);
-- since this is just a simple mapping UI on the sql view it lacks some domain logic that is in your entities, so if you have some methods like `isActive`,
-`isDeleted` or others that will influence the UI, you will need to duplicate them in this class too.
-
 
 ### Multiple GridViews on one page <span id="multiple-gridviews"></span>
 
 You can use more than one GridView on a single page but some additional configuration is needed so that
 they do not interfere with each other.
+
 When using multiple instances of GridView you have to configure different parameter names for
 the generated sort and pagination links so that each GridView has its own individual sorting and pagination.
+
 You do so by setting the [[Sort.sortParam|sortParam]] and [[Pagination.pageParam|pageParam]]
 of the dataProvider's [[BaseDataProvider.$sort|sort]] and [[BaseDataProvider.pagination|pagination]]
 instances.
@@ -713,7 +491,7 @@ Assume we want to list the `Post` and `User` models for which we have already pr
 in `userProvider` and `postProvider`:
 
 ```js
-use GridView;
+import { GridView } from 'pwoli';
 
 userProvider.pagination.pageParam = 'user-page';
 userProvider.sort.sortParam = 'user-sort';
@@ -722,56 +500,12 @@ postProvider.pagination.pageParam = 'post-page';
 postProvider.sort.sortParam = 'post-sort';
 
 console.log '<h1>Users</h1>';
-console.log GridView.widget([
-    'dataProvider: userProvider,
-]);
+let userGrid = new GridView.({
+    dataProvider: userProvider,
+});
 
 console.log '<h1>Posts</h1>';
-console.log GridView.widget([
-    'dataProvider: postProvider,
+let postGrid = new GridView({
+    dataProvider: postProvider,
 ]);
 ```
-
-### Using GridView with Pjax <span id="using-gridview-with-pjax"></span>
-
-The [[Pjax|Pjax]] widget allows you to update a certain section of a
-page instead of reloading the entire page. You can use it to update only the
-[[GridView|GridView]] content when using filters.
-
-```js
-import Pjax;
-import GridView;
-
-Pjax.begin([
-    // PJax options
-]);
-    Gridview.widget([
-        // GridView options
-    ]);
-Pjax.end();
-```
-
-Pjax also works for the links inside the [[Pjax|Pjax]] widget and
-for the links specified by [[Pjax.linkSelector|Pjax.linkSelector]].
-But this might be a problem for the links of an [[ActionColumn|ActionColumn]].
-To prevent this, add the HTML attribute `data-pjax="0"` to the links when you edit
-the [[ActionColumn.buttons|ActionColumn.buttons]] property.
-
-#### GridView/ListView with Pjax in Gii
-
-Since 2.0.5, the CRUD generator of [Gii](start-gii.md) has an option called
-`enablePjax` that can be used via either web interface or command line.
-
-```js
-yii gii/crud --controllerClass="backend\\controllers\PostController" \
-  --modelClass="common\\models\\Post" \
-  --enablePjax=1
-```
-
-Which generates a [[Pjax|Pjax]] widget wrapping the
-[[GridView|GridView]] or [[ListView|ListView]] widgets.
-
-Further reading
----------------
-
-- [Rendering Data in Pwoli 2 with GridView and ListView](http://www.sitepoint.com/rendering-data-in-yii-2-with-gridview-and-listview/) by Arno Slatius.
