@@ -52,11 +52,11 @@ export default class DataProvider extends Component {
     }
     /** @inheritdoc */
     public async init() {
-        await super.init.call(this);
         if (this.id === null) {
             if (DataProvider.counter > 0) this.id = `dp-${DataProvider.counter}`;
             DataProvider.counter++;
         }
+        await super.init.call(this);
     }
     /**
      * Prepares the data models and keys.
@@ -172,7 +172,7 @@ export default class DataProvider extends Component {
      * @return the sorting object. If this is false, it means the sorting is disabled.
      */
     public getSort() {
-        if (this._sort === undefined) this.setSort([]);
+        if (this._sort === undefined) this.setSort({});
         return this._sort;
     }
     /**

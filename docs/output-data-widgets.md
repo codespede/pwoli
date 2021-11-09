@@ -423,33 +423,40 @@ let dataProvider = new ActiveDataProvider({
 query = { ...query, include: [{ model: Author, as: 'author' }]};
 
 // enable sorting for the related column
-dataProvider.sort.attributes['author.name'] = {
-    asc: {author.name: 'asc'},
-    desc: {author.name: 'desc'},
+let sort = dataProvider.getSort();
+sort.attributes['author.name'] = {
+    asc: {'author', 'name', 'asc'},
+    desc: {'author', 'name', 'desc'},
 };
-
+dataProvider.setSort(sort);
 // ...
 ```
 
+You can see this same thing working in this Boilerplate: ()
+
 For filtering with relations, you just need to override the `search()` as it needs to have the additional logic for filtering with foreign columns:
 
-So, in the `Post` model:
+Assume there's a relation `event`(also assume that this relation is included in the `query` of DataProvider) for `Post` model and it has a field `title`. So, in the `Post` model:
 
 ```js
 class Post extends Model{
     ...
     public search(params) {
-        let provider = super.search.call(params); // calling the default implementation of search
-        provider.query = {
-            ...provider.query,
-            include: [{ model: Author, as: 'author' }], // adding the extra `include` required
-            where: { 'author.name': params['author.name'] } // adding the extra `where` required
+        let provider = super.search.call(this, params); // calling the default implementation of search
+        console.log('params', params, this.getFormName())
+        for (const param in params[this.getFormName()]) {
+            if (['event.title'].includes(param)) {
+                provider.query.where[`$${param}$`] = { [Op.like]: `%${params[this.getFormName()]['event.title']}%` };
+                this[param] = params[this.getFormName()][param]; // for setting this searched value back into the filterModel for showing in the filter field of GridView
+            }
         }
         return provider;
     }
     ...
 }
 ```
+
+You can see this same thing working in this Boilerplate: ()
 
 > When specifying the [Sort.defaultOrder()](/pwoli/api-docs/classes/Sort.html#defaultOrder) for sorting, you need to use the relation name
 > instead of the alias:

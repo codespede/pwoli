@@ -136,6 +136,7 @@ export default class View extends Component {
 
         if (this.cssFiles.length > 0) lines.push(this.cssFiles.join('\n'));
         if (this.jsFiles.head.length > 0) lines.push(this.jsFiles.head.join('\n'));
+        this.cssFiles = [];
         return lines.length > 0 ? lines.join('\n') : '';
     }
     /**
@@ -171,6 +172,8 @@ export default class View extends Component {
                 lines.push(Html.script(js));
             }
         }
+        this.jsFiles.end = [];
+        this.js.end = this.js.ready = this.js.load = [];
         return lines.length > 0 ? lines.join('\n') : '';
     }
     /**

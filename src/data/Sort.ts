@@ -104,7 +104,6 @@ export default class Sort extends Component {
             //     for (const name in columns)
             //         orders[name] = columns[name];
             // else
-
             orders.push(columns);
         }
         return orders;

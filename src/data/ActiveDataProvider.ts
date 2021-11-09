@@ -68,11 +68,11 @@ export default class ActiveDataProvider extends DataProvider {
      * This method will initialize the [[ormAdapter]] property (when set) to make sure it refers to a valid ORM Adapter.
      */
     public async init() {
-        await super.init.call(this);
         if (this.ormAdapter === undefined) {
             this.ormAdapter = Application.getORMAdapter();
             this.ormAdapter.modelClass = this.modelClass;
         }
+        await super.init.call(this);
     }
     /** @inheritdoc */
     public async prepareModels() {
