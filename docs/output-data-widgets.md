@@ -168,21 +168,16 @@ You may specify various container HTML options by passing arrays to:
 #### Data column <span id="data-column"></span>
 
 [DataColumn](/pwoli/api-docs/classes/DataColumn.html) is used for displaying and sorting data. It is the default column type so the specifying class could be omitted when
-using it.
-
-The main setting of the data column is its [format](/pwoli/api-docs/classes/DataColumn.html#format) property. Its values
-correspond to methods in the `formatter` [application component](structure-application-components.md) that is [[Formatter]] by default:
+using it:
 
 ```js
 let grid = new GridView({
     columns: {
         {
             attribute: 'name',
-            format: 'text'
         },
         {
             attribute: 'birthday',
-            format: ['date', { js:'Y-m-d' }]
         },
         created_at:datetime, // shortcut format
         {
@@ -191,9 +186,9 @@ let grid = new GridView({
             filter: [0: 'Elementary', 1: 'Secondary', 2: 'Higher'},
             filterInputOptions: {prompt: 'All educations', class: 'form-control', id: null}
         },
-    },
-});
+    });
 ```
+
 For configuring data columns there is also a shortcut format which is described in the
 API documentation for [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns).
 
@@ -209,12 +204,12 @@ By default the label will be populated from data model. For more details see [ge
 
 ```js
 let grid = new GridView({
-        dataProvider: dataProvider,
-        columns: {
-            class: 'ActionColumn',
-            // you may configure additional properties here
-        },
-    })
+    dataProvider: dataProvider,
+    columns: {
+        class: 'ActionColumn',
+        // you may configure additional properties here
+    },
+});
 ```
 
 Available properties you can configure are:
@@ -325,12 +320,12 @@ And in the view you then assign the `dataProvider` and `filterModel` to the Grid
 
 ```js
 let grid = new GridView({
-        dataProvider: dataProvider,
-        filterModel: filterModel,
-        columns: [
-            // ...
-        ],
-    })
+    dataProvider: dataProvider,
+    filterModel: filterModel,
+    columns: [
+        // ...
+    ],
+});
 ```
 
 ### Separate filter form <span id="separate-filter-form"></span>
@@ -487,12 +482,10 @@ userProvider.sort.sortParam = 'user-sort';
 postProvider.pagination.pageParam = 'post-page';
 postProvider.sort.sortParam = 'post-sort';
 
-console.log('<h1>Users</h1>');
 let userGrid = new GridView.({
     dataProvider: userProvider,
 });
 
-console.log('<h1>Posts</h1>');
 let postGrid = new GridView({
     dataProvider: postProvider,
 ]);
