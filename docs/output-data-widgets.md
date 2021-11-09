@@ -1,14 +1,14 @@
 # Data widgets
 
-Pwoli provides a set of [widgets](structure-widgets.md) that can be used to display data.
+Pwoli provides a set of widgets that can be used to display data.
 
 [ListView](#list-view) and [GridView](#grid-view) can be used to display a list or table of data records
 providing features like pagination, sorting and filtering.
 
 ## ListView <span id="list-view"></span>
 
-The [[ListView|ListView]] widget is used to display data from a [data provider](output-data-providers.md).
-Each data model is rendered using the specified [[ListView.$itemView|view file]].
+The [ListView](#list-view) widget is used to display data from a [data provider](output-data-providers.md).
+Each data model is rendered using the specified [itemView](/pwoli/api-docs/classes/ListView.html#itemView).
 Since it provides features such as pagination, sorting and filtering out of the box, it is handy both to display
 information to end user and to create data managing UI.
 
@@ -50,7 +50,7 @@ In the view file above, the current data model is available as `model`. Addition
 -   `index`: integer, the zero-based index of the data item in the items array returned by the data provider.
 -   `widget`: ListView, this widget instance.
 
-If you need to pass additional data to each view, you can use the [[ListView.viewParams|viewParams]] property
+If you need to pass additional data to each view, you can use the [viewParams](/pwoli/api-docs/classes/ListView.html#viewParams) property
 to pass key value pairs like the following:
 
 ```js
@@ -69,8 +69,8 @@ These are then also available as variables in the view.
 
 ## GridView <span id="grid-view"></span>
 
-Data grid or [[GridView]] is one of the most powerful Pwoli widgets. It is extremely useful if you need to quickly build the admin
-section of the system. It takes data from a [data provider](output-data-providers.md) and renders each row using a set of [[GridView.columns|columns]]
+Data grid or [GridView](/pwoli/api-docs/classes/GridView.html) is one of the most powerful Pwoli widgets. It is extremely useful if you need to quickly build the admin
+section of the system. It takes data from a [data provider](output-data-providers.md) and renders each row using a set of [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns)
 presenting data in the form of a table.
 
 Each row of the table represents the data of a single data item, and a column usually represents an attribute of
@@ -100,10 +100,10 @@ the data provider. The displayed table is equipped with sorting and pagination f
 
 ### Grid columns <span id="grid-columns"></span>
 
-The columns of the grid table are configured in terms of [[Column]] classes, which are
-configured in the [[GridView.columns|columns]] property of GridView configuration.
+The columns of the grid table are configured in terms of [Column](/pwoli/api-docs/classes/Column.html) classes, which are
+configured in the [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns) property of GridView configuration.
 Depending on column type and settings these are able to present data differently.
-The default class is [[DataColumn]], which represents a model attribute and can be sorted and filtered by.
+The default class is [DataColumn](/pwoli/api-docs/classes/DataColumn.html), which represents a model attribute and can be sorted and filtered by.
 
 ```js
 let grid = GridView({
@@ -125,7 +125,7 @@ let grid = GridView({
 });
 ```
 
-Note that if the [[GridView.columns|columns]] part of the configuration isn't specified,
+Note that if the [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns) part of the configuration isn't specified,
 Pwoli tries to show all possible columns of the data provider's model.
 
 ### Column classes <span id="column-classes"></span>
@@ -144,13 +144,13 @@ let grid = new GridView({
 
 In addition to column classes provided by Pwoli that we'll review below, you can create your own column classes.
 
-Each column class extends from [[Column]] so that there are some common options you can set while configuring
+Each column class extends from [Column](/pwoli/api-docs/classes/Column.html) so that there are some common options you can set while configuring
 grid columns.
 
--   [[Column.header|header]] allows to set content for header row.
--   [[Column.footer|footer]] allows to set content for footer row.
--   [[Column.visible|visible]] defines if the column should be visible.
--   [[Column.content|content]] allows you to pass a valid JS callback that will return data for a row. The format is the following:
+-   [header](/pwoli/api-docs/classes/Column.html#header) allows to set content for header row.
+-   [footer](/pwoli/api-docs/classes/Column.html#footer) allows to set content for footer row.
+-   [visible](/pwoli/api-docs/classes/Column.html#visible) defines if the column should be visible.
+-   [content](/pwoli/api-docs/classes/Column.html#content) allows you to pass a valid JS callback that will return data for a row. The format is the following:
 
     ```js
     function (model, key, index, column) {
@@ -160,21 +160,21 @@ grid columns.
 
 You may specify various container HTML options by passing arrays to:
 
--   [[Column.headerOptions|headerOptions]]
--   [[Column.footerOptions|footerOptions]]
--   [[Column.filterOptions|filterOptions]]
--   [[Column.contentOptions|contentOptions]]
+-   [headerOptions](/pwoli/api-docs/classes/Column.html#headerOptions)
+-   [footerOptions](/pwoli/api-docs/classes/Column.html#footerOptions)
+-   [filterOptions](/pwoli/api-docs/classes/Column.html#filterOptions)
+-   [contentOptions](/pwoli/api-docs/classes/Column.html#contentOptions)
 
 #### Data column <span id="data-column"></span>
 
-[[DataColumn|Data column]] is used for displaying and sorting data. It is the default column type so the specifying class could be omitted when
+[DataColumn](/pwoli/api-docs/classes/DataColumn.html) is used for displaying and sorting data. It is the default column type so the specifying class could be omitted when
 using it.
 
-The main setting of the data column is its [[DataColumn.format|format]] property. Its values
+The main setting of the data column is its [format](/pwoli/api-docs/classes/DataColumn.html#format) property. Its values
 correspond to methods in the `formatter` [application component](structure-application-components.md) that is [[Formatter]] by default:
 
 ```js
-console.log GridView.widget({
+let grid = new GridView({
     columns: {
         {
             attribute: 'name',
@@ -182,7 +182,7 @@ console.log GridView.widget({
         },
         {
             attribute: 'birthday',
-            format: ['date', 'php:Y-m-d']
+            format: ['date', { js:'Y-m-d' }]
         },
         created_at:datetime, // shortcut format
         {
@@ -194,49 +194,39 @@ console.log GridView.widget({
     },
 });
 ```
-
-In the above, `text` corresponds to [[Formatter.asText]]. The value of the column is passed as the first
-argument. In the second column definition, `date` corresponds to [[Formatter.asDate]]. The value of the
-column is, again, passed as the first argument while 'php:Y-m-d' is used as the second argument value.
-
-For a list of available formatters see the [section about Data Formatting](output-formatting.md).
-
 For configuring data columns there is also a shortcut format which is described in the
-API documentation for [[GridView.columns|columns]].
+API documentation for [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns).
 
-Use [[DataColumn.filter|filter]] and [[DataColumn.filterInputOptions|filterInputOptions]] to
-control HTML for the filter input.
+Use [filter](/pwoli/api-docs/classes/DataColumn.html#filter) and [filterInputOptions](/pwoli/api-docs/classes/DataColumn.html#filterInputOptions)to control HTML for the filter input.
 
-By default, column headers are rendered by [[Sort.link]]. It could be adjusted using [[Column.header]].
-To change header text you should set [[DataColumn.$label]] like in the example above.
-By default the label will be populated from data model. For more details see [[DataColumn.getHeaderCellLabel]].
+By default, column headers are rendered by [Sort.link()](/pwoli/api-docs/classes/Sort.html#link). It could be adjusted using [header](/pwoli/api-docs/classes/Column.html#header).
+To change header text you should set [label](/pwoli/api-docs/classes/DataColumn.html#label) like in the example above.
+By default the label will be populated from data model. For more details see [getHeaderCellLabel](/pwoli/api-docs/classes/DataColumn.html#getHeaderCellLabel).
 
 #### Action column <span id="action-column"></span>
 
-[[ActionColumn|Action column]] displays action buttons such as update or delete for each row.
+[ActionColumn](/pwoli/api-docs/classes/ActionColumn.html) displays action buttons such as update or delete for each row.
 
 ```js
-console.log(
-    GridView.widget({
+let grid = new GridView({
         dataProvider: dataProvider,
         columns: {
             class: 'ActionColumn',
             // you may configure additional properties here
         },
-    }),
-);
+    })
 ```
 
 Available properties you can configure are:
 
--   [[ActionColumn.controller|controller]] is the ID of the controller that should handle the actions. If not set, it will use the currently active
+-   [controller](/pwoli/api-docs/classes/ActionColumn.html#controller) is the ID of the controller that should handle the actions. If not set, it will use the currently active
     controller.
--   [[ActionColumn.template|template]] defines the template used for composing each cell in the action column. Tokens enclosed within curly brackets are
+-   [template](/pwoli/api-docs/classes/ActionColumn.html#template) defines the template used for composing each cell in the action column. Tokens enclosed within curly brackets are
     treated as controller action IDs (also called _button names_ in the context of action column). They will be replaced
-    by the corresponding button rendering callbacks specified in [[ActionColumn.buttons|buttons]]. For example, the token `{view}` will be
+    by the corresponding button rendering callbacks specified in [buttons](/pwoli/api-docs/classes/ActionColumn.html#buttons). For example, the token `{view}` will be
     replaced by the result of the callback `buttons['view']`. If a callback cannot be found, the token will be replaced
     with an empty string. The default tokens are `{view} {update} {delete}`.
--   [[ActionColumn.buttons|buttons]] is an array of button rendering callbacks. The array keys are the button names (without curly brackets),
+-   [buttons](/pwoli/api-docs/classes/ActionColumn.html#buttons) is an array of button rendering callbacks. The array keys are the button names (without curly brackets),
     and the values are the corresponding button rendering callbacks. The callbacks should use the following signature:
 
     ```js
@@ -248,10 +238,10 @@ Available properties you can configure are:
     In the code above, `url` is the URL that the column creates for the button, `model` is the model object being
     rendered for the current row, and `key` is the key of the model in the data provider array.
 
--   [[ActionColumn.urlCreator|urlCreator]] is a callback that creates a button URL using the specified model information. The signature of
-    the callback should be the same as that of [[ActionColumn.createUrl]]. If this property is not set,
-    button URLs will be created using [[ActionColumn.createUrl]].
--   [[ActionColumn.visibleButtons|visibleButtons]] is an array of visibility conditions for each button.
+-   [urlCreator](/pwoli/api-docs/classes/ActionColumn.html#urlCreator) is a callback that creates a button URL using the specified model information. The signature of
+    the callback should be the same as that of [createUrl](/pwoli/api-docs/classes/ActionColumn.html#createUrl). If this property is not set,
+    button URLs will be created using [createUrl](/pwoli/api-docs/classes/ActionColumn.html#createUrl).
+-   [visibleButtons](/pwoli/api-docs/classes/ActionColumn.html#visibleButtons) is an array of visibility conditions for each button.
     The array keys are the button names (without curly brackets), and the values are the boolean `true`/`false` or the
     anonymous function. When the button name is not specified in this array it will be shown by default.
     The callbacks must use the following signature:
@@ -272,12 +262,12 @@ Available properties you can configure are:
 
 #### Checkbox column <span id="checkbox-column"></span>
 
-[[CheckboxColumn|Checkbox column]] displays a column of checkboxes.
+[CheckboxColumn](/pwoli/api-docs/classes/CheckboxColumn.html) displays a column of checkboxes.
 
-To add a CheckboxColumn to the GridView, add it to the [[GridView.columns|columns]] configuration as follows:
+To add a CheckboxColumn to the GridView, add it to the [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns) configuration as follows:
 
 ```js
-console.log(GridView.widget([
+let grid = new GridView([
     id: 'grid',
     dataProvider: dataProvider,
     columns:
@@ -298,12 +288,12 @@ var keys = $('#grid').yiiGridView('getSelectedRows');
 
 #### Serial column <span id="serial-column"></span>
 
-[[SerialColumn|Serial column]] renders row numbers starting with `1` and going forward.
+[SerialColumn](/pwoli/api-docs/classes/SerialColumn.html) renders row numbers starting with `1` and going forward.
 
 Usage is as simple as the following:
 
 ```js
-console.log(GridView.widget({
+let grid = new GridView({
     dataProvider: dataProvider,
     columns:
         {class: 'SerialColumn'}, // <-- here
@@ -334,15 +324,13 @@ return this.render('myview', {
 And in the view you then assign the `dataProvider` and `filterModel` to the GridView:
 
 ```js
-console.log(
-    GridView.widget({
+let grid = new GridView({
         dataProvider: dataProvider,
         filterModel: filterModel,
         columns: [
             // ...
         ],
-    }),
-);
+    })
 ```
 
 ### Separate filter form <span id="separate-filter-form"></span>
@@ -421,7 +409,7 @@ And add the representative fields to the filter form:
 
 When displaying active records in a GridView you might encounter the case where you display values of related
 columns such as the post author's name instead of just his `id`.
-You do this by defining the attribute name in [[GridView.columns]] as `author.name` when the `Post` model
+You do this by defining the attribute name in [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns) as `author.name` when the `Post` model
 has a relation named `author` and the author model has an attribute `name`.
 The GridView will then display the name of the author but sorting and filtering are not enabled by default.
 You have to adjust the `filterModel` that has been introduced in the last section to add this functionality.
@@ -468,7 +456,7 @@ class Post extends Model{
 }
 ```
 
-> When specifying the [[Sort.defaultOrder|defaultOrder]] for sorting, you need to use the relation name
+> When specifying the [Sort.defaultOrder()](/pwoli/api-docs/classes/Sort.html#defaultOrder) for sorting, you need to use the relation name
 > instead of the alias:
 >
 > ```js
@@ -483,8 +471,8 @@ they do not interfere with each other.
 When using multiple instances of GridView you have to configure different parameter names for
 the generated sort and pagination links so that each GridView has its own individual sorting and pagination.
 
-You do so by setting the [[Sort.sortParam|sortParam]] and [[Pagination.pageParam|pageParam]]
-of the dataProvider's [[BaseDataProvider.$sort|sort]] and [[BaseDataProvider.pagination|pagination]]
+You do so by setting the [Sort.sortParam()](/pwoli/api-docs/classes/Sort.html#sortParam) and [Pagination.sortParam()](/pwoli/api-docs/classes/Pagination.html#sortParam)
+of the dataProvider's [sort](/pwoli/api-docs/classes/DataProvider.html#sort) and [pagination](/pwoli/api-docs/classes/DataProvider.html#pagination)
 instances.
 
 Assume we want to list the `Post` and `User` models for which we have already prepared two data providers
@@ -499,12 +487,12 @@ userProvider.sort.sortParam = 'user-sort';
 postProvider.pagination.pageParam = 'post-page';
 postProvider.sort.sortParam = 'post-sort';
 
-console.log '<h1>Users</h1>';
+console.log('<h1>Users</h1>');
 let userGrid = new GridView.({
     dataProvider: userProvider,
 });
 
-console.log '<h1>Posts</h1>';
+console.log('<h1>Posts</h1>');
 let postGrid = new GridView({
     dataProvider: postProvider,
 ]);

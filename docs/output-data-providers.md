@@ -1,69 +1,18 @@
 Data Providers
 ==============
 
-In the [Pagination](output-pagination.md) and [Sorting](output-sorting.md) sections, we have described how to
+In the [Pagination](/pwoli/api-docs/classes/Pagination.html) and [Sort](/pwoli/api-docs/classes/Sort.html) sections, we have described how to
 allow end users to choose a particular page of data to display and sort them by some columns. Because the task
 of paginating and sorting data is very common, Pwoli provides a set of *data provider* classes to encapsulate it.
 
-A data provider is a class implementing [[DataProviderInterface]]. It mainly supports retrieving paginated
-and sorted data. It is usually used to work with [data widgets](output-data-widgets.md) so that end users can 
+A data provider is a class extending [DataProvider](/pwoli/api-docs/classes/DataProvider.html). It mainly supports retrieving paginated
+and sorted data. It is usually used to work with [data widgets](/pwoli/output-data-widgets.md) so that end users can 
 interactively paginate and sort data. 
 
 The following data provider classes are included in the Pwoli releases:
 
-* [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html): uses [[Query]] or [[ActiveQuery]] to query data from databases
-  and return them in terms of arrays or [Active Record](db-active-record.md) instances.
-* [[SqlDataProvider]]: executes a SQL statement and returns database data as arrays.
-* [ArrayDataProvider](/pwoli/api-docs/classes/ArrayDataProvider.html): takes a big array and returns a slice of it based on the paginating and sorting
-  specifications.
-
-The usage of all these data providers share the following common pattern:
-
-```js
-// create the data provider by configuring its pagination and sort properties
-let provider = new XyzDataProvider({
-    pagination: [...],
-    sort: [...],
-});
-
-// retrieves paginated and sorted data
-let models = provider.getModels();
-
-// get the number of data items in the current page
-let count = provider.getCount();
-
-// get the total number of data items across all pages
-let totalCount = provider.getTotalCount();
-```
-
-You specify the pagination and sorting behaviors of a data provider by configuring its 
-[[BaseDataProvider.pagination|pagination]] and [[BaseDataProvider.sort|sort]] properties
-which correspond to the configurations for [[Pagination]] and [[Sort]], respectively.
-You may also configure them to be `false` to disable pagination and/or sorting features.
-
-[Data widgets](output-data-widgets.md), such as [[GridView]], have a property named `dataProvider` which
-can take a data provider instance and display the data it provides. For example,
-
-```js
-console.log(GridView.widget({
-    dataProvider: Data Providers
-}))
-==============
-```
-
-In the [Pagination](output-pagination.md) and [Sorting](output-sorting.md) sections, we have described how to
-allow end users to choose a particular page of data to display and sort them by some columns. Because the task
-of paginating and sorting data is very common, Pwoli provides a set of *data provider* classes to encapsulate it.
-
-A data provider is a class implementing [[DataProviderInterface]]. It mainly supports retrieving paginated
-and sorted data. It is usually used to work with [data widgets](output-data-widgets.md) so that end users can 
-interactively paginate and sort data. 
-
-The following data provider classes are included in the Pwoli releases:
-
-* [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html): uses [[Query]] or [[ActiveQuery]] to query data from databases
-  and return them in terms of arrays or [Active Record](db-active-record.md) instances.
-* [[SqlDataProvider]]: executes a SQL statement and returns database data as arrays.
+* [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html): uses [query](/pwoli/api-docs/classes/ActiveDataProvider.html#query) to query data from databases
+  and return them in terms of arrays or [Active Record](/pwoli/api-docs/classes/Model.html) instances.
 * [ArrayDataProvider](/pwoli/api-docs/classes/ArrayDataProvider.html): takes a big array and returns a slice of it based on the paginating and sorting
   specifications.
 
@@ -91,11 +40,60 @@ You specify the pagination and sorting behaviors of a data provider by configuri
 which correspond to the configurations for [Pagination](/pwoli/api-docs/classes/Pagination.html) and [Sort](/pwoli/api-docs/classes/Sort.html), respectively.
 You may also configure them to be `false` to disable pagination and/or sorting features.
 
-[Data widgets](output-data-widgets.md), such as [GridView](/pwoli/api-docs/classes/GridView.html), have a property named `dataProvider` which
+[Data widgets](/pwoli/output-data-widgets.md), such as [GridView](/pwoli/api-docs/classes/GridView.html), have a property named `dataProvider` which
 can take a data provider instance and display the data it provides. For example,
 
 ```js
-console.log(GridView.widget([
+let grid = new GridView({
+    dataProvider: Data Providers
+}))
+==============
+```
+
+In the [Pagination](/pwoli/api-docs/classes/Pagination.html) and [Sort](/pwoli/api-docs/classes/Sort.html) sections, we have described how to
+allow end users to choose a particular page of data to display and sort them by some columns. Because the task
+of paginating and sorting data is very common, Pwoli provides a set of *data provider* classes to encapsulate it.
+
+A data provider is a class implementing [DataProvider](/pwoli/api-docs/classes/DataProvider.html). It mainly supports retrieving paginated
+and sorted data. It is usually used to work with [data widgets](/pwoli/output-data-widgets.md) so that end users can 
+interactively paginate and sort data. 
+
+The following data provider classes are included in the Pwoli releases:
+
+* [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html): uses [query](/pwoli/api-docs/classes/ActiveDataProvider.html#query) to query data from databases
+  and return them in terms of arrays or [Active Record](/pwoli/api-docs/classes/Model.html) instances.
+* [ArrayDataProvider](/pwoli/api-docs/classes/ArrayDataProvider.html): takes a big array and returns a slice of it based on the paginating and sorting
+  specifications.
+
+The usage of all these data providers share the following common pattern:
+
+```js
+// create the data provider by configuring its pagination and sort properties
+let provider = new XyzDataProvider({
+    pagination: [...],
+    sort: [...],
+});
+
+// retrieves paginated and sorted data
+let models = provider.getModels();
+
+// get the number of data items in the current page
+let count = provider.getCount();
+
+// get the total number of data items across all pages
+let totalCount = provider.getTotalCount();
+```
+
+You specify the pagination and sorting behaviors of a data provider by configuring its 
+[pagination](/pwoli/api-docs/classes/DataProvider.html#pagination) and [sort](/pwoli/api-docs/classes/DataProvider.html#sort) properties
+which correspond to the configurations for [Pagination](/pwoli/api-docs/classes/Pagination.html) and [Sort](/pwoli/api-docs/classes/Sort.html), respectively.
+You may also configure them to be `false` to disable pagination and/or sorting features.
+
+[Data widgets](/pwoli/output-data-widgets.md), such as [GridView](/pwoli/api-docs/classes/GridView.html), have a property named `dataProvider` which
+can take a data provider instance and display the data it provides. For example,
+
+```js
+let grid = new GridView([
     dataProvider: dataProvider,
 ));
 ```
@@ -107,12 +105,12 @@ we will explain the detailed usage of each of these data providers.
 ## Active Data Provider <span id="active-data-provider"></span> 
 
 To use [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html), you should configure its [query](/pwoli/api-docs/classes/ActiveDataProvider.html#query) property.
-It can take either a [[Query]] or [[ActiveQuery]] object. If the former, the data returned will be arrays;
-if the latter, the data returned can be either arrays or [Active Record](db-active-record.md) instances.
+It can take a [query](/pwoli/api-docs/classes/ActiveDataProvider.html#query) object. If the former, the data returned will be arrays;
+if the latter, the data returned can be either arrays or [Active Record](/pwoli/api-docs/classes/Model.html) instances.
 For example,
 
 ```js
-import ActiveDataProvider;
+import { ActiveDataProvider} from 'pwoli';
 
 let query = where({status: 1});
 
@@ -138,7 +136,7 @@ If `query` in the above example is created using the following code, then the da
 ```js
 import Query;
 
-query = ({where: {status: 1}}); 
+let query = ({where: {status: 1}}); 
 ```
 
 > Note: If a query already specifies the `orderBy` clause, the new ordering instructions given by end users
@@ -155,7 +153,7 @@ use a different database connection by configuring the [db](/pwoli/api-docs/clas
 a page of the array data sorted by one or multiple columns. To use [ArrayDataProvider](/pwoli/api-docs/classes/ArrayDataProvider.html) , you should
 specify the [allModels](/pwoli/api-docs/classes/ArrayDataProvider.html#allModels) property as the big array.
 Elements in the big array can be either associative arrays
-(e.g. query results of [DAO](db-dao.md)) or objects (e.g. [Active Record](db-active-record.md) instances).
+objects (e.g. [Active Record](/pwoli/api-docs/classes/Model.html) instances).
 For example,
 
 ```js
@@ -182,8 +180,7 @@ let provider = new ArrayDataProvider({
 let rows = provider.getModels();
 ``` 
 
-> Note: Compared to [Active Data Provider](#active-data-provider) and [SQL Data Provider](#sql-data-provider),
-  array data provider is less efficient because it requires loading *all* data into the memory.
+> Note: Compared to [Active Data Provider](#active-data-provider),array data provider is less efficient because it requires loading *all* data into the memory.
 
 
 ## Working with Data Keys <span id="working-with-keys"></span>
@@ -191,10 +188,10 @@ let rows = provider.getModels();
 When using the data items returned by a data provider, you often need to identify each data item with a unique key.
 For example, if the data items represent customer information, you may want to use the customer ID as the key
 for each customer data. Data providers can return a list of such keys corresponding with the data items returned 
-by [[DataProviderInterface.getModels]]. For example,
+by [DataProvider.getModels()](/pwoli/api-docs/classes/DataProvider.html#getModels). For example,
 
 ```js
-import ActiveDataProvider;
+import { ActiveDataProvider } from 'pwoli';
 
 let query = {where: {status: 1}};
 
@@ -209,7 +206,7 @@ let posts = provider.getModels();
 let ids = provider.getKeys();
 ```
 
-In the above example, because you provide to [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html) an [[ActiveQuery]] object,
+In the above example, because you provide to [ActiveDataProvider](/pwoli/api-docs/classes/ActiveDataProvider.html) an [query](/pwoli/api-docs/classes/ActiveDataProvider.html#query) object,
 it is intelligent enough to return primary key values as the keys. You may also explicitly specify how the key
 values should be calculated by configuring [key](/pwoli/api-docs/classes/ActiveDataProvider.html#key) with a column name or
 a callable calculating key values. For example,
@@ -233,24 +230,23 @@ provider = new ActiveDataProvider({
 
 ## Creating Custom Data Provider <span id="custom-data-provider"></span>
 
-To create your own custom data provider classes, you should implement [[DataProviderInterface]].
-An easier way is to extend from [BaseDataProvider](/pwoli/api-docs/classes/BaseDataProvider.html) which allows you to focus on the core data provider
+To create your own custom data provider classes, you should implement [DataProvider](/pwoli/api-docs/classes/DataProvider.html).
+An easier way is to extend from [DataProvider](/pwoli/api-docs/classes/DataProvider.html) which allows you to focus on the core data provider
 logic. In particular, you mainly need to implement the following methods:
                                                    
-- [prepareModels] (/pwoli/api-docs/classes/BaseDataProvider.     html#prepareModels): prepares the data models that will be made 
+- [prepareModels](/pwoli/api-docs/classes/DataProvider.html#prepareModels): prepares the data models that will be made 
   available in the current page and returns them as an array.
-- [prepareKeys] (/pwoli/api-docs/classes/BaseDataProvider.     html#prepareKeys): accepts an array of currently available data models
+- [prepareKeys](/pwoli/api-docs/classes/DataProvider.html#prepareKeys): accepts an array of currently available data models
   and returns keys associated with them.
-- [PrepareTotalCount] (/pwoli/api-docs/classes/BaseDataProvider.     html#prepareTotalCount): returns a value indicating the total number 
+- [PrepareTotalCount](/pwoli/api-docs/classes/DataProvider.html#prepareTotalCount): returns a value indicating the total number 
   of data models in the data provider.
 
 Below is an example of a data provider that reads CSV data efficiently:
 
 ```js
-<?php
-import BaseDataProvider;
+import { DataProvider } from "pwoli";
 
-class CsvDataProvider extends BaseDataProvider
+class CsvDataProvider extends DataProvider
 {
     /**
      * @var string name of the CSV file to read
@@ -350,7 +346,7 @@ class CsvDataProvider extends BaseDataProvider
 ## Filtering Data Providers using Data Filters <span id="filtering-data-providers-using-data-filters"></span>
 
 While you can build conditions for active data provider manually as described in
-[Filtering Data](output-data-widgets.md#filtering-data) and [Separate Filter Form](output-data-widgets.md#separate-filter-form)
+[Filtering Data](/pwoli/output-data-widgets.md#filtering-data) and [Separate Filter Form](/pwoli/output-data-widgets.md#separate-filter-form)
 sections of data widgets guide, Pwoli has data filters that are very useful if you need flexible filter conditions.
 Data filters could be used as follows:
 
@@ -385,7 +381,7 @@ return new ActiveDataProvider({
 `PostSearch` model serves the purpose of defining which properties and values are allowed for filtering:
 
 ```js
-import yii\base\Model;
+import { Model } from 'pwoli';
 
 class PostSearch extends Model 
 {
@@ -401,6 +397,3 @@ class PostSearch extends Model
     }
 }
 ```
-
-Data filters are quite flexible. You may customize how conditions are built and which operators are allowed.
-For details check API docs on [[DataFilter]].
