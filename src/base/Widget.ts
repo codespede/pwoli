@@ -1,3 +1,4 @@
+import Pwoli from '../base/Application';
 import Component from './Component';
 /**
  * Widget is the base class for widgets.
@@ -17,10 +18,26 @@ export default class Widget extends Component {
      * @internal
      */
     public static counter = 0;
+    /**
+     * The HTML attributes for the container tag of the widget.
+     * @see [[Html.renderTagAttributes]] for details on how attributes are being rendered.
+     */
+    public options: { [key: string]: any } = {};
+    /**
+     * Whether to enable [Pjax](https://github.com/MoOx/pjax) on this widget.
+     */
+    public enablePjax = true;
     private _id;
     public constructor(config: { [key: string]: any }) {
         super(config);
         Object.assign(this, config);
+    }
+    /**
+     * Initializes the widget.
+     */
+    public async init() {
+        await super.init.call(this);
+        if (this.options.id === undefined) this.options.id = this.getId();
     }
     /**
      * Returns the ID of the widget.
@@ -45,6 +62,13 @@ export default class Widget extends Component {
      * @return the result of widget execution to be outputted.
      */
     public async run(): Promise<any> {
+        await this.initialization;
+        if (this.enablePjax) {
+            await Pwoli.view.registerJs(
+                `jQuery(document).on('submit', '#${this.options.id} form[data-pjax]', function(event){ jQuery.pjax.submit(event, {id: '${this.options.id}', container: '#${this.options.id}'})});`,
+            );
+            await Pwoli.view.registerJs(`jQuery(document).pjax('#${this.options.id} a', '#${this.options.id}');`);
+        }
         return '';
     }
 

@@ -17,5 +17,7 @@ export default class Component {
      * This method is invoked at the end of the constructor after the object is initialized with the
      * given configuration.
      */
-    public async init() {}
+    public async init() {
+        //
+    }
 }

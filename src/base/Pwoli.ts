@@ -1,7 +1,7 @@
 class Pwoli {
     public config: { [key: string]: any } = {
         ormModelClass: null,
-        viewPath: 'views'
-    }
+        viewPath: 'views',
+    };
 }
-export default new Pwoli()
+export default new Pwoli();

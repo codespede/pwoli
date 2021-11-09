@@ -1,7 +1,7 @@
-import Pwoli from "./Pwoli";
+import Pwoli from './Pwoli';
 import Component from './Component';
 import SequelizeAdapter from '../orm-adapters/SequelizeAdapter';
-import { Model as SequelizeModel } from "sequelize";
+import { Model as SequelizeModel } from 'sequelize';
 import View from './View';
 import Serializer from '../rest/Serializer';
 import url = require('url');
@@ -59,25 +59,23 @@ export default class Application extends Component {
      */
     public static ormModelClass = () => {
         try {
-            let model = require("../../../../orm-model-config")
+            let model = require('../../../../orm-model-config');
             return model.default;
-        }
-        catch (e) {
+        } catch (e) {
             try {
-                let model = require("../../../../orm-model-config.cjs")
+                let model = require('../../../../orm-model-config.cjs');
                 return model;
             } catch (innerE) {}
             return SequelizeModel;
         }
-    }
+    };
     /**
      * The [[Serializer]] that should be used for RESTful operations.
      */
     public static serializer = new Serializer({});
     /** @inheritdoc */
     public async init() {
-        if(Pwoli.config.viewPath)
-            Application.viewPath = Pwoli.config.viewPath;
+        if (Pwoli.config.viewPath) Application.viewPath = Pwoli.config.viewPath;
     }
     /**
      * Returns the full URL of the request.

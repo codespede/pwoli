@@ -170,14 +170,6 @@ export default class ActiveForm extends Widget {
         Object.assign(this, config);
     }
     /**
-     * Initializes the widget.
-     * This renders the form open tag.
-     */
-    public async init() {
-        await super.init.call(this);
-        if (this.options.id === undefined) this.options.id = this.getId();
-    }
-    /**
      * Runs the widget.
      * @throws `Error` if `beginField()` and `endField()` calls are not matching.
      */
@@ -198,6 +190,7 @@ export default class ActiveForm extends Widget {
     public async end() {
         const html = Html.endForm();
         if (this.enableClientScript) await this.registerClientScript();
+        await super.run.call(this);
         return html;
     }
     /**

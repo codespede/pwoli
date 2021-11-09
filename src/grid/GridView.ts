@@ -238,16 +238,17 @@ export default class GridView extends CollectionView {
      */
     public async init() {
         await super.init.call(this);
-        if (this.filterRowOptions.id === undefined) this.filterRowOptions.id = `${this.options.id}-filters`;
+        if (this.filterRowOptions.id === undefined)
+            this.filterRowOptions.id = `${this.options.id || this.getId()}-filters`;
         await this.initColumns();
     }
     /**
      * Runs the widget.
      */
     public async run(): Promise<string> {
+        await this.initialization;
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, '/../assets/js/gridView.js'));
         await Pwoli.view.publishAndRegisterFile(path.join(__dirname, '/../assets/css/bootstrap.css'));
-        //await this.initialization;
         const id = this.options.id;
         const options = { ...this.getClientOptions(), filterOnfocusOut: this.filterOnfocusOut };
         await Pwoli.view.registerJs(`jQuery('#${id}').pwoliGridView(${JSON.stringify(options)});`);

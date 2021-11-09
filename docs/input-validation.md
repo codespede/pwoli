@@ -1,5 +1,4 @@
-Validating Input
-================
+# Validating Input
 
 As a rule of thumb, you should never trust the data received from end users and should always validate it
 before putting it to good use.
@@ -12,7 +11,7 @@ succeeded or not. If not, you may get the error messages from the [Model.errors]
 model = new ContactForm();
 
 // populate model attributes with user inputs
-model.load(Pwoli.app.request.post());
+model.load(request.body);
 // which is equivalent to the following:
 // model.attributes = Pwoli.app.request.post('ContactForm');
 
@@ -24,9 +23,8 @@ if (model.validate()) {
 }
 ```
 
-
 ## Validation Rules <span id="declaring-rules"></span>
 
-Validation works based on the ORM you are using. Please visit your ORM's documentation to know more on how to set different kinds of validations for your Models.
-I f you are using Sequelize,  please refer https://sequelize.org/master/manual/validations-and-constraints.html
-You can see how validations are set for a sample app which uses Sequelize in this file: https://github.com/internetmango/pwoli-express-sample/blob/master/models/Company.js
+Validations work based on the ORM you are using. Please visit your ORM's documentation to know more on how to set different kinds of validations for your Models.
+If you are using Sequelize, please refer https://sequelize.org/master/manual/validations-and-constraints.html
+You can see how validations are set for a sample Pwoli app which uses Sequelize in this file: https://github.com/internetmango/pwoli-express-sample/blob/master/models/Company.js

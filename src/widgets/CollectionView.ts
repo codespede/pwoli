@@ -103,15 +103,15 @@ export default class CollectionView extends Widget {
      * Initializes the view.
      */
     public async init() {
-        await super.init.call(this);
         if (this.dataProvider === undefined) throw new Error('The "dataProvider" property must be set.');
         if (this.emptyText === undefined) this.emptyText = 'No results found';
-        if (this.options.id === undefined) this.options.id = this.getId();
+        await super.init.call(this);
     }
     /**
      * Runs the widget.
      */
     public async run(): Promise<string> {
+        await super.run.call(this);
         let content;
         this._models = await this.dataProvider.getModels();
         if (this.showOnEmpty || this.dataProvider.getCount() > 0)
