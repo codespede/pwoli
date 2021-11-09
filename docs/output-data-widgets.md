@@ -168,21 +168,16 @@ You may specify various container HTML options by passing arrays to:
 #### Data column <span id="data-column"></span>
 
 [[DataColumn|Data column]] is used for displaying and sorting data. It is the default column type so the specifying class could be omitted when
-using it.
-
-The main setting of the data column is its [[DataColumn.format|format]] property. Its values
-correspond to methods in the `formatter` [application component](structure-application-components.md) that is [[Formatter]] by default:
+using it:
 
 ```js
 console.log GridView.widget({
     columns: {
         {
             attribute: 'name',
-            format: 'text'
         },
         {
             attribute: 'birthday',
-            format: ['date', 'php:Y-m-d']
         },
         created_at:datetime, // shortcut format
         {
