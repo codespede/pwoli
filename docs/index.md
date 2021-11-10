@@ -1,6 +1,6 @@
 ## Pwoli
 
-Pwoli is a Node JS framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with other frameworks like Express.js.
+Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with any other frameworks or libraries like Express.js.
 
 Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
 
@@ -43,22 +43,28 @@ You're ready to go!
 
 Click on one of our guides below for learning how to use Pwoli's features:
 
--   Data Widgets - GridViews, ListViews
--   Data Providers - ActiveDataProvider, ArrayDataProvider
--   Creating Forms - via ActiveForms
--   Validating Input - via Model validations and ActiveForms
--   Html helper - to help you do anything in the HTML side
--   REST APIs - Data Rendering made easy with a few lines
--   Using a different ORM - If you are using an ORM other than Sequelize
+-   [Data Widgets - GridViews, ListViews](/pwoli/output-data-widgets)
+-   [Data Providers - ActiveDataProvider, ArrayDataProvider](/pwoli/output-data-providers)
+-   [Creating Forms - via ActiveForms](/pwoli/input-forms)
+-   [Validating Input - via Model validations and ActiveForms](/pwoli/input-validation)
+-   [Html helper - to help you do anything in the HTML side](/pwoli/html-helper)
+-   [REST APIs - Data Rendering made easy with a few lines](/pwoli/rest-api)
+-   [Using a different ORM - If you are using an ORM other than Sequelize](/pwoli/using-another-orm)
 
 ### Try it out
 
 We have made four sample apps for you to get started quickly by trying them out in your local:
 
--   Sample App - Pwoli with NodeJS
--   Sample App - Pwoli with TypeScript
--   Sample App - Pwoli with Express.js and NodeJS
--   Sample App - Pwoli with Express.js and TypeScript
+-   [Sample App - Pwoli with NodeJS](https://github.com/internetmango/pwoli-node-sample)
+-   [Sample App - Pwoli with TypeScript](https://github.com/internetmango/pwoli-nodejs-typescript-sample)
+-   [Sample App - Pwoli with Express.js and NodeJS](https://github.com/internetmango/pwoli-express-sample)
+-   [Sample App - Pwoli with Express.js and TypeScript](https://github.com/internetmango/pwoli-express-typescript-sample)
+
+### Credits
+
+Pwoli is created as a tribute to PHP's [Yii framework](https://www.yiiframework.com) because it is from this framework, [me](https://github.com/codespede) as the creator of Pwoli learned efficient and modularized development methodologies.
+
+My thought on making these available in other web programming languages is what resulted in Pwoli.
 
 ### Support or Contact
 

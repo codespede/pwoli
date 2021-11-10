@@ -149,7 +149,7 @@ export default class Application extends Component {
             this.serializer.request = this.request;
             this.serializer.response = this.response;
             this.response.data = JSON.stringify(await this.serializer.serialize(data));
-            this.response.headers['Content-Type'] = "application/json";
+            this.response.headers['Content-Type'] = 'application/json';
         }
         nativeResponse = this.responsify(nativeResponse);
         nativeResponse.write(this.response.data);

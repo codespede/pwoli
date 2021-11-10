@@ -497,3 +497,11 @@ let postGrid = new GridView({
     dataProvider: postProvider,
 ]);
 ```
+
+## [Pjax](https://github.com/defunkt/jquery-pjax) integration
+
+By default all the Widgets(including GridView and ListView) extended from the base [Widget](/pwoli/api-docs/classes/Widget.html) class are Pjax enabled.
+
+This means that any operations like clicking any link, submitting any form inside the Widget(For eg., in GridView - filtering, sorting and pagination) will trigger an AJAX request and the Widget will get reloaded without getting the whole page reloaded.
+
+You can disable Pjax by setting [Widget.enablePjax](/pwoli/api-docs/classes/Widget.html#enablePjax) to false.
