@@ -1,4 +1,4 @@
-## Pwoli
+## Pwoli.js
 
 Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with any other frameworks or libraries like Express.js.
 
