@@ -7,12 +7,12 @@ Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM A
 ### Main Features
 
 -   Fully flexible and extensible - thanks to the OOP based architecture.
--   Frontend widgets like ActiveForm, GridView, ListView for SSR applications.
+-   Frontend widgets like [ActiveForm](/pwoli/input-forms), [GridView, ListView](/pwoli/output-data-widgets) for SSR applications.
 -   [Ready to use REST APIs](/pwoli/rest-api) for the backends of SPA applications.
 -   Works on both NodeJS and TypeScript applications.
 -   Has reasonable defaults.
 -   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
--   Can be used in an ongoing project. Pwoli doesn't require that for using it, the project should be started from scratch.
+-   Can be used in an ongoing project or a new project. Pwoli doesn't require that for using it, the project should be started from scratch.
 
 ### Installation
 
