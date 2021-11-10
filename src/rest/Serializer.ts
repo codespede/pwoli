@@ -53,21 +53,21 @@ export default class Serializer extends Component {
      * This is used when serving a resource collection. When this is set and pagination is enabled, the serializer
      * will return a collection in the following format:
      *
-     * ```php
-     * [
-     *     'items' => [...],  // assuming collectionEnvelope is "items"
-     *     '_links' => {  // pagination links as returned by Pagination::getLinks()
-     *         'self' => '...',
-     *         'next' => '...',
-     *         'last' => '...',
+     * ```js
+     * {
+     *     'items': [...],  // assuming collectionEnvelope is "items"
+     *     '_links': {  // pagination links as returned by Pagination.getLinks()
+     *         'self': '...',
+     *         'next': '...',
+     *         'last': '...',
      *     },
-     *     '_meta' => {  // meta information as returned by Pagination::toArray()
-     *         'totalCount' => 100,
-     *         'pageCount' => 5,
-     *         'currentPage' => 1,
-     *         'perPage' => 20,
+     *     '_meta': {  // meta information as returned by Pagination.toArray()
+     *         'totalCount': 100,
+     *         'pageCount': 5,
+     *         'currentPage': 1,
+     *         'perPage': 20,
      *     },
-     * ]
+     * }
      * ```
      *
      * If this property is not set, the resource arrays will be directly returned without using envelope.
