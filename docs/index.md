@@ -25,7 +25,7 @@ npm install pwoli@latest
 If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](/pwoli/using-another-orm)
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
-```markdown
+```js
 import { Application as Pwoli } from 'pwoli'; //if using ES6 modules or "type": "module" is set in your package.json
 //if the above doesn't work, try the below two lines as you might be using CommonJS:
 const pkg = require('pwoli'); //if using CommonJS
@@ -65,6 +65,8 @@ We have made four sample apps for you to get started quickly by trying them out 
 Pwoli is created as a tribute to PHP's [Yii framework](https://www.yiiframework.com) because it is from this framework, [me](https://github.com/codespede) as the creator of Pwoli learned efficient and modularized development methodologies.
 
 My thought on making these available in other web programming languages is what resulted in Pwoli.
+
+Many thanks to YiiSoft and it's team for building this awesome product!
 
 ### Support or Contact
 
