@@ -8,13 +8,11 @@ Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM A
 
 -   Fully flexible and extensible - thanks to the OOP based architecture.
 -   Frontend widgets like ActiveForm, GridView, ListView for SSR applications.
--   [DataProviders](/pwoli/api-docs/classes/DataProvider.html) and [Serializers](/pwoli/api-docs/classes/Serializer.html) for the backends of SPA applications.
+-   [Ready to use REST APIs](/pwoli/rest-api) for the backends of SPA applications.
 -   Works on both NodeJS and TypeScript applications.
 -   Has reasonable defaults.
 -   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
 -   Can be used in an ongoing project. Pwoli doesn't require that for using it, the project should be started from scratch.
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ### Installation
 
