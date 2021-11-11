@@ -146,7 +146,7 @@ export default class ActionColumn extends Column {
                 let options = {
                     title,
                     'aria-label': title,
-                    'data-pjax': '0',
+                    'data-pjax': 'false',
                     ...additionalOptions,
                     ...this.buttonOptions,
                 };

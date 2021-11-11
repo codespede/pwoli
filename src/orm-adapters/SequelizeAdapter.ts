@@ -48,7 +48,12 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter 
 
     public setAttributes(model: Model, values: { [key: string]: any }): Model {
         for (let attribute in values) {
-            if (values[attribute] !== undefined) model.dataValues[attribute] = values[attribute];
+            if (values[attribute] !== undefined) {
+                if(model.rawAttributes[attribute] !== undefined)
+                    model[attribute] = values[attribute];
+                else
+                    model.dataValues[attribute] = values[attribute];
+            }
         }
         return model;
     }

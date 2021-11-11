@@ -71,7 +71,7 @@ export default class View extends Component {
      */
     public async publishAndRegisterFile(file: string, position = 'end') {
         //await this.initialization;
-        this.registerFile(path.extname(file) === '.js' ? 'js' : 'css', `${this.basePath}/${path.basename(file)}`, {
+        this.registerFile(path.extname(file) === '.js' ? 'js' : 'css', `/${this.basePath}/${path.basename(file)}`, {
             position,
         });
         if (!fs.existsSync(`${this.basePath}`)) {

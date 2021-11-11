@@ -504,4 +504,34 @@ By default all the Widgets(including GridView and ListView) extended from the ba
 
 This means that any operations like clicking any link, submitting any form inside the Widget(For eg., in GridView - filtering, sorting and pagination) will trigger an AJAX request and the Widget will get reloaded without getting the whole page reloaded.
 
+Important:- Please note that if you are using Pjax, you should detect if the request is triggered by Pjax and render the partial view containing only the widget in the following way:
+
+```js
+if (req.headers['x-requested-with'] === 'XMLHttpRequest')
+    // If it's a Pjax request
+    content = await Pwoli.view.render('/_grid.ejs', { grid, company: new Company() }, false);
+// else render the full view
+else content = await Pwoli.view.render('/index.ejs', { grid, company: new Company() });
+```
+
+The partial view should only contain the widget rendering code and it can be included in the main view like:
+
+Partial view file: `_grid.ejs`
+
+```js
+<%- await grid.render() %>
+```
+
+Main view file: `index.ejs`
+
+```js
+<%- include('_grid_') %>
+OR
+<%- partial('_grid_') %>
+```
+
+This is to make sure that if it's a Pjax request, its response should only contain the required HTML to be replaced in the page. If it contains any extra HTML, that too will get shown which is unnecessary and affects the design.
+
+This implementation is available in all of our Sample Apps [here](/pwoli/#sample-apps) so that you can seee how they are wired up.
+
 You can disable Pjax by setting [Widget.enablePjax](/pwoli/api-docs/classes/Widget.html#enablePjax) to false.

@@ -51,7 +51,7 @@ Check out on one of our guides below for learning how to use Pwoli's features:
 -   [REST APIs - Data Rendering made easy with a few lines](/pwoli/rest-api)
 -   [Using a different ORM - If you are using an ORM other than Sequelize](/pwoli/using-another-orm)
 
-### Try it out
+### Try it out <span id="sample-apps"></span>
 
 We have made four sample apps in different environments for you to get started quickly by trying them out in your local:
 
