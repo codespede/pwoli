@@ -1,6 +1,5 @@
 import Application from '../base/Application';
 import { DataTypes, Model } from 'sequelize';
-Application.ormModelClass = Model;
 import Model1 from './Models.jestignore';
 import { ActiveDataProvider } from '..';
 
