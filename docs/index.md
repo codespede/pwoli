@@ -10,11 +10,11 @@ _Pwoli means "super awesome" and our intention is to make web app development "s
 
 -   Fully flexible and extensible - thanks to the OOP based architecture.
 -   Frontend widgets like [ActiveForm](/pwoli/input-forms), [GridView, ListView](/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
--   [Simple-to-setup REST APIs](/pwoli/rest-api) for the backends of SPA applications.
+-   [Simple-to-setup REST APIs](/pwoli/rest-api) for the backends of Single Page Applications(like React, Angular, Vue etc.).
 -   Works on both NodeJS and TypeScript applications.
--   Has reasonable defaults.
+-   Has reasonable defaults to get you started with little or zero config.
 -   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
--   Can be used in an ongoing project or a new project. Pwoli doesn't require that for using it, the project should be started from scratch.
+-   You can use Pwoli on an ongoing project, and ofcourse you can start new projects with Pwoli.
 
 ### Installation
 
