@@ -2,15 +2,15 @@
 
 Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with any other frameworks or libraries like Express.js.
 
-Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
+Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](https://internetmango.github.io/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](https://internetmango.github.io/pwoli/api-docs/classes/SequelizeAdapter.html).
 
 _Pwoli means "super awesome" and our intention is to make web app development "super awesome"_
 
 ### Main Features
 
 -   Fully flexible and extensible - thanks to the OOP based architecture.
--   Frontend widgets like [ActiveForm](/pwoli/input-forms), [GridView, ListView](/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
--   [Simple-to-setup REST APIs](/pwoli/rest-api) for the backends of SPA applications.
+-   Frontend widgets like [ActiveForm](https://internetmango.github.io/pwoli/input-forms), [GridView, ListView](https://internetmango.github.io/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
+-   [Simple-to-setup REST APIs](https://internetmango.github.io/pwoli/rest-api) for the backends of SPA applications.
 -   Works on both NodeJS and TypeScript applications.
 -   Has reasonable defaults.
 -   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
@@ -22,7 +22,7 @@ _Pwoli means "super awesome" and our intention is to make web app development "s
 npm install pwoli@latest
 ```
 
-If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](/pwoli/using-another-orm)
+If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](https://internetmango.github.io/pwoli/using-another-orm)
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
 ```js
@@ -39,17 +39,17 @@ Pwoli.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which yo
 
 ### Get Started
 
--   Please note: If you are building an SPA or REST APIs, [click here](/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
+-   Please note: If you are building an SPA or REST APIs, [click here](https://internetmango.github.io/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
 
 Check out on one of our guides below for learning how to use Pwoli's features:
 
--   [Data Widgets - GridViews, ListViews](/pwoli/output-data-widgets)
--   [Data Providers - ActiveDataProvider, ArrayDataProvider](/pwoli/output-data-providers)
--   [Creating Forms - via ActiveForms](/pwoli/input-forms)
--   [Validating Input - via Model validations and ActiveForms](/pwoli/input-validation)
--   [Html helper - to help you do anything in the HTML side](/pwoli/html-helper)
--   [REST APIs - Data Rendering made easy with a few lines](/pwoli/rest-api)
--   [Using a different ORM - If you are using an ORM other than Sequelize](/pwoli/using-another-orm)
+-   [Data Widgets - GridViews, ListViews](https://internetmango.github.io/pwoli/output-data-widgets)
+-   [Data Providers - ActiveDataProvider, ArrayDataProvider](https://internetmango.github.io/pwoli/output-data-providers)
+-   [Creating Forms - via ActiveForms](https://internetmango.github.io/pwoli/input-forms)
+-   [Validating Input - via Model validations and ActiveForms](https://internetmango.github.io/pwoli/input-validation)
+-   [Html helper - to help you do anything in the HTML side](https://internetmango.github.io/pwoli/html-helper)
+-   [REST APIs - Data Rendering made easy with a few lines](https://internetmango.github.io/pwoli/rest-api)
+-   [Using a different ORM - If you are using an ORM other than Sequelize](https://internetmango.github.io/pwoli/using-another-orm)
 
 ### Try it out
 
