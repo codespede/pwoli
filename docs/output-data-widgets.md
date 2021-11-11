@@ -532,6 +532,6 @@ OR
 
 This is to make sure that if it's a Pjax request, its response should only contain the required HTML to be replaced in the page. If it contains any extra HTML, that too will get shown which is unnecessary and affects the design.
 
-This implementation is available in all of our Sample Apps [here](/pwoli/#sample-apps) so that you can seee how they are wired up.
+This implementation is available in all of our Sample Apps [here](/pwoli/index#sample-apps) so that you can seee how they are wired up.
 
 You can disable Pjax by setting [Widget.enablePjax](/pwoli/api-docs/classes/Widget.html#enablePjax) to false.
