@@ -11,7 +11,7 @@ import Widget from '../base/Widget';
  * to look like a real pager, you should provide some CSS styles for it.
  * With the default configuration, LinkPager should look good using Twitter Bootstrap CSS framework.
  *
- * For more details and usage information on LinkPager, see the [guide article on pagination](guide:output-pagination).
+ * For more details and usage information on LinkPager, see the [pagination section in this guide](https://internetmango.github.io/pwoli/output-data-widgets).
  *
  * @author Mahesh S Warrier <https://github.com/codespede>
  */

@@ -3,7 +3,7 @@ import Component from './Component';
 /**
  * Widget is the base class for widgets.
  *
- * For more details and usage information on Widget, see the [guide article on widgets](guide:structure-widgets).
+ * For more details and usage information on Widget, see the [guide article on widgets](https://internetmango.github.io/pwoli/output-data-widgets).
  *
  * @author Mahesh S Warrier <https://github.com/codespede>
  */

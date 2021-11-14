@@ -149,7 +149,9 @@ export default class ActiveField extends Component {
      * If "for" field label attribute should be skipped.
      */
     private _skipLabelFor = false;
-
+    /**
+     * The params with which /assets/js/activeForm.js should perform the client validation.
+     */
     private clientValidators: { [key: string]: (params: { [key: string]: any }) => string } = {
         regex: (params) => {
             params.options = {

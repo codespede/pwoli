@@ -4,7 +4,7 @@ import Component from '../base/Component';
 import Html from '../helpers/Html';
 /**
  * Column is the base class of all [[GridView]] column classes.
- * For more details and usage information on Column, see the [guide article on data widgets](guide:output-data-widgets).
+ * For more details and usage information on Column, see the [guide article on data widgets](https://internetmango.github.io/pwoli/output-data-widgets).
  */
 export default class Column extends Component {
     /**

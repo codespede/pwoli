@@ -17,7 +17,7 @@ import DataHelper from '../helpers/DataHelper';
  * ]
  * ```
  *
- * For more details and usage information on ActionColumn, see the [guide article on data widgets](guide:output-data-widgets).
+ * For more details and usage information on ActionColumn, see the [guide article on data widgets](https://internetmango.github.io/pwoli/output-data-widgets).
  *
  */
 export default class ActionColumn extends Column {

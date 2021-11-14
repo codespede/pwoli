@@ -9,7 +9,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
-    "doc": "rm -rf docs && npx typedoc"
+    "doc": "rm -rf docs/api-docs && npx typedoc"
   },
   "author": "Mahesh S Warrier (codespede)",
   "license": "ISC",

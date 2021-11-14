@@ -8,7 +8,6 @@ import url = require('url');
 /**
  * Application is the base class for all web application classes.
  *
- * For more details and usage information on Application, see the [guide article on applications](guide:structure-applications).
  *
  * @property-read ErrorHandler $errorHandler The error handler application component. This property is
  * read-only.

@@ -90,8 +90,6 @@ const ORMModel = ormAdapter.extendableModelClass();
  * ```
  * If your ORM is Sequelize, please refer <https://sequelize.org/master/manual/model-basics.html>
  *
- * For more details and usage information on Model, see the [guide article on Model](guide:db-active-record).
- *
  * @author Mahesh S Warrier <https://github.com/codespede>
  */
 export default class Model extends ORMModel {

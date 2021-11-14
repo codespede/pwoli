@@ -8,7 +8,7 @@ import ActiveField from './ActiveField';
 /**
  * ActiveForm is a widget that builds an interactive HTML form for one or multiple data models.
  *
- * For more details and usage information on ActiveForm, see the [guide article on forms](guide:input-forms).
+ * For more details and usage information on ActiveForm, see the [guide article on forms](https://internetmango.github.io/pwoli/input-forms).
  *
  * @author Mahesh S Warrier <https://github.com/codespede>
  */
