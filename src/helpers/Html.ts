@@ -2,11 +2,16 @@ import Model from '../base/Model';
 import Pwoli from '../base/Application';
 import Component from '../base/Component';
 import DataHelper from './DataHelper';
-import DataProvider from '../data//DataProvider';
 /**
- * BaseHtml provides concrete implementation for [[Html]].
+ * Html provides a set of static methods for generating commonly used HTML tags.
  *
- * Do not use BaseHtml. Use [[Html]] instead.
+ * Nearly all of the methods in this class allow setting additional html attributes for the html
+ * tags they generate. You can specify, for example, `class`, `style` or `id` for an html element
+ * using the `$options` parameter. See the documentation of the [[tag]] method for more details.
+ *
+ * For more details and usage information on Html, see the [guide article on html helpers](guide:helper-html).
+ *
+ * @author Mahesh S Warrier <https://github.com/codespede>
  */
 export default class Html extends Component {
     /**
@@ -1043,7 +1048,7 @@ export default class Html extends Component {
      * @return the generated drop-down list tag
      */
     public static activeDropDownList(model, attribute, items, options: any = {}) {
-        if (options.multiple.length === 0) {
+        if (options.multiple !== true) {
             return this.activeListInput('dropDownList', model, attribute, items, options);
         }
 
@@ -1205,7 +1210,222 @@ export default class Html extends Component {
         if (options.id === undefined) {
             options.id = this.getInputId(model, attribute);
         }
-
         return this[type](name, selection, items, options);
+    }
+    /**
+     * Generates a drop-down list.
+     * @param name the input name
+     * @param selection the selected value(s). String for single or array for multiple selection(s).
+     * @param items the option data items. The array keys are option values, and the array values
+     * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
+     * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
+     * If you have a list of data models, you may convert them into the format described above using
+     * `Array.map()`.
+     * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
+     * the labels will also be HTML-encoded.
+     * @param options the tag options in terms of name-value pairs. The following options are specially handled:
+     *
+     * - prompt: string, a prompt text to be displayed as the first option. Since version 2.0.11 you can use an array
+     *   to override the value and to set other tag attributes:
+     *
+     *   ```js
+     *   { text: 'Please select', options: { value: 'none', class: 'prompt', label: 'Select' } },
+     *   ```
+     *
+     * - options: array, the attributes for the select option tags. The array keys must be valid option values,
+     *   and the array values are the extra attributes for the corresponding option tags. For example,
+     *
+     *   ```js
+     *   { 
+     *       value1: { disabled: true },
+     *       value2: { label: 'value 2' },
+     *   }
+     *   ```
+     *
+     * - groups: array, the attributes for the optgroup tags. The structure of this is similar to that of 'options',
+     *   except that the array keys represent the optgroup labels specified in $items.
+     * - encodeSpaces: bool, whether to encode spaces in option prompt and option value with `&nbsp;` character.
+     *   Defaults to false.
+     * - encode: bool, whether to encode option prompt and option value characters.
+     *   Defaults to `true`. This option is available since 2.0.3.
+     * - strict: boolean, if `$selection` is an array and this value is true a strict comparison will be performed on `$items` keys. Defaults to false.
+     *
+     * The rest of the options will be rendered as the attributes of the resulting tag. The values will
+     * be HTML-encoded using [[encode]]. If a value is null, the corresponding attribute will not be rendered.
+     * See [[renderTagAttributes]] for details on how attributes are being rendered.
+     *
+     * @return The generated drop-down list tag
+     */
+    public static dropDownList(name, selection = null, items = [], options: { [key: string]: any } = {}) {
+        if (options.multiple !== undefined) {
+            return this.listBox(name, selection, items, options);
+        }
+        options['name'] = name;
+        delete options['unselect'];
+        let selectOptions = this.renderSelectOptions(selection, items, options);
+        return this.tag('select', '\n' + selectOptions + '\n', options);
+    }
+    /**
+     * Generates a list box.
+     * @param name the input name
+     * @param selection the selected value(s). String for single or array for multiple selection(s).
+     * @param items the option data items. The array keys are option values, and the array values
+     * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
+     * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
+     * If you have a list of data models, you may convert them into the format described above using
+     * `Array.map()`.
+     *
+     * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
+     * the labels will also be HTML-encoded.
+     * @param options the tag options in terms of name-value pairs. The following options are specially handled:
+     *
+     * - prompt: string, a prompt text to be displayed as the first option. Since version 2.0.11 you can use an array
+     *   to override the value and to set other tag attributes:
+     *
+     *   ```js
+     *   { text: 'Please select', options: { value: 'none', class: 'prompt', label: 'Select' } },
+     *   ```
+     *
+     * - options: array, the attributes for the select option tags. The array keys must be valid option values,
+     *   and the array values are the extra attributes for the corresponding option tags. For example,
+     *   ```js
+     *   { 
+     *       value1: { disabled: true },
+     *       value2: { label: 'value 2' },
+     *   }
+     *   ```
+     *   ```
+     *
+     * - groups: array, the attributes for the optgroup tags. The structure of this is similar to that of 'options',
+     *   except that the array keys represent the optgroup labels specified in $items.
+     * - unselect: string, the value that will be submitted when no option is selected.
+     *   When this attribute is set, a hidden field will be generated so that if no option is selected in multiple
+     *   mode, we can still obtain the posted unselect value.
+     * - encodeSpaces: bool, whether to encode spaces in option prompt and option value with `&nbsp;` character.
+     *   Defaults to false.
+     * - encode: bool, whether to encode option prompt and option value characters.
+     *   Defaults to `true`.
+     * - strict: boolean, if `$selection` is an array and this value is true a strict comparison will be performed on `$items` keys. Defaults to false.
+     *
+     * The rest of the options will be rendered as the attributes of the resulting tag. The values will
+     * be HTML-encoded using [[encode]]. If a value is null, the corresponding attribute will not be rendered.
+     * See [[renderTagAttributes]] for details on how attributes are being rendered.
+     *
+     * @return The generated list box tag
+     */
+    public static listBox(name: string, selection = null, items = [], options: { [key: string]: any } = {}) {
+        if (options.size === undefined) {
+            options['size'] = 4;
+        }
+        if (options.multiple !== undefined && name.length > 0 && DataHelper.substrCompare(name, '[]', -2, 2)) {
+            name += '[]';
+        }
+        options['name'] = name;
+        let hidden;
+        if (options['unselect'] !== undefined) {
+            // add a hidden field so that if the list box has no option being selected, it still submits a value
+            if (name.length > 0 && DataHelper.substrCompare(name, '[]', -2, 2) === 0) {
+                name = name.substr(0, -2);
+            }
+            let hiddenOptions = [];
+            // make sure disabled input is not sending any value
+            if (options['disabled'] !== undefined) {
+                hiddenOptions['disabled'] = options['disabled'];
+            }
+            hidden = this.hiddenInput(name, options['unselect'], hiddenOptions);
+            delete options['unselect'];
+        } else {
+            hidden = '';
+        }
+        let selectOptions = this.renderSelectOptions(selection, items, options);
+        return hidden + this.tag('select', '\n' + selectOptions + '\n', options);
+    }
+    /**
+     * Renders the option tags that can be used by [[dropDownList]] and [[listBox]].
+     * @param selection the selected value(s). String for single or array for multiple selection(s).
+     * @param items the option data items. The array keys are option values, and the array values
+     * are the corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
+     * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
+     * If you have a list of data models, you may convert them into the format described above using
+     * `Array.map()`
+     *
+     * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in
+     * the labels will also be HTML-encoded.
+     * @param tagOptions the $options parameter that is passed to the [[dropDownList]] or [[listBox]] call.
+     * This method will take out these elements, if any: "prompt", "options" and "groups". See more details
+     * in [[dropDownList]] for the explanation of these elements.
+     *
+     * @return String the generated list options
+     */
+    public static renderSelectOptions(selection, items, tagOptions: { [key: string]: any } = {}) {
+        var lines,
+            encodeSpaces,
+            encode,
+            strict,
+            promptOptions,
+            promptText,
+            options,
+            groups,
+            key,
+            value,
+            groupAttrs,
+            attrs,
+            content,
+            text;
+        lines = [];
+        encodeSpaces = DataHelper.remove(tagOptions, 'encodeSpaces', false);
+        encode = DataHelper.remove(tagOptions, 'encode', true);
+        strict = DataHelper.remove(tagOptions, 'strict', false);
+        if (tagOptions.prompt !== undefined) {
+            promptOptions = { value: '' };
+            if (typeof tagOptions['prompt'] === 'string') {
+                promptText = tagOptions['prompt'];
+            } else {
+                promptText = tagOptions['prompt']['text'];
+                promptOptions = { ...promptOptions, ...tagOptions['prompt']['options'] };
+            }
+            promptText = encode ? this.encode(promptText) : promptText;
+            if (encodeSpaces) {
+                promptText = promptText.replace(' ', '&nbsp;');
+            }
+            lines.push(this.tag('option', promptText, promptOptions));
+        }
+
+        options = tagOptions.options !== undefined ? tagOptions['options'] : {};
+        groups = tagOptions.groups !== undefined ? tagOptions['groups'] : {};
+        delete tagOptions.prompt, tagOptions.options, tagOptions.groups;
+        options.encodeSpaces = DataHelper.getValue(options, 'encodeSpaces', encodeSpaces);
+        options.encode = DataHelper.getValue(options, 'encode', encode);
+
+        for (key in items) {
+            value = items[key];
+            if (typeof value === 'object') {
+                groupAttrs = groups[key] !== undefined ? groups[key] : {};
+                if (groupAttrs['label'] === undefined) groupAttrs['label'] = key;
+                attrs = {
+                    options: options,
+                    groups: groups,
+                    encodeSpaces: encodeSpaces,
+                    encode: encode,
+                    strict: strict,
+                };
+                content = this.renderSelectOptions(selection, value, attrs);
+                lines.push(this.tag('optgroup', '\n' + content + '\n', groupAttrs));
+            } else {
+                attrs = options[key] !== undefined ? options[key] : {};
+                attrs['value'] = key as string;
+                console.log('attrs.selected', options);
+                if (attrs.selected === undefined && selection !== undefined && !DataHelper.strcmp(key, selection)) {
+                    attrs.selected = true;
+                }
+                text = encode ? this.encode(value) : value;
+                if (encodeSpaces) {
+                    text = text.replace(' ', '&nbsp;');
+                }
+                lines.push(this.tag('option', text, attrs));
+            }
+        }
+
+        return lines.join('\n');
     }
 }

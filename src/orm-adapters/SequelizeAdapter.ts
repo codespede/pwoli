@@ -3,8 +3,13 @@ import Model from '../base/Model';
 import Sort from '../data/Sort';
 import IORMAdapter from './IORMAdapter';
 import ORMAdapter from './ORMAdapter';
-
+/**
+ * SequelizeAdapter is the ORM connectivity interface between Pwoli and the Sequelize ORM.
+ * @see [Using a different ORM](/pwoli/using-another-orm)
+ * @author Mahesh S Warrier <https://github.com/codespede>
+ */
 export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter {
+    /** @inheritdoc */
     public validatorMap: { [key: string]: string } = {
         is: 'regex',
         not: 'regexInverse',
@@ -17,7 +22,6 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter 
         Object.assign(this, config);
     }
 
-    /** seeds property comment */
     public async findAll(query: { [key: string]: any }): Promise<Model[]> {
         return await this.modelClass.findAll(query);
     }
@@ -49,10 +53,8 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter 
     public setAttributes(model: Model, values: { [key: string]: any }): Model {
         for (let attribute in values) {
             if (values[attribute] !== undefined) {
-                if(model.rawAttributes[attribute] !== undefined)
-                    model[attribute] = values[attribute];
-                else
-                    model.dataValues[attribute] = values[attribute];
+                if (model.rawAttributes[attribute] !== undefined) model[attribute] = values[attribute];
+                else model.dataValues[attribute] = values[attribute];
             }
         }
         return model;
