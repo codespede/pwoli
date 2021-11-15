@@ -2,7 +2,7 @@ import { ActiveDataProvider, Pagination, Sort } from '..';
 import Component from '../base/Component';
 import Model from '../base/Model';
 /**
- * An ORM Adapter defines how Pwoli should interact between that ORM for which this ORMAdapter is implemented.
+ * An ORM Adapter defines how Pwoli should interact between that ORM for which that ORMAdapter is implemented.
  * 
  * Every ORM Adapter created for Pwoli must implement this interface as these are the set of properties and methods
  * required for Pwoli's DB related operations.
