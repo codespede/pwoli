@@ -68,6 +68,12 @@ Kudos to [Mahesh](https://github.com/codespede), who is the brain behind Pwoli, 
 
 Last but not least, thanks to [Yadu Dev](https://github.com/yadavgoku) for his contributions to Pwoli.
 
+### Tests
+```
+npm run test
+```
+More tests are invited as contributions!
+
 ### Support or Contact
 
 Pwoli is created at InternetMango.
@@ -75,3 +81,4 @@ Pwoli is created at InternetMango.
 Please feel free to shoot a mail to info@internetmango.com for any queries or concerns.
 
 We'll be starting our Slack channel soon where you can directly chat with us on clearing your queries.
+
