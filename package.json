@@ -1,6 +1,6 @@
 {
   "name": "pwoli",
-  "version": "0.5.0-beta",
+  "version": "0.5.1-beta",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
