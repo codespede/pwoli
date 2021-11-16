@@ -16,7 +16,7 @@ export default interface IORMAdapter extends Component {
     modelClass: Model;
     /**
      * This is the object which is used to map the validators in the ORM with the client side validators in Pwoli.
-     * Keys of this object are the validator string for the ORM and the values are the corresponding validators in Pwoli.
+     * Keys of this object are the validator strings for the ORM and the values are the corresponding validators in Pwoli.
      * This is used by assets/js/activeForm.js
      */
     validatorMap: { [key: string]: string };

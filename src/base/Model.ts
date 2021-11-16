@@ -82,10 +82,10 @@ const ORMModel = ormAdapter.extendableModelClass();
  * await user.save();  // a new row is inserted into user table
  *
  * // the following will retrieve the user 'Mahesh' from the database
- * let user = await User.find({where: {name: 'Mahesh'});
+ * let user = await User.findOne({where: {name: 'Mahesh'});
  *
  * // this will get related records from orders table when relation is defined. Please note that you need to `include` the required relations like below:
- * let user = await User.find({where: {name: 'Mahesh'}, include: [{ model: Order, as: 'orders' }]);
+ * let user = await User.findOne({where: {name: 'Mahesh'}, include: [{ model: Order, as: 'orders' }]);
  * let orders = user.orders;
  * ```
  * If your ORM is Sequelize, please refer <https://sequelize.org/master/manual/model-basics.html>

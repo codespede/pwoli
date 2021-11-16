@@ -4,6 +4,10 @@ Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work inde
 
 Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
 
+> This means that, all Sequelize supported databases like PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present.
+>
+> For MongoDB support, a MongooseAdapter implementing is to be implemented. Please see (how to use a different ORM)[https://internetmango.github.io/pwoli/using-another-orm]
+
 _Pwoli means "super awesome" and our intention is to make web app development "super awesome"_
 
 ### Main Features

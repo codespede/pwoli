@@ -171,7 +171,7 @@ export default class ActionColumn extends Column {
 
     public createUrl(action, model, key, index) {
         const resolvedActionRoute = this.actionRoutes[action].replace('{id}', key);
-        return this.route !== undefined ? `${this.route}/${resolvedActionRoute}` : resolvedActionRoute;
+        return this.route !== undefined ? `/${this.route}/${resolvedActionRoute}` : resolvedActionRoute;
     }
 
     /** @inheritdoc */
