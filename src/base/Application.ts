@@ -151,6 +151,8 @@ export default class Application extends Component {
             this.response.headers['Content-Type'] = 'application/json';
         }
         nativeResponse = this.responsify(nativeResponse);
+        this.response.headers = {};
+        this.response.status = null;
         nativeResponse.write(this.response.data);
         nativeResponse.end();
     }
