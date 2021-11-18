@@ -6,7 +6,7 @@ Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM A
 
 _This means that, all Sequelize supported databases like PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present._
 
-_For MongoDB support, a MongooseAdapter implementing is to be implemented. Please see (how to use a different ORM)[https://internetmango.github.io/pwoli/using-another-orm]_
+_For any other DB/ORM support, an ORM Adapter implementing [IORMAdapter](https://internetmango.github.io/pwoli/api-docs/interfaces/IORMAdapter.html) has to be implemented. Please see [how to use a different ORM](https://internetmango.github.io/pwoli/using-another-orm)_
 
 _Pwoli means "super awesome" and our intention is to make web app development "super awesome"_
 
