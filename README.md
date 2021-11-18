@@ -15,9 +15,9 @@ _Pwoli means "super awesome" and our intention is to make web app development "s
 -   Fully flexible and extensible - thanks to the OOP based architecture.
 -   Frontend widgets like [ActiveForm](https://internetmango.github.io/pwoli/input-forms), [GridView, ListView](https://internetmango.github.io/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
 -   [Simple-to-setup REST APIs](https://internetmango.github.io/pwoli/rest-api) for the backends of SPA applications, Mobile apps and other API consumers.
--   Works on both NodeJS and TypeScript applications.
+-   Works on both raw NodeJS and TypeScript applications.
 -   Has reasonable defaults.
--   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
+-   Well documented and [typed](https://www.typescriptlang.org) code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
 -   Can be used in an ongoing project or a new project. Pwoli doesn't require that for using it, the project should be started from scratch.
 
 ### Installation
@@ -43,7 +43,7 @@ Pwoli.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which yo
 
 ### Get Started
 
--   Please note: If you are building an SPA or REST APIs, [click here](https://internetmango.github.io/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
+-   Please note: If you are building the backend for an SPA, Mobile App or a REST API client, [click here](https://internetmango.github.io/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
 
 Check out on one of our guides below for learning how to use Pwoli's features:
 
