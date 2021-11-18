@@ -14,7 +14,7 @@ _Pwoli means "super awesome" and our intention is to make web app development "s
 
 -   Fully flexible and extensible - thanks to the OOP based architecture.
 -   Frontend widgets like [ActiveForm](https://internetmango.github.io/pwoli/input-forms), [GridView, ListView](https://internetmango.github.io/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
--   [Simple-to-setup REST APIs](https://internetmango.github.io/pwoli/rest-api) for the backends of SPA applications.
+-   [Simple-to-setup REST APIs](https://internetmango.github.io/pwoli/rest-api) for the backends of SPA applications, Mobile apps and other API consumers.
 -   Works on both NodeJS and TypeScript applications.
 -   Has reasonable defaults.
 -   Well documented and [type](https://www.typescriptlang.org)d code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
