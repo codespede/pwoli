@@ -40,7 +40,7 @@ const Pwoli = pkg.Application;
 
 // Now set the viewPath for finding the views:
 // Please note: You don't need to set this if your application is just a REST API service
-Pwoli.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
+Pwoli.setViewPath(path.join(__dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
 
 //You're ready to go!
 ```
