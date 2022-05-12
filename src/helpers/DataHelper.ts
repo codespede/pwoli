@@ -50,7 +50,7 @@ export default class DataHelper extends Component {
     }
 
     public static parseQueryParams(params: { [key: string]: string | string[] | undefined }): {
-        [key: string]: string;
+        [key: string]: any;
     } {
         let parsedParams = {};
         for (let param in params) {
