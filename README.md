@@ -1,4 +1,4 @@
-[![Github All Releases](https://img.shields.io/github/downloads/internetmango/pwoli/total.svg)]()
+[![Github All Releases](https://img.shields.io/npm/dt/pwoli.svg)]()
 
 ## Pwoli.js
 
