@@ -35,8 +35,10 @@ import { Application as Pwoli } from 'pwoli'; //if using ES6 modules or "type": 
 const pkg = require('pwoli'); //if using CommonJS
 const Pwoli = pkg.Application;
 // Pwoli is loaded!
-//Now set the viewPath for finding the views:
-Pwoli.setViewPath(path.join(\_\_dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
+
+// Now set the viewPath for finding the views:
+// Please note: You don't need to set this if your application is just a REST API service
+Pwoli.setViewPath(path.join(__dirname, 'views')); // The base path in which your view files are stored. Only applicable for SSR apps.
 
 //You're ready to go!
 ```
