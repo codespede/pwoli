@@ -25,7 +25,7 @@ export default class Application extends Component {
     /**
      * The [[View]] object for the application that is used to render various view files..
      */
-    public static view = new View({});
+    public static view = null;
     /**
      * @var registered path aliases
      * @see [[getAlias]]
@@ -111,6 +111,7 @@ export default class Application extends Component {
      * @param path The path to be set.
      */
     public static setViewPath(path: string) {
+        this.view = this.view || new View({});
         const resolved = this.getAlias(path);
         this.viewPath = resolved !== false ? resolved : path;
     }
