@@ -84,6 +84,16 @@ npm run test
 
 More tests are invited as contributions!
 
+Contributing
+------------
+
+The framework is [Open Source](LICENSE).
+
+You may join us and:
+
+- [Report an issue](docs/internals/report-an-issue.md)
+- [Contribute to the core code or fix bugs](docs/internals/git-workflow.md)
+
 ### Support or Contact
 
 Pwoli is created at InternetMango.
