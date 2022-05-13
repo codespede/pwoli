@@ -84,8 +84,7 @@ npm run test
 
 More tests are invited as contributions!
 
-Contributing
-------------
+### Contributing
 
 The framework is [Open Source](LICENSE).
 
