@@ -64,6 +64,7 @@ export default class Widget extends Component {
     public async run(): Promise<any> {
         await this.initialization;
         if (this.enablePjax) {
+            console.log('wrun', )
             await Pwoli.view.registerJs(
                 `jQuery(document).on('submit', '#${this.options.id} form[data-pjax]', function(event){ jQuery.pjax.submit(event, {id: '${this.options.id}', container: '#${this.options.id}'})});`,
             );

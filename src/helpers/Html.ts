@@ -193,7 +193,7 @@ export default class Html extends Component {
     public static ul(items, options: any = {}) {
         const tag = DataHelper.remove(options, 'tag', 'ul');
         const encode = DataHelper.remove(options, 'encode', true);
-        const formatter = DataHelper.remove(options, 'formatter', 'item');
+        const formatter = DataHelper.remove(options, 'item');
         const separator = DataHelper.remove(options, 'separator', '\n');
         const itemOptions = DataHelper.remove(options, 'itemOptions', []);
 

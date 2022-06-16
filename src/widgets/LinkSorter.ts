@@ -19,7 +19,7 @@ export default class LinkSorter extends Widget {
      * List of the attributes that support sorting. If not set, it will be determined
      * using [[Sort.attributes]].
      */
-    public attributes: string[];
+    public attributes: any = {};
     /**
      * HTML attributes for the sorter container tag.
      * @see [[Html.ul]] for special attributes.
@@ -55,7 +55,7 @@ export default class LinkSorter extends Widget {
      * @return the rendering result
      */
     protected renderSortLinks(): string {
-        const attributes = this.attributes.length === 0 ? Object.keys(this.sort.attributes) : this.attributes;
+        const attributes = Object.keys(this.attributes).length === 0 ? Object.keys(this.sort.attributes) : this.attributes;
         const links = [];
         for (const name of attributes) {
             links.push(this.sort.link(name, this.linkOptions));

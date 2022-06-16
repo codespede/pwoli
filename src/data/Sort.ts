@@ -1,4 +1,4 @@
-import Inflector from 'inflected';
+import { humanize } from 'inflected';
 import url = require('url');
 import Component from '../base/Component';
 import Application from '../base/Application';
@@ -162,7 +162,7 @@ export default class Sort extends Component {
             label =
                 this.attributes[attribute].label !== undefined
                     ? this.attributes[attribute].label
-                    : Inflector.humanize(attribute);
+                    : humanize(attribute);
         // let optionsHtml;
         // for (const option in options)
         //     optionsHtml += `${option}=${options[option]} `;

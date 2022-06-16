@@ -210,10 +210,10 @@ Pwoli.respond(res, dataProvider);
 
 By default, the data returned is paginated with [default page size](/pwoli/api-docs/classes/Pagination.html#defaultPageSize) of 20.
 
-You can change this by calling [DataProvider.setPageSize](/pwoli/api-docs/classes/Pagination.html#setPageSize) like below:
+You can change this by calling [Pagination.setPageSize](/pwoli/api-docs/classes/Pagination.html#setPageSize) like below:
 
 ```js
-dataProvider.setPageSize(40);
+dataProvider.getPagination().setPageSize(40);
 ```
 
 You can change the pageSize in the request URL too by passing the [pageSizeParam](/pwoli/api-docs/classes/Pagination.html#pageSizeParam) like this:

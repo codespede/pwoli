@@ -204,7 +204,7 @@ export default class CollectionView extends Widget {
      */
     public async renderSorter(): Promise<string> {
         const sort = this.dataProvider.getSort();
-        if (!sort || sort.attributes.length === 0 || this.dataProvider.getCount() <= 0) return '';
+        if (!sort || Object.keys(sort.attributes).length === 0 || this.dataProvider.getCount() <= 0) return '';
         let sorter = this.sorter || new LinkSorter({ sort });
         return sorter.render();
     }
