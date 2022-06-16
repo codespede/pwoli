@@ -106,7 +106,7 @@ export default class ListView extends CollectionView {
                 index,
                 widget: this,
                 ...this.viewParams,
-            });
+            }, false);
         else content = this.itemView(model, key, index, this);
         if (typeof this.itemOptions === 'function') options = this.itemOptions(model, key, index, this);
         else options = this.itemOptions;
