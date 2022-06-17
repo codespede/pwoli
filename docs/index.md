@@ -12,23 +12,23 @@ _Pwoli means "super awesome" and our intention is to make web app development "s
 
 _A basic example of the API features provided by Pwoli:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _A simple GridView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView_big.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView_big.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _A bit more complex GridView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView2.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView2.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _A simple ListView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ListView.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ListView.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _An example of ActiveForm's capabilities:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 ### Main Features
 

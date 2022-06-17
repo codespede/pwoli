@@ -1,6 +1,6 @@
 # Validating Input
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true" style="margin-left: auto; margin-right: auto;"/></p>
 
 As a rule of thumb, you should never trust the data received from end users and should always validate it
 before putting it to good use.

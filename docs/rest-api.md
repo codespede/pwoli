@@ -3,7 +3,7 @@
 Pwoli provides an easy and efficient way to render data for RESTful GET requests.
 
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 ## Rendering a single record
 
