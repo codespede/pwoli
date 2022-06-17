@@ -7,6 +7,8 @@ providing features like pagination, sorting and filtering.
 
 ## ListView <span id="list-view"></span>
 
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ListView.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+
 The [ListView](#list-view) widget is used to display data from a [data provider](output-data-providers.md).
 Each data model is rendered using the specified [itemView](/pwoli/api-docs/classes/ListView.html#itemView).
 Since it provides features such as pagination, sorting and filtering out of the box, it is handy both to display
@@ -68,6 +70,8 @@ new ListView({
 These are then also available as variables in the view.
 
 ## GridView <span id="grid-view"></span>
+
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView_big.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
 
 Data grid or [GridView](/pwoli/api-docs/classes/GridView.html) is one of the most powerful Pwoli widgets. It is extremely useful if you need to quickly build the admin
 section of the system. It takes data from a [data provider](output-data-providers.md) and renders each row using a set of [GridView.columns()](/pwoli/api-docs/classes/GridView.html#columns)

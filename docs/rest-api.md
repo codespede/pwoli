@@ -2,6 +2,9 @@
 
 Pwoli provides an easy and efficient way to render data for RESTful GET requests.
 
+
+<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+
 ## Rendering a single record
 
 For rendering a single record via the API, you just need to pass the Model of that record to `Pwoli.respond()` like below:
