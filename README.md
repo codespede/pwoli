@@ -114,8 +114,8 @@ The framework is [Open Source](LICENSE).
 
 You may join us and:
 
-- [Report an issue](docs/internals/report-an-issue.md)
-- [Contribute to the core code or fix bugs](docs/internals/git-workflow.md)
+- [Report an issue](https://github.com/internetmango/pwoli/blob/master/docs/internals/report-an-issue.md)
+- [Contribute to the core code or fix bugs](https://github.com/internetmango/pwoli/blob/master/docs/internals/git-workflow.md)
 
 ### Support or Contact
 
