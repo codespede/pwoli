@@ -43,7 +43,9 @@ _An example of ActiveForm's capabilities:_
 ### Installation
 
 ```markdown
-npm install pwoli@latest
+//cd into the project directory
+$ npm init //run this only if it's a new project/application.
+$ npm install pwoli@latest
 ```
 
 If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](/pwoli/using-another-orm)
