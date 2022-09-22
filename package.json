@@ -30,6 +30,7 @@
     "inflected": "^2.1.0",
     "mysql2": "^2.2.5",
     "path": "^0.12.7",
+    "pwoli": "^0.9.4-beta",
     "sequelize": "*",
     "typedoc": "^0.22.11",
     "url": "^0.11.0"
