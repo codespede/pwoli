@@ -506,8 +506,8 @@ export default class DataHelper extends Component {
             return key(object, defaultValue);
         }
 
-        if (object[key] !== undefined) {
-            return object[key];
+        if (object?.[key] !== undefined) {
+            return object?.[key];
         }
 
         let pos = key.indexOf('.');
@@ -516,8 +516,8 @@ export default class DataHelper extends Component {
             key = key.substr(pos + 1);
         }
 
-        if (object[key] !== undefined) {
-            return object[key];
+        if (object?.[key] !== undefined) {
+            return object?.[key];
         }
 
         return defaultValue;
