@@ -70,7 +70,7 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter 
         if (params[this.modelClass.name] !== undefined) {
             for (const param in params[this.modelClass.name]) {
                 if(this.attributes().includes(param)){
-                    if(this.modelClass.tableAttributes[param]?.type?.toString?.() === 'INTEGER' && model.sequelize.options.dialect === 'postgresql')
+                    if(this.modelClass.tableAttributes[param]?.type?.toString?.() === 'INTEGER' && model.sequelize.options.dialect === 'postgres')
                         dataProvider.query.where[Op.and] = Sequelize.literal(`${this.modelClass.name}.${param}::text LIKE '%${params[this.modelClass.name][param]}%'`);
                     else
                         dataProvider.query.where[param] = { [Op.like]: `%${params[this.modelClass.name][param]}%` };
