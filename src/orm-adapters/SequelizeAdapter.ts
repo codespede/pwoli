@@ -3,6 +3,7 @@ import Model from '../base/Model';
 import Sort from '../data/Sort';
 import IORMAdapter from './IORMAdapter';
 import ORMAdapter from './ORMAdapter';
+import { Sequelize, QueryInterface } from 'sequelize';
 /**
  * SequelizeAdapter is the communication interface between Pwoli and the Sequelize ORM.
  * 
@@ -68,8 +69,12 @@ export default class SequelizeAdapter extends ORMAdapter implements IORMAdapter 
         dataProvider.query.where = dataProvider.query.where !== undefined ? dataProvider.query.where : {};
         if (params[this.modelClass.name] !== undefined) {
             for (const param in params[this.modelClass.name]) {
-                if (this.attributes().includes(param) && (params[this.modelClass.name][param] !== "" || this.modelClass.tableAttributes[param]?.type?.toString?.() !== 'INTEGER')) // as PostGres won't support LIKE operator for integers..
-                    dataProvider.query.where[param] = this.modelClass.tableAttributes[param]?.type?.toString?.() === 'INTEGER' ? params[this.modelClass.name][param] : { [Op.like]: `%${params[this.modelClass.name][param]}%` };
+                if(this.attributes().includes(param)){
+                    if(this.modelClass.tableAttributes[param]?.type?.toString?.() === 'INTEGER' && model.sequelize.options.dialect === 'postgresql')
+                        dataProvider.query.where[Op.and] = Sequelize.literal(`${this.modelClass.name}.${param} LIKE '%${params[this.modelClass.name][param]}%'`);
+                    else
+                        dataProvider.query.where[param] = { [Op.like]: `%${params[this.modelClass.name][param]}%` };
+                }
             }
         }
         return dataProvider;
