@@ -112,7 +112,7 @@ window.pwoli = (function ($) {
                 params = $e.data('params'),
                 areValidParams = params && $.isPlainObject(params),
                 pjax = $e.data('pjax'),
-                usePjax = pjax !== undefined && pjax !== 0 && $.support.pjax,
+                usePjax = pjax !== undefined && pjax !== 0 && pjax !== '0' && pjax !== 'false' && $.support.pjax,
                 pjaxContainer,
                 pjaxOptions = {},
                 conflictParams = [
