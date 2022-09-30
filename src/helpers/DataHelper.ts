@@ -1,6 +1,5 @@
 import Component from '../base/Component';
 import url = require('url');
-import { link } from 'fs';
 /**
  * BaseDataHelper provides concrete implementation for [[DataHelper]].
  *
