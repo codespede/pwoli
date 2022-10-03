@@ -1,8 +1,6 @@
-import Model from '../base/Model';
 import Application from '../base/Application';
 import DataProvider from './DataProvider';
-import ORMAdapter from '../orm-adapters/ORMAdapter';
-import SequelizeAdapter from '../orm-adapters/SequelizeAdapter';
+
 /**
  * ActiveDataProvider implements a data provider based on db queries.
  *
