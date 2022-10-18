@@ -3,7 +3,7 @@ import Model from '../base/Model';
 import Sort from '../data/Sort';
 import IORMAdapter from './IORMAdapter';
 import ORMAdapter from './ORMAdapter';
-import { Sequelize, QueryInterface } from 'sequelize';
+import { Sequelize } from 'sequelize';
 /**
  * SequelizeAdapter is the communication interface between Pwoli and the Sequelize ORM.
  * 

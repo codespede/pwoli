@@ -1,4 +1,3 @@
-import Pwoli from './Pwoli';
 import Inflector = require('inflected');
 import { emptyDir } from 'fs-extra';
 import { Application } from '..';
