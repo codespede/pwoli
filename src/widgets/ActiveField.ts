@@ -154,6 +154,7 @@ export default class ActiveField extends Component {
      */
     private clientValidators: { [key: string]: (params: { [key: string]: any }) => string } = {
         regex: (params) => {
+            
             params.options = {
                 message: `The value entered is invalid.`,
                 pattern: params.criteria.source,

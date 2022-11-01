@@ -111,7 +111,7 @@ export default class ActiveDataProvider extends DataProvider {
             const model = new (this.modelClass as any)();
 
             if (Object.keys(sort.attributes).length === 0) {
-                const attributes = this.ormAdapter.attributes();
+                const attributes = this.ormAdapter.allAttributes !== undefined? this.ormAdapter.allAttributes(model) : this.ormAdapter.attributes();
                 for (const attribute of attributes) {
                     sort.attributes[attribute] = {
                         asc: [attribute, 'asc'],

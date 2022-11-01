@@ -385,7 +385,7 @@ export default class Html extends Component {
         const matches = attribute.match(this.attributeRegex);
         if (matches.length === 0) throw new Error('Attribute name must contain word characters only.');
         attribute = matches[2];
-        let value = model[attribute];
+        let value = DataHelper.getValue(model, attribute);
 
         if (matches[3] !== '') {
             for (const id of matches[3].trim().split(']['))
@@ -1414,7 +1414,7 @@ export default class Html extends Component {
             } else {
                 attrs = options[key] !== undefined ? options[key] : {};
                 attrs['value'] = key as string;
-                console.log('attrs.selected', options);
+                
                 if (attrs.selected === undefined && selection !== undefined && !DataHelper.strcmp(key, selection)) {
                     attrs.selected = true;
                 }

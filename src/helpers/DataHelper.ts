@@ -567,4 +567,25 @@ export default class DataHelper extends Component {
         // *     returns 2: -1
         return str1 == str2 ? 0 : str1 > str2 ? 1 : -1;
     }
+
+    public static resolveDotStructuredObject(object, attribute){
+        
+        let nests = attribute.split('.');
+        let dotResolved = this.findValuesByPrefix(object, nests[0] + ".");
+        if(Object.values(dotResolved).length === 0)
+            return { ...object, ...dotResolved };
+        
+        return {[nests[0]]: this.resolveDotStructuredObject(dotResolved, nests.slice(1).join('.'))};
+    }
+
+    public static findValuesByPrefix(object, prefix) {
+        let output = {};
+        for (var property in object) { //
+          if (object.hasOwnProperty(property) && 
+             property.toString().startsWith(prefix)) { //
+             output[property.toString().split(prefix)[1]] = object[property]
+          }
+        }
+        return output;
+      }
 }

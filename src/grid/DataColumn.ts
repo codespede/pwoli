@@ -163,7 +163,8 @@ export default class DataColumn extends Column {
     protected renderFilterCellContent(): string {
         if (typeof this.filter === 'string') return this.filter;
         const model = this.grid.filterModel;
-        if (this.filter !== false && model instanceof Model && this.filterAttribute !== undefined) {
+        
+        if (this.filter !== false && typeof model.getFormName === 'function' && this.filterAttribute !== undefined) {
             const options = { maxlength: true, ...this.filterInputOptions };
             return Html.activeTextInput(model, this.filterAttribute, options);
         }

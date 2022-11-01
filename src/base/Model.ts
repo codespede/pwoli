@@ -104,13 +104,15 @@ export default class Model extends ORMModel {
      * Eg:-
      * ```js
      * export class Event extends Model {
-     *   attributeLabels = {
-     *      firstName: 'First Name',
-     *      ...
+     *   getAttributeLabels() {
+     *      return {
+     *          firstName: 'First Name',
+     *          ...
+     *      }
      *   };
      * ```
      */
-    protected attributeLabels: { [key: string]: string } = {};
+    public getAttributeLabels: () => { [key: string]: string } = () => ({});
     /**
      * Attribute hints are mainly used for display purpose. For example, given an attribute
      * `isPublic`, we can declare a hint `Whether the post should be visible for not logged in users`,
@@ -118,13 +120,21 @@ export default class Model extends ORMModel {
      * Eg:-
      * ```js
      * export class Event extends Model {
-     *   attributeHints = {
-     *      isPublic: 'Whether the post should be visible for not logged in users',
-     *      ...
+     *   getAttributeHints() {
+     *      return {
+     *          firstName: 'First Name',
+     *          ...
+     *      }
      *   };
      * ```
      */
-    protected attributeHints: { [key: string]: string } = {};
+    protected getAttributeHints: () => { [key: string]: string } = () => ({});
+    
+    public constructor(config: { [key: string]: any } = {}) {
+        super(config);
+        Object.assign(this, config);
+    }
+
     /**
      * Returns the text label for the specified attribute.
      * If the attribute looks like `relatedModel.attribute`, then the attribute will be received from the related model.
@@ -133,8 +143,8 @@ export default class Model extends ORMModel {
      * @see [[attributeLabels]]
      */
     public getAttributeLabel(attribute: string): string {
-        return this.attributeLabels[attribute] !== undefined
-            ? this.attributeLabels[attribute]
+        return this.getAttributeLabels?.()?.[attribute] !== undefined
+            ? this.getAttributeLabels()[attribute]
             : Inflector.humanize(attribute);
     }
     /**
@@ -163,7 +173,7 @@ export default class Model extends ORMModel {
      * @see [[load]]
      */
     public getFormName(): string {
-        return this.constructor.name;
+        return (this.constructor as any).modelName || this.constructor.name;
     }
     /**
      * Populates the model with input data.
@@ -200,7 +210,7 @@ export default class Model extends ORMModel {
      */
     public load(data: { [key: string]: any }, formName: string | null = null): boolean {
         const scope = formName === null ? this.getFormName() : formName;
-        if (scope === '' && !emptyDir(data)) {
+        if (scope === '' && !emptyDir(data)) { 
             this.setAttributeValues(data);
             return true;
         } else if (data[scope] !== undefined) {
@@ -232,7 +242,7 @@ export default class Model extends ORMModel {
      * @return the error message. Null is returned if no error.
      */
     public getFirstError(attribute: string): string | null {
-        return this._errors[attribute] !== undefined ? this._errors[attribute] : null;
+        return this._errors?.[attribute] !== undefined ? this._errors?.[attribute] : null;
     }
     /**
      * Returns the text hint for the specified attribute.
@@ -242,8 +252,8 @@ export default class Model extends ORMModel {
      * @since 2.0.4
      */
     public getAttributeHint(attribute): string {
-        let hints = this.attributeHints;
-        return hints[attribute] !== undefined ? hints[attribute] : '';
+        let hints = this.getAttributeHints?.();
+        return hints?.[attribute] !== undefined ? hints?.[attribute] : '';
     }
     /**
      * Returns a value indicating whether the attribute is required.
@@ -260,7 +270,7 @@ export default class Model extends ORMModel {
      * @return whether there is any error.
      */
     public hasErrors(attribute: string | null = null): boolean {
-        return attribute === null ? Object.keys(this._errors).length > 0 : this._errors[attribute] !== undefined;
+        return attribute === null ? Object.keys(this._errors).length > 0 : this._errors?.[attribute] !== undefined;
     }
     /**
      * Returns the attribute names that are subject to validation in the current scenario.
@@ -301,6 +311,7 @@ export default class Model extends ORMModel {
         if (clearErrors) this.clearErrors();
         if (attributeNames === null) attributeNames = this.activeAttributes();
         await ormAdapter.validate(this);
+        //
         return !this.hasErrors();
     }
     /**
@@ -309,6 +320,6 @@ export default class Model extends ORMModel {
      */
     public clearErrors(attribute: string | null = null) {
         if (attribute === null) this._errors = {};
-        else delete this._errors[attribute];
+        else delete this._errors?.[attribute];
     }
 }

@@ -28,6 +28,7 @@ export { column } from './grid/GridView';
 export { default as IORMAdapter } from './orm-adapters/IORMAdapter';
 export { default as ORMAdapter } from './orm-adapters/ORMAdapter';
 export { default as SequelizeAdapter } from './orm-adapters/SequelizeAdapter';
+export { default as MongooseAdapter } from './orm-adapters/MongooseAdapter';
 // export {
 //     ActionColumn,
 //     ActiveField,

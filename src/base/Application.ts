@@ -1,6 +1,7 @@
 import Pwoli from './Pwoli';
 import Component from './Component';
 import SequelizeAdapter from '../orm-adapters/SequelizeAdapter';
+import MongooseAdapter from '../orm-adapters/MongooseAdapter';
 import { Model as SequelizeModel } from 'sequelize';
 import View from './View';
 import Serializer from '../rest/Serializer';
@@ -44,9 +45,11 @@ export default class Application extends Component {
     /**
      * The adapters for any ORMs used by this application.
      * The key of the adapter to be used should be specified in [[orm]]
-     * By default, support for Sequelize ORM is provided.
      */
-    public static ormAdapterClasses = { sequelize: SequelizeAdapter };
+    public static ormAdapterClasses: { [key: string]: any } = { 
+        mongoose: MongooseAdapter,
+        sequelize: SequelizeAdapter
+    };
     private static _ormAdapter;
     /**
      * The model class for the ORM being used. Eg:- [[sequelize.Model]] for Sequelize
@@ -62,12 +65,15 @@ export default class Application extends Component {
             return model.default;
         } catch (e) {
             try {
-                let model = require('../../../../orm-model-config.cjs');
+                let model = require('../../../../orm-model-config.js'); // require('../pkgtest/orm-model-config.js');
                 return model;
-            } catch (innerE) {}
+            } catch (innerE) {
+                
+            }
             return SequelizeModel;
         }
     };
+
     /**
      * The [[Serializer]] that should be used for RESTful operations.
      */
@@ -126,8 +132,8 @@ export default class Application extends Component {
      * Returns the ORM Adapter.
      * @return The ORM Adapter class.
      */
-    public static getORMAdapter() {
-        if (this._ormAdapter === undefined) this._ormAdapter = new this.ormAdapterClasses[this.orm]({});
+    public static getORMAdapter() { 
+        if (this._ormAdapter === undefined && this.orm !== undefined) this._ormAdapter = new this.ormAdapterClasses[(this.ormModelClass()).ormKey || this.orm]({});
         return this._ormAdapter;
     }
     /**
