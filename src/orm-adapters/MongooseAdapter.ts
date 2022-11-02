@@ -4,7 +4,14 @@ import Model from '../base/Model';
 import Sort from '../data/Sort';
 import ActiveDataProvider from '../data/ActiveDataProvider';
 import DataHelper from '../helpers/DataHelper';
-
+/**
+ * MongooseAdapter is the communication interface between Pwoli and the Mongoose ORM.
+ * 
+ * An ORM Adapter defines how Pwoli should interact between that ORM(here Mongoose) for which this ORMAdapter is implemented.
+ * 
+ * @see [Using a different ORM](/pwoli/using-mongoose)
+ * @author Mahesh S Warrier <https://github.com/codespede>
+ */
 export default class MongooseAdapter extends ORMAdapter implements IORMAdapter {
     /** @inheritdoc */
     public validatorMap: { [key: string]: string } = {
