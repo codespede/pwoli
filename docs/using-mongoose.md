@@ -72,7 +72,7 @@ export { EventModel as Event };
 ```
 Now you can use these Models just as how you use it in the normal way for Pwoli.
 
-A working example of using Mongoose with Pwoli is available in this [repo](https://github.com/internetmango/pwoli-node-sample).
+Fully working examples of using Mongoose with Pwoli are available [here](https://github.com/internetmango/pwoli-node-sample) and [here](https://github.com/internetmango/pwoli-express-typescript-sample).
 
 ### Operations with Embedded Documents
 
@@ -91,7 +91,7 @@ In Widgets like [GridView](/pwoli/api-docs/classes/GridView.html), [ListView](/p
         ```
     
         -    Sorting, filtering, pagination etc. will be enabled automatically for the embedded attributes by default.
-        -    
+
 
 -   ActiveForm ([click here](/pwoli/input-forms) for learning how to use ActiveForm):
     ```js
@@ -151,3 +151,4 @@ APIs will work as normal as demonstrated [here](/pwoli/rest-api).
 -    Similarly, for filtering the data with an embedded attribute, [just as how you do for normal attributes](https://internetmango.github.io/pwoli/rest-api#filtering), pass it in the filter param like `?Event[contactPerson.name]=Mahesh`
 -   Pagination will work as normal as how it's specified [here](https://internetmango.github.io/pwoli/rest-api#pagination).
 
+Fully working examples of using Mongoose with Pwoli are available [here](https://github.com/internetmango/pwoli-node-sample) and [here](https://github.com/internetmango/pwoli-express-typescript-sample).
