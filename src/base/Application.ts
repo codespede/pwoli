@@ -65,7 +65,7 @@ export default class Application extends Component {
             return model.default;
         } catch (e) {
             try {
-                let model = require('../../../../orm-model-config.js'); // require('../pkgtest/orm-model-config.js');
+                let model = require('../../../../orm-model-config.cjs'); //require('../pkgtest/orm-model-config.js');
                 return model;
             } catch (innerE) {
                 

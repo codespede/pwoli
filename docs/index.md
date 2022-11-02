@@ -2,11 +2,10 @@
 
 Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environment OR, in co-ordination with any other frameworks or libraries like Express.js.
 
-Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html).
+Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) and [Mongoose](https://mongoosejs.com) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html) and [MongooseAdapter](/pwoli/api-docs/classes/MongooseAdapter.html) respectively.
 
-> This means that, all Sequelize supported databases like PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present.
+> This means that, all Mongoose and Sequelize supported databases like MongoDB, PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present.
 >
-> For MongoDB support, a MongooseAdapter implementing is to be implemented. Please see (how to use a different ORM)[https://internetmango.github.io/pwoli/using-another-orm]
 
 _Pwoli means "super awesome" and our intention is to make web app development "super awesome"_
 
@@ -48,7 +47,8 @@ $ npm init //run this only if it's a new project/application.
 $ npm install pwoli@latest
 ```
 
-If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](/pwoli/using-another-orm)
+If you are using any ORM(like Mongoose) other than Sequelize, please [click here](/pwoli/using-another-orm) to see details on how to configure it.
+
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
 ```js

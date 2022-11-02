@@ -112,7 +112,9 @@ export default class Model extends ORMModel {
      *   };
      * ```
      */
-    public getAttributeLabels: () => { [key: string]: string } = () => ({});
+    public getAttributeLabels (): { [key: string]: string } {
+        return {};
+    };
     /**
      * Attribute hints are mainly used for display purpose. For example, given an attribute
      * `isPublic`, we can declare a hint `Whether the post should be visible for not logged in users`,
