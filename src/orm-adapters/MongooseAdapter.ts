@@ -36,14 +36,12 @@ export default class MongooseAdapter extends ORMAdapter implements IORMAdapter {
         if(query.order !== undefined)
             for(let order of query.order)
                 sort[order[0]] = order[1] === 'asc' ? 1 : -1;
-        console.log('fa-sort', query.order, sort, populate);
         return await this.modelClass.find(condition).sort(sort).populate(populate).skip(skip).limit(limit);
     }
     /** @inheritdoc */
     public applySort(query: { [key: string]: any }, sort: Sort): { [key: string]: any } {
         if (query.order === undefined) query.order = sort.getOrders();
         else query.order.push(sort.getOrders());
-        console.log('as', query.order);
         return query;
     }
     /** @inheritdoc */
