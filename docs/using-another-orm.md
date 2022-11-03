@@ -2,7 +2,7 @@
 
 ### Using Mongoose (for MongoDB)
 
-If you need to use your own customized or extended version of Sequelize, please do the following steps:
+For using Mongoose as the ORM, please do the following steps:
 
 -   Create a file with name exactly as `orm-model-config.cjs` in the root directory(same level of package.json)
 -   In this file, insert the following lines:
