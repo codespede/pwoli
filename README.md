@@ -6,9 +6,9 @@ https://internetmango.github.io/pwoli
 
 Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with any other frameworks or libraries like Express.js.
 
-Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](https://internetmango.github.io/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) out of the box at present by [SequelizeAdapter](https://internetmango.github.io/pwoli/api-docs/classes/SequelizeAdapter.html).
+Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) and [Mongoose](https://mongoosejs.com) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html) and [MongooseAdapter](/pwoli/api-docs/classes/MongooseAdapter.html) respectively.
 
-_This means that, all Sequelize supported databases like PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present._
+_This means that, all Mongoose and Sequelize supported databases like MongoDB, PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present._
 
 _For any other DB/ORM support, an ORM Adapter implementing [IORMAdapter](https://internetmango.github.io/pwoli/api-docs/interfaces/IORMAdapter.html) has to be implemented. Please see [how to use a different ORM](https://internetmango.github.io/pwoli/using-another-orm)_
 
@@ -52,7 +52,7 @@ _An example of ActiveForm's capabilities:_
 npm install pwoli@latest
 ```
 
-If you are using an ORM other than Sequelize or even a customized version of Sequelize, [click here](https://internetmango.github.io/pwoli/using-another-orm)
+If you are using any ORM(like Mongoose) other than Sequelize, please [click here](https://internetmango.github.io/pwoli/using-another-orm) to see details on how to configure it.
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
 ```js
