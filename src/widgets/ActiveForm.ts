@@ -1,4 +1,3 @@
-import Inflector = require('inflected');
 import path = require('path');
 import Html from '../helpers/Html';
 import Widget from '../base/Widget';

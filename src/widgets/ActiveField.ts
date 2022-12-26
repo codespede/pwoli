@@ -429,7 +429,7 @@ export default class ActiveField extends Component {
      * @return the field object itself.
      */
     public fileInput(options: { [key: string]: any } = {}) {
-        if (this.inputOptions !== { class: 'form-control' }) options = { ...this.inputOptions, ...options };
+        if (JSON.stringify(this.inputOptions) !== JSON.stringify({ class: 'form-control' })) options = { ...this.inputOptions, ...options };
         if (this.form.options.encType === undefined) this.form.options.encType = 'multipart/form-data';
         if (this.form.validationStateOn === 'input') this.addErrorClassIfNeeded(options);
         this.doAddAriaAttributes(options);
