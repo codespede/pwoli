@@ -28,7 +28,7 @@ then you must [setup your Git installation to work with GitHub](https://help.git
 Change to the directory where you cloned Pwoli, normally, "Pwoli". Then enter the following command:
 
 ```
-git remote add upstream git://github.com/internetmango/pwoli.git
+git remote add upstream git://github.com/codespede/pwoli.git
 ```
 
 ### 3. Prepare the testing environment <span id="prepare-the-test-environment"></span>
@@ -192,7 +192,7 @@ git push origin --delete 999-name-of-your-branch-goes-here
 
 ```
 git clone git@github.com:YOUR-GITHUB-USERNAME/pwoli.git
-git remote add upstream git://github.com/internetmango/pwoli.git
+git remote add upstream git://github.com/codespede/pwoli.git
 ```
 
 ```

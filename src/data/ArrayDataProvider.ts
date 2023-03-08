@@ -37,7 +37,7 @@ import Sort from './Sort';
  * Note: if you want to use the sorting feature, you must configure the [[sort]] property
  * so that the provider knows which columns can be sorted.
  *
- * For more details and usage information on ArrayDataProvider, see the [guide article on data providers](https://internetmango.github.io/pwoli/output-data-providers).
+ * For more details and usage information on ArrayDataProvider, see the [guide article on data providers](https://codespede.github.io/pwoli/output-data-providers).
  *
  * @author Mahesh S Warrier <https://github.com/codespede>
  */

@@ -1,6 +1,6 @@
 # Validating Input
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true" style="margin-left: auto; margin-right: auto;"/></p>
 
 As a rule of thumb, you should never trust the data received from end users and should always validate it
 before putting it to good use.
@@ -29,4 +29,4 @@ if (model.validate()) {
 
 Validations work based on the ORM you are using. Please visit your ORM's documentation to know more on how to set different kinds of validations for your Models.
 If you are using Sequelize, please refer https://sequelize.org/master/manual/validations-and-constraints.html
-You can see how validations are set for a sample Pwoli app which uses Sequelize in this file: https://github.com/internetmango/pwoli-express-sample/blob/master/models/Company.js
+You can see how validations are set for a sample Pwoli app which uses Sequelize in this file: https://github.com/codespede/pwoli-express-sample/blob/master/models/Company.js

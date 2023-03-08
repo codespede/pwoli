@@ -11,23 +11,23 @@ _Pwoli means "super awesome" and our intention is to make web app development "s
 
 _A basic example of the API features provided by Pwoli:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/API.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _A simple GridView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView_big.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/GridView_big.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _A bit more complex GridView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView2.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/GridView2.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _A simple ListView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ListView.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/ListView.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 _An example of ActiveForm's capabilities:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true"  style="margin-left: auto; margin-right: auto;"/></p>
 
 ### Main Features
 
@@ -83,10 +83,10 @@ Check out on one of our guides below for learning how to use Pwoli's features:
 
 We have made four sample apps in different environments for you to get started quickly by trying them out in your local:
 
--   [Sample App - Pwoli with NodeJS](https://github.com/internetmango/pwoli-node-sample)
--   [Sample App - Pwoli with TypeScript](https://github.com/internetmango/pwoli-nodejs-typescript-sample)
--   [Sample App - Pwoli with Express.js and NodeJS](https://github.com/internetmango/pwoli-express-sample)
--   [Sample App - Pwoli with Express.js and TypeScript](https://github.com/internetmango/pwoli-express-typescript-sample)
+-   [Sample App - Pwoli with NodeJS](https://github.com/codespede/pwoli-node-sample)
+-   [Sample App - Pwoli with TypeScript](https://github.com/codespede/pwoli-nodejs-typescript-sample)
+-   [Sample App - Pwoli with Express.js and NodeJS](https://github.com/codespede/pwoli-express-sample)
+-   [Sample App - Pwoli with Express.js and TypeScript](https://github.com/codespede/pwoli-express-typescript-sample)
 
 ### Credits
 
@@ -98,8 +98,6 @@ Last but not least, thanks to [Yadu Dev](https://github.com/yadavgoku) for his c
 
 ### Support or Contact
 
-Pwoli is created at InternetMango.
-
-Please feel free to shoot a mail to info@internetmango.com for any queries or concerns.
+Please feel free to shoot a mail to codespede@gmail.com for any queries or concerns.
 
 We'll be starting our Slack channel soon where you can directly chat with us on clearing your queries.

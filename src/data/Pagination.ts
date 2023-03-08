@@ -38,7 +38,7 @@ import Application from '../base/Application';
  * <%- pager.render(); %>
  * ```
  *
- * For more details and usage information on Pagination, see the [pagination section in this guide](https://internetmango.github.io/pwoli/output-data-widgets).
+ * For more details and usage information on Pagination, see the [pagination section in this guide](https://codespede.github.io/pwoli/output-data-widgets).
  *
  * @property-read int limit The limit of the data. This may be used to set the LIMIT value for a SQL
  * statement for fetching the current page of data. Note that if the page size is infinite, a value -1 will be

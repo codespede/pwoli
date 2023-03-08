@@ -72,7 +72,7 @@ export { EventModel as Event };
 ```
 Now you can use these Models just as how you use it in the normal way for Pwoli.
 
-Fully working examples of using Mongoose with Pwoli are available [here](https://github.com/internetmango/pwoli-node-sample) and [here](https://github.com/internetmango/pwoli-express-typescript-sample).
+Fully working examples of using Mongoose with Pwoli are available [here](https://github.com/codespede/pwoli-node-sample) and [here](https://github.com/codespede/pwoli-express-typescript-sample).
 
 ### Operations with Embedded Documents
 
@@ -147,8 +147,8 @@ APIs will work as normal as demonstrated [here](/pwoli/rest-api).
             ... //total 10 items since default value of DataProvider.perPage is 10
         ]
         ```
--    For sorting the data with an embedded attribute, [just as how you do for normal attributes](https://internetmango.github.io/pwoli/rest-api#sorting), pass it in the sort param like `?sort=contactPerson.name`
--    Similarly, for filtering the data with an embedded attribute, [just as how you do for normal attributes](https://internetmango.github.io/pwoli/rest-api#filtering), pass it in the filter param like `?Event[contactPerson.name]=Mahesh`
--   Pagination will work as normal as how it's specified [here](https://internetmango.github.io/pwoli/rest-api#pagination).
+-    For sorting the data with an embedded attribute, [just as how you do for normal attributes](https://codespede.github.io/pwoli/rest-api#sorting), pass it in the sort param like `?sort=contactPerson.name`
+-    Similarly, for filtering the data with an embedded attribute, [just as how you do for normal attributes](https://codespede.github.io/pwoli/rest-api#filtering), pass it in the filter param like `?Event[contactPerson.name]=Mahesh`
+-   Pagination will work as normal as how it's specified [here](https://codespede.github.io/pwoli/rest-api#pagination).
 
-Fully working examples of using Mongoose with Pwoli are available [here](https://github.com/internetmango/pwoli-node-sample) and [here](https://github.com/internetmango/pwoli-express-typescript-sample).
+Fully working examples of using Mongoose with Pwoli are available [here](https://github.com/codespede/pwoli-node-sample) and [here](https://github.com/codespede/pwoli-express-typescript-sample).

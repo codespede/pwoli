@@ -36,7 +36,7 @@ export type column = Column | { [key: string]: any };
  *
  * The look and feel of a grid view can be customized using the large amount of properties.
  *
- * For more details and usage information on GridView, see the [guide article on data widgets](https://internetmango.github.io/pwoli/output-data-widgets).
+ * For more details and usage information on GridView, see the [guide article on data widgets](https://codespede.github.io/pwoli/output-data-widgets).
  *
  * @author Mahesh S Warrier <maheshs60@gmail.com>
  * @since 1.0

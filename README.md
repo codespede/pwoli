@@ -1,6 +1,6 @@
 [![Github All Releases](https://img.shields.io/npm/dt/pwoli.svg)]()
 
-https://internetmango.github.io/pwoli
+https://codespede.github.io/pwoli
 
 ## Pwoli.js 
 
@@ -10,37 +10,37 @@ Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM A
 
 _This means that, all Mongoose and Sequelize supported databases like MongoDB, PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present._
 
-_For any other DB/ORM support, an ORM Adapter implementing [IORMAdapter](https://internetmango.github.io/pwoli/api-docs/interfaces/IORMAdapter.html) has to be implemented. Please see [how to use a different ORM](https://internetmango.github.io/pwoli/using-another-orm)_
+_For any other DB/ORM support, an ORM Adapter implementing [IORMAdapter](https://codespede.github.io/pwoli/api-docs/interfaces/IORMAdapter.html) has to be implemented. Please see [how to use a different ORM](https://codespede.github.io/pwoli/using-another-orm)_
 
 _Pwoli means "super awesome" and our intention is to make web app development "super awesome"_
 
 _A basic example of the API features provided by Pwoli:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/API.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/API.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
 
 _A simple GridView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView_big.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/GridView_big.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
 
 _A bit more complex GridView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/GridView2.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/GridView2.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
 
 _A simple ListView:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ListView.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/ListView.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
 
 _An example of ActiveForm's capabilities:_
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/ActiveForm.gif" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
 
 
 
 ### Main Features
 
 -   Fully flexible and extensible - thanks to the OOP based architecture.
--   Frontend widgets like [ActiveForm](https://internetmango.github.io/pwoli/input-forms), [GridView, ListView](https://internetmango.github.io/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
--   [Simple-to-setup REST APIs](https://internetmango.github.io/pwoli/rest-api) for the backends of SPA applications, Mobile apps and other API consumers.
+-   Frontend widgets like [ActiveForm](https://codespede.github.io/pwoli/input-forms), [GridView, ListView](https://codespede.github.io/pwoli/output-data-widgets) for SSR(Server Side HTML Rendering) applications.
+-   [Simple-to-setup REST APIs](https://codespede.github.io/pwoli/rest-api) for the backends of SPA applications, Mobile apps and other API consumers.
 -   Works on both raw NodeJS and TypeScript applications.
 -   Has reasonable defaults.
 -   Well documented and [typed](https://www.typescriptlang.org) code for [IDE Intellisense](https://en.wikipedia.org/wiki/Intelligent_code_completion).
@@ -52,7 +52,7 @@ _An example of ActiveForm's capabilities:_
 npm install pwoli@latest
 ```
 
-If you are using any ORM(like Mongoose) other than Sequelize, please [click here](https://internetmango.github.io/pwoli/using-another-orm) to see details on how to configure it.
+If you are using any ORM(like Mongoose) other than Sequelize, please [click here](https://codespede.github.io/pwoli/using-another-orm) to see details on how to configure it.
 Enter these lines in your application's entry script(most probably index.ts or index.js)
 
 ```js
@@ -71,26 +71,26 @@ Pwoli.setViewPath(path.join(__dirname, 'views')); // The base path in which your
 
 ### Get Started
 
--   Please note: If you are building the backend for an SPA, Mobile App or a REST API client, [click here](https://internetmango.github.io/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
+-   Please note: If you are building the backend for an SPA, Mobile App or a REST API client, [click here](https://codespede.github.io/pwoli/rest-api) to jump to the tutorial on learning how to use Pwoli for rendering data from backend servers in a paginated, filtered and sorted manner for any model with the matter of a couple of lines of code.
 
 Check out on one of our guides below for learning how to use Pwoli's features:
 
--   [Data Widgets - GridViews, ListViews](https://internetmango.github.io/pwoli/output-data-widgets)
--   [Data Providers - ActiveDataProvider, ArrayDataProvider](https://internetmango.github.io/pwoli/output-data-providers)
--   [Creating Forms - via ActiveForms](https://internetmango.github.io/pwoli/input-forms)
--   [Validating Input - via Model validations and ActiveForms](https://internetmango.github.io/pwoli/input-validation)
--   [Html helper - to help you do anything in the HTML side](https://internetmango.github.io/pwoli/html-helper)
--   [REST APIs - Data Rendering made easy with a few lines](https://internetmango.github.io/pwoli/rest-api)
--   [Using a different ORM - If you are using an ORM other than Sequelize](https://internetmango.github.io/pwoli/using-another-orm)
+-   [Data Widgets - GridViews, ListViews](https://codespede.github.io/pwoli/output-data-widgets)
+-   [Data Providers - ActiveDataProvider, ArrayDataProvider](https://codespede.github.io/pwoli/output-data-providers)
+-   [Creating Forms - via ActiveForms](https://codespede.github.io/pwoli/input-forms)
+-   [Validating Input - via Model validations and ActiveForms](https://codespede.github.io/pwoli/input-validation)
+-   [Html helper - to help you do anything in the HTML side](https://codespede.github.io/pwoli/html-helper)
+-   [REST APIs - Data Rendering made easy with a few lines](https://codespede.github.io/pwoli/rest-api)
+-   [Using a different ORM - If you are using an ORM other than Sequelize](https://codespede.github.io/pwoli/using-another-orm)
 
 ### Try it out
 
 We have made four sample apps in different environments for you to get started quickly by trying them out in your local:
 
--   [Sample App - Pwoli with NodeJS](https://github.com/internetmango/pwoli-node-sample)
--   [Sample App - Pwoli with TypeScript](https://github.com/internetmango/pwoli-nodejs-typescript-sample)
--   [Sample App - Pwoli with Express.js and NodeJS](https://github.com/internetmango/pwoli-express-sample)
--   [Sample App - Pwoli with Express.js and TypeScript](https://github.com/internetmango/pwoli-express-typescript-sample)
+-   [Sample App - Pwoli with NodeJS](https://github.com/codespede/pwoli-node-sample)
+-   [Sample App - Pwoli with TypeScript](https://github.com/codespede/pwoli-nodejs-typescript-sample)
+-   [Sample App - Pwoli with Express.js and NodeJS](https://github.com/codespede/pwoli-express-sample)
+-   [Sample App - Pwoli with Express.js and TypeScript](https://github.com/codespede/pwoli-express-typescript-sample)
 
 ### Credits
 
@@ -114,13 +114,13 @@ The framework is [Open Source](LICENSE).
 
 You may join us and:
 
-- [Report an issue](https://github.com/internetmango/pwoli/blob/master/docs/internals/report-an-issue.md)
-- [Contribute to the core code or fix bugs](https://github.com/internetmango/pwoli/blob/master/docs/internals/git-workflow.md)
+- [Report an issue](https://github.com/codespede/pwoli/blob/master/docs/internals/report-an-issue.md)
+- [Contribute to the core code or fix bugs](https://github.com/codespede/pwoli/blob/master/docs/internals/git-workflow.md)
 
 ### Support or Contact
 
-Pwoli is created at InternetMango.
+Pwoli is created at codespede.
 
-Please feel free to shoot a mail to info@internetmango.com for any queries or concerns.
+Please feel free to shoot a mail to info@codespede.com for any queries or concerns.
 
 We'll be starting our Slack channel soon where you can directly chat with us on clearing your queries.

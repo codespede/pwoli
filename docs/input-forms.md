@@ -2,7 +2,7 @@
 
 ## ActiveRecord based forms: ActiveForm
 
-<p align="center"><img src="https://github.com/internetmango/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true" style="margin-left: auto; margin-right: auto;"/></p>
+<p align="center"><img src="https://github.com/codespede/pwoli/blob/master/docs/images/ActiveForm.gif?raw=true" style="margin-left: auto; margin-right: auto;"/></p>
 
 The primary way of using forms in Pwoli is through
 [ActiveForm](/pwoli/api-docs/classes/ActiveForm.html). This approach should be preferred when

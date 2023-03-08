@@ -9,7 +9,7 @@ import Widget from '../base/Widget';
  * provider. Each data model is rendered using the view
  * specified.
  *
- * For more details and usage information on ListView, see the [guide article on data widgets](https://internetmango.github.io/pwoli/output-data-widgets).
+ * For more details and usage information on ListView, see the [guide article on data widgets](https://codespede.github.io/pwoli/output-data-widgets).
  *
  * @author Mahesh S Warrier <https://github.com/codespede>
  */
