@@ -6,7 +6,7 @@ https://codespede.github.io/pwoli
 
 Pwoli is a NodeJS/TypeScript framework written in TypeScript which can work independantly on a raw NodeJS/TypeScript environement OR, in co-ordination with any other frameworks or libraries like Express.js.
 
-Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) and [Mongoose](https://mongoosejs.com) out of the box at present by [SequelizeAdapter](/pwoli/api-docs/classes/SequelizeAdapter.html) and [MongooseAdapter](/pwoli/api-docs/classes/MongooseAdapter.html) respectively.
+Pwoli can connect to any kind of ORMs by implementing thier corresponding [ORM Adapters](https://codespede.github.io/pwoli/api-docs/classes/ORMAdapter.html) and works with [Sequelize](https://sequelize.org) and [Mongoose](https://mongoosejs.com) out of the box at present by [SequelizeAdapter](https://codespede.github.io/pwoli/api-docs/classes/SequelizeAdapter.html) and [MongooseAdapter](https://codespede.github.io/pwoli/api-docs/classes/MongooseAdapter.html) respectively.
 
 _This means that, all Mongoose and Sequelize supported databases like MongoDB, PostgreSQL, MySQL, MariaDB, SQLite, and Microsoft SQL Server are readily usable with Pwoli at present._
 
@@ -119,8 +119,6 @@ You may join us and:
 
 ### Support or Contact
 
-Pwoli is created at codespede.
-
-Please feel free to shoot a mail to info@codespede.com for any queries or concerns.
+Please feel free to shoot a mail to codespede@gmail.com for any queries or concerns.
 
 We'll be starting our Slack channel soon where you can directly chat with us on clearing your queries.
