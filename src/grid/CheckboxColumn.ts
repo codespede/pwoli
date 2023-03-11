@@ -101,7 +101,7 @@ export default class CheckboxColumn extends Column {
      */
     protected getHeaderCheckBoxName(): string {
         let name = this.name;
-        let matches = name.match(/(.*)\[\]$/);
+        let matches = name.match(/(.*)\[\]$/) as any;
         if (matches.length > 0) name = matches[1];
         matches = name.match(/(.*)\]$/);
         if (matches === null) matches = [];

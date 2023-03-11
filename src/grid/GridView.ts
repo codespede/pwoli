@@ -2,7 +2,6 @@ import path = require('path');
 import DataHelper from '../helpers/DataHelper';
 import Pwoli from '../base/Application';
 import CollectionView from '../widgets/CollectionView';
-import Component from '../base/Component';
 import DataColumn from './DataColumn';
 import Html from '../helpers/Html';
 import Model from '../base/Model';
