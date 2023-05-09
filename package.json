@@ -37,5 +37,13 @@
   },
   "files": [
     "lib/**/*"
+  ],
+  "keywords": [
+    "nodejs",
+    "activerecord",
+    "rest-api",
+    "dataprovider",
+    "sequelize",
+    "mongoose" 
   ]
 }
