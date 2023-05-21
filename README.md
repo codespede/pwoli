@@ -1,4 +1,6 @@
-[![Github All Releases](https://img.shields.io/npm/dt/pwoli.svg)]()
+[![Github All Releases](https://img.shields.io/npm/dt/pwoli.svg?label=Total%20Installs)]()
+
+![npm](https://img.shields.io/npm/dw/pwoli?label=Weekly%20Installs)
 
 https://codespede.github.io/pwoli
 
