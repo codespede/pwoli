@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "jest": "^27.3.1",
+    "jest": "^30.4.2",
     "none": "^1.0.0",
     "prettier": "^2.3.0",
     "ts-jest": "^27.0.7",
